@@ -1,0 +1,16 @@
+<?php
+
+namespace Modules\DumpMyModule\Views\Components;
+
+
+
+use Illuminate\View\Component;
+
+class HeaderBar extends Component
+{
+
+    public function render(){
+
+        return view('DumpMyComponent::components.header-bar');
+    }
+}

@@ -1,0 +1,15 @@
+<div class="w-full  p-1 md:p-4">
+    <x-lf.card title="Create" class="info">
+        DumpMyFormField
+        <x-lf.form.done />
+        <x-slot name="tools">
+            <a class="btn-primary sm" href="{{route('DumpMyRoute')}}">{!! lfIcon("list") !!}</a>
+        </x-slot>
+        <x-slot name="footer">
+            <div class="card-footer flex justify-between">
+                <label class="btn-primary flex-none" wire:click="store">Create</label>
+                <a class="btn" href="{{route('DumpMyRoute')}}">Cancel</a>
+            </div>
+        </x-slot>
+    </x-lf.card>
+</div>

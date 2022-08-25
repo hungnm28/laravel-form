@@ -1,0 +1,81 @@
+<?php
+
+namespace Hungnm28\LaravelForm;
+
+use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\ServiceProvider;
+
+class LaravelFormServiceProvider extends ServiceProvider
+{
+    protected $commands = [
+        Commands\ModelCommand::class
+        ,Commands\InitMix::class
+        ,Commands\InitLayout::class
+        ,Commands\InitProvider::class
+        ,Commands\InitIcon::class
+        ,Commands\InitRoute::class
+        ,Commands\InitModule::class
+        ,Commands\MakeCreate::class
+    ];
+
+    public function register()
+    {
+        parent::register();
+    }
+
+    public function boot()
+    {
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'lf-form');
+        $this->configureCommands();
+        $this->configureComponents();
+    }
+
+    protected function configureComponents()
+    {
+        $this->registerComponent('card');
+
+        $this->registerComponent('form.field');
+        $this->registerComponent('form.array');
+        $this->registerComponent('form.input');
+        $this->registerComponent('form.textarea');
+        $this->registerComponent('form.select');
+        $this->registerComponent('form.picture');
+        $this->registerComponent('form.checkbox');
+        $this->registerComponent('form.radio');
+        $this->registerComponent('form.icon');
+        $this->registerComponent('form.sort');
+        $this->registerComponent('form.toggle');
+        $this->registerComponent('form.done');
+
+        $this->registerComponent('btn.delete');
+
+        $this->registerComponent('page.create');
+        $this->registerComponent('page.edit');
+        $this->registerComponent('page.show');
+        $this->registerComponent('page.listing');
+
+        $this->registerComponent('filter.label');
+        $this->registerComponent('filter.input');
+    }
+
+    protected function registerComponent(string $component)
+    {
+        Blade::component('lf-form::components.' . $component, 'lf.' . $component);
+    }
+
+    protected function configureCommands()
+    {
+        if (!$this->app->runningInConsole()) {
+            return;
+        }
+
+        $this->commands($this->commands);
+    }
+    protected function registerPublishing()
+    {
+        if ($this->app->runningInConsole()) {
+
+
+        }
+    }
+}

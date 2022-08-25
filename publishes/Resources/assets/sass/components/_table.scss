@@ -1,0 +1,24 @@
+.table{
+    @apply min-w-full ;
+    thead{
+        @apply bg-slate-200;
+        th{
+            @apply text-left p-1 py-2;
+        }
+    }
+    .stt{
+        @apply w-1;
+    }
+    tbody{
+        tr{
+            @apply border-b hover:bg-slate-100;
+
+        }
+    }
+    td{
+        @apply p-1 ;
+    }
+    .action{
+        @apply text-right whitespace-nowrap w-1;
+    }
+}

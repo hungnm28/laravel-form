@@ -1,0 +1,52 @@
+.card{
+    @apply w-full bg-white shadow rounded overflow-hidden;
+
+    .card-header{
+        @apply w-full border-b flex content-between px-2 h-12 font-medium text-base items-center;
+        .title{
+            @apply flex-none text-xl;
+        }
+        .card-tools{
+            @apply flex-none flex space-x-1 justify-self-end;
+        }
+    }
+
+    .card-content{
+        @apply w-full block overflow-auto;
+    }
+
+    .card-footer{
+        @apply w-full border-t bg-slate-200 p-2;
+    }
+
+    &.primary{
+        .card-header{
+            @apply bg-indigo-600 text-white;
+        }
+    }
+    &.info{
+        .card-header{
+            @apply bg-green-600 text-white;
+        }
+    }
+    &.success{
+        .card-header{
+            @apply bg-emerald-700 text-white;
+        }
+    }
+    &.warning{
+        .card-header{
+            @apply bg-amber-600 text-white;
+        }
+    }
+    &.danger{
+        .card-header{
+            @apply bg-rose-700 text-white;
+        }
+    }
+    &.secondary{
+        .card-header{
+            @apply bg-slate-600 text-white;
+        }
+    }
+}

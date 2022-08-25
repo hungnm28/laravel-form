@@ -1,0 +1,34 @@
+{
+    "name": "hungnm28/laravel-form",
+    "description": "This package used for create laravel form",
+    "type": "library",
+    "require": {
+        "doctrine/dbal": ">=2.3.0"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Hungnm28\\LaravelForm\\": "src/"
+        },
+        "files": [
+            "src/Helpers/functions.php"
+        ]
+    },
+    "authors": [
+        {
+            "name": "HungNM28",
+            "email": "nguyenmanhhung28@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "\\Hungnm28\\LaravelForm\\LaravelFormServiceProvider"
+            ],
+            "aliases": {
+                "LForm": "\\Hungnm28\\LaravelForm\\Facades\\LaravelForm"
+            }
+        }
+    },
+    "minimum-stability": "dev"
+}

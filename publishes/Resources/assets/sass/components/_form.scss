@@ -1,0 +1,154 @@
+.form-input{
+    @apply w-full border-gray-300 py-1.5 px-2 rounded-sm  ring-emerald-300 focus:border-emerald-300;
+}
+.form-field{
+    @apply w-full block p-2;
+    .form-label{
+            @apply block text-xs font-semibold mb-1;
+    }
+    .form-box{
+        @apply w-full block;
+
+    }
+
+    .message{
+        @apply text-xs text-orange-500 hidden ;
+    }
+    &.error{
+        .form-label{
+            @apply text-orange-500;
+        }
+        .form-input{
+            @apply border-orange-200 text-orange-500;
+        }
+        .message{
+            @apply block;
+        }
+    }
+
+    &.sm{
+        .form-input{
+            @apply px-1 py-0.5;
+        }
+    }
+    &.lg{
+        .form-input{
+            @apply py-2 px-3;
+        }
+
+    }
+    &.form-array{
+       .form-box{
+           @apply w-full block p-2 bg-gray-100 rounded;
+           .item{
+               @apply w-full flex mb-1;
+               .form-input{
+                   @apply flex-auto p-1 ring-0 rounded-r-none;
+               }
+               .icon{
+                   @apply rounded-r-sm bg-white flex-none flex items-center justify-center px-2 border-gray-300 border-t border-r border-b cursor-pointer hover:border-yellow-400 hover:bg-yellow-400;
+               }
+           }
+       }
+        .item-add{
+            @apply w-full flex;
+            .form-input{
+                @apply flex-auto border-cyan-600 rounded-r-none ring-0;
+            }
+            .icon{
+                @apply rounded-r-sm bg-white flex-none flex items-center justify-center px-4 border-cyan-600 border bg-cyan-600 cursor-pointer text-white hover:bg-cyan-500 hover:border-cyan-500 ;
+            }
+        }
+
+    }
+    .lf-flex{
+        @apply flex flex-wrap;
+        .item{
+            @apply flex-none flex items-center mr-4 cursor-pointer font-medium hover:text-blue-600 whitespace-nowrap;
+            .form-radio, .form-checkbox{
+                @apply w-5 h-5 mr-1.5;
+            }
+            &:hover{
+                .form-radio,.form-checkbox{
+                    @apply border-blue-600;
+                    &:checked {
+                      &+.text{
+                            @apply text-blue-600;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .form-icon{
+        @apply w-full block;
+        .box-icons{
+            @apply w-full block max-h-60 overflow-auto bg-gray-100 p-2 rounded mt-2;
+            .icons{
+                @apply w-full flex flex-wrap;
+                .item{
+                    @apply flex-auto block  p-0.5;
+                }
+                .item-show{
+                    @apply w-full text-center block whitespace-nowrap border bg-white p-1 rounded cursor-pointer hover:bg-green-600 hover:text-white;
+                    .icon{
+                        @apply w-full flex items-center justify-center w-full p-2;
+                    }
+                    &.active{
+                        @apply bg-green-600 text-white;
+                    }
+                }
+
+            }
+        }
+    }
+
+    .form-picture{
+        @apply w-full max-w-xs block overflow-hidden p-2 bg-gray-100 rounded cursor-pointer;
+        .picture{
+            @apply w-full block mb-2;
+            img{
+                @apply w-full;
+            }
+        }
+        input{
+           @apply bg-slate-200 cursor-pointer;
+        }
+    }
+
+    .form-toggle{
+        @apply w-12 h-4 inline-block bg-slate-400 rounded-full mt-3 flex-auto  items-center shadow-lg  ;
+        .dot{
+            @apply flex-none w-8 h-8 bg-slate-500 rounded-full inline-block -mt-2 cursor-pointer shadow;
+        }
+        input{
+            @apply hidden;
+            &:checked + .dot{
+                @apply bg-blue-600 ml-5
+            }
+        }
+    }
+}
+
+.form-filter{
+    @apply w-full flex flex-wrap p-2 bg-slate-100;
+
+    .field{
+        @apply flex-auto p-0.5 flex items-center min-w-[200px];
+        .form-input{
+            @apply w-full p-1 text-xs;
+        }
+
+    }
+    .label{
+        @apply font-bold text-xs flex-none min-w-0;
+    }
+}
+
+.form-sort{
+    @apply inline-flex hover:bg-slate-300 cursor-pointer text-blue-800 px-1 items-center;
+    .label{
+        @apply whitespace-nowrap;
+    }
+}
