@@ -11,6 +11,9 @@ if (!function_exists('lfIcon')) {
     }
 }
 
-function lfForm(){
-    return new \Hungnm28\LaravelForm\Facades\LaravelForm();
+if(!function_exists("lForm")){
+    function lForm(){
+        return \Hungnm28\LaravelForm\LaravelForm::getInstance();
+    }
 }
+

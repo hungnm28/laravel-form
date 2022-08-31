@@ -1,0 +1,58 @@
+<?php
+
+namespace DumpMyNamespace;
+
+use DumpMyModelNamespace;
+use Hungnm28\LaravelForm\Facades\LaravelForm;
+use Hungnm28\LaravelForm\Traits\WithLaravelFormTrait;
+use Livewire\Component;
+
+
+class Edit extends Component
+{
+    use WithLaravelFormTrait;
+
+    public DumpMyListFields;
+
+    protected function rules()
+    {
+        return [
+            DumpMyRules
+        ];
+    }
+
+    public function mount()
+    {
+        $this->authorize("DumpMyPermission.edit");
+        $data = DumpMyModelClassName::findOrFail($this->record_id);
+        DumpMyMountFields
+    }
+
+    public function updated($field)
+    {
+        $this->validateOnly($field);
+    }
+
+    public function store()
+    {
+        $this->authorize("DumpMyPermission.edit");
+        $this->validate();
+        $data = DumpMyModelClassName::findOrFail($this->record_id);
+        $data->fill([
+            DumpMyEditFields
+        ]);
+        if (!$data->clean) {
+            $data->update();
+            $this->redirectForm("DumpMyRoute", $data->id);
+        }
+    }
+
+    public function render()
+    {
+        lForm()->setTitle("DumpMyPageName");
+        DumpMyBreadcrumb
+
+        return view("DumpMyModuleName::livewire.DumpMyView.edit")
+            ->layout('DumpMyModuleName::layouts.master', ['title' => 'DumpMyPageName Edit']);
+    }
+}

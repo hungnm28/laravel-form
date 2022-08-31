@@ -14,7 +14,7 @@ class LaravelForm extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return \Hungnm28\LaravelForm\LaravelForm::class;
+        return 'laravelform';
     }
 
 }

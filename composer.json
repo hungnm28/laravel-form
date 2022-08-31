@@ -26,7 +26,7 @@
                 "\\Hungnm28\\LaravelForm\\LaravelFormServiceProvider"
             ],
             "aliases": {
-                "LForm": "\\Hungnm28\\LaravelForm\\Facades\\LaravelForm"
+                "LForm": "\\Hungnm28\\LaravelForm\\LaravelForm"
             }
         }
     },

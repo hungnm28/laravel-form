@@ -17,6 +17,11 @@ class ModelGenerator
         ],
     ];
 
+    protected  $defaultTypeMapping = [
+      "json"=>[]
+        ,"array"=>[]
+    ];
+
     protected $fieldRulerMapping = [
         "name" => "string"
         , "email" => "email"
@@ -45,7 +50,7 @@ class ModelGenerator
                 , "label" => $this->formatLabel($name)
                 , "type" => $type
                 , "notnull" => $notnull
-                , "default" => $column->getDefault()
+                , "default" =>$column->getDefault()
                 , "rule" => $ruler
             ];
         }

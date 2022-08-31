@@ -1,0 +1,59 @@
+<?php
+
+namespace DumpMyNamespace;
+
+use DumpMyModelNamespace;
+use Hungnm28\LaravelForm\Traits\WithLaravelFormTrait;
+use Livewire\Component;
+
+class Listing extends Component
+{
+    use WithLaravelFormTrait;
+
+    public $confirm = 0;
+    // Filter
+    public $fId;
+    // Sort
+    public $sId = 0;
+    public $fields = [
+        DumpMyFields
+    ];
+
+    public function mount()
+    {
+        $this->authorize("DumpMyPermission.listing");
+    }
+
+    function delete()
+    {
+        $this->authorize("DumpMyPermission.delete");
+        if ($this->confirm > 0) {
+            DumpMyModelClassName::destroy($this->confirm);
+        }
+        $this->confirm = 0;
+        $this->dispatchBrowserEvent('warning', 'DumpMyPageName successfully destroyed.');
+    }
+
+
+    public function render()
+    {
+        $data = new DumpMyModelClassName();
+
+        if ($this->fId > 0) {
+            $data = $data->whereId($this->fId);
+        }
+        if ($this->sId == 1) {
+            $data = $data->orderBy("id");
+        }
+        if ($this->sId == 2) {
+            $data = $data->orderByDesc("id");
+        }
+        $data = $data->paginate(30);
+
+
+        lForm()->setTitle("DumpMyPageName");
+        DumpMyBreadcrumb
+        return view("DumpMyModuleName::livewire.DumpMyView.listing", compact("data"))
+            ->layout('DumpMyModuleName::layouts.master', ['title' => 'DumpMyPageName Create']);
+    }
+}

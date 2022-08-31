@@ -1,0 +1,36 @@
+<x-lf.page.listing :fields="$fields" :footer="$data->onEachSide(3)->links()">
+    <table class="table">
+        <thead>
+        <tr>
+            <th><x-lf.form.sort name="sId" :value="$sId">#</x-lf.form.sort></th>
+            DumpMyTitleFields
+            <th></th>
+        </tr>
+        </thead>
+        @foreach($data as $item)
+            <tr>
+                <th class="stt">{{$item->id}}</th>
+                DumpMyFields
+                <td class="action">
+                    @can('DumpMyPermission.show')
+                    <a class="btn-success xs" href="{{route("DumpMyRoute.show",$item->id)}}">{!! lfIcon("launch",10) !!}</a>
+                    @endcan
+                    @can('DumpMyPermission.edit')
+                    <a class="btn-info xs" href="{{route("DumpMyRoute.edit",$item->id)}}">{!! lfIcon("edit",10) !!}</a>
+                    @endcan
+                    @can('DumpMyPermission.delete')
+                    <x-lf.btn.delete :record="$item->id" :confirm="$confirm"/>
+                    @endcan
+                </td>
+            </tr>
+        @endforeach
+    </table>
+    <x-slot name="filters">
+        <x-lf.filter.input name="fId" type="number" placeholder="Id ..." />
+    </x-slot>
+    <x-slot name="tools">
+        @can("DumpMyPermission.create")
+           <div> <a class="btn-primary sm" href="{{route("DumpMyRoute.create")}}">{!! lfIcon("add") !!}</a></div>
+        @endcan
+    </x-slot>
+</x-lf.page.listing>

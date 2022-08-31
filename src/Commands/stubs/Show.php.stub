@@ -1,0 +1,28 @@
+<?php
+
+namespace DumpMyNamespace;
+
+use DumpMyModelNamespace;
+use Hungnm28\LaravelForm\Traits\WithLaravelFormTrait;
+use Livewire\Component;
+
+
+class Show extends Component
+{
+    use WithLaravelFormTrait;
+
+    public function mount()
+    {
+        $this->authorize("DumpMyPermission.show");
+        DumpMyModelClassName::findOrFail($this->record_id);
+    }
+
+    public function render()
+    {
+        $data =  DumpMyModelClassName::findOrFail($this->record_id);
+        lForm()->setTitle("DumpMyPageName");
+        DumpMyBreadcrumb
+        return view("DumpMyModuleName::livewire.DumpMyView.show", compact("data"))
+            ->layout('DumpMyModuleName::layouts.master', ['title' => 'DumpMyPageName Show']);
+    }
+}

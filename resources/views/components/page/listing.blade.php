@@ -10,7 +10,7 @@
         {{$slot}}
         <x-slot name="tools">
             @if($filters)
-                <a class="btn-info sm" @click="filter= !filter">{!! lfIcon("filter",14) !!}</a>
+                <div><a class="btn-info sm" @click="filter= !filter">{!! lfIcon("filter",14) !!}</a></div>
             @endif
             @if($tools)
                 {!! $tools !!}

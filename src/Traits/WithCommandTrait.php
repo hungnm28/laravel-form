@@ -131,7 +131,27 @@ trait WithCommandTrait
 
     private function getModelNamspace()
     {
-        return "APP\\Models\\$this->modelName";
+        return "App\\Models\\$this->modelName";
+    }
+
+    private function getArrRoutes($name=""){
+        $return = [];
+        $route = $this->getSnakeString($this->module->getName());
+        $return[$route] = $this->module->getName();
+        if($this->prePath){
+            foreach(explode("/",$this->prePath) as $pre){
+                $route .= '.' .$this->getSnakeString($pre);
+                $return[$route] = $this->getHeadline($pre);
+            }
+        }
+        $route .= '.' .$this->getSnakeString($this->pageName);
+        $return[$route] = $this->getHeadline($this->pageName);
+        if($name){
+            $route .= ".$name";
+            $return[$route] = $this->getHeadline($name);
+        }
+
+        return $return;
     }
 
     private function getStub($path)

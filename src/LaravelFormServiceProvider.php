@@ -16,11 +16,17 @@ class LaravelFormServiceProvider extends ServiceProvider
         ,Commands\InitRoute::class
         ,Commands\InitModule::class
         ,Commands\MakeCreate::class
+        ,Commands\MakeEdit::class
+        ,Commands\MakeShow::class
+        ,Commands\MakeListing::class
     ];
 
     public function register()
     {
         parent::register();
+        $this->app->bind('laravelform', function($app) {
+            return new LaravelForm();
+        });
     }
 
     public function boot()
@@ -48,6 +54,8 @@ class LaravelFormServiceProvider extends ServiceProvider
         $this->registerComponent('form.done');
 
         $this->registerComponent('btn.delete');
+        $this->registerComponent('item.tags');
+        $this->registerComponent('item.tree-nav');
 
         $this->registerComponent('page.create');
         $this->registerComponent('page.edit');
@@ -78,4 +86,5 @@ class LaravelFormServiceProvider extends ServiceProvider
 
         }
     }
+
 }

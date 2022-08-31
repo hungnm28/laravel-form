@@ -3,6 +3,7 @@
 namespace DumpMyNamespace;
 
 use DumpMyModelNamespace;
+use Hungnm28\LaravelForm\Facades\LaravelForm;
 use Hungnm28\LaravelForm\Traits\WithLaravelFormTrait;
 use Livewire\Component;
 
@@ -40,7 +41,8 @@ class   Create extends Component
 
     public function render()
     {
-
+        lForm()->setTitle("DumpMyPageName");
+        DumpMyBreadcrumb
         return view("DumpMyModuleName::livewire.DumpMyView.create")
             ->layout('DumpMyModuleName::layouts.master', ['title' => 'DumpMyPageName Create']);
     }

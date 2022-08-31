@@ -8,13 +8,13 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Str;
 use Nwidart\Modules\Facades\Module;
 
-class MakeCreate extends Command
+class MakeEdit extends Command
 {
     use WithCommandTrait;
 
-    protected $signature = 'lf:make-create {name} {module} {--pre=} {--model=}';
+    protected $signature = 'lf:make-edit {name} {module} {--pre=} {--model=}';
 
-    protected $description = 'Make create Page: ';
+    protected $description = 'Make edit Page: ';
 
     protected $folder;
 
@@ -25,35 +25,32 @@ class MakeCreate extends Command
         $this->info($this->description . $this->pageName);
         $this->getModelFields($this->modelName);
         $this->createClass();
-        $this->createView();
+          $this->createView();
         return true;
     }
 
     private function createClass()
     {
-        $stub = $this->getStub("Create.php.stub");
+        $stub = $this->getStub("Edit.php.stub");
+
         $listField = '';
         $rules = '';
         $createFields = '';
-
+        $mountFields = '';
         foreach ($this->fields as $f => $field) {
             if (!in_array($f, $this->reservedColumn)) {
-                $default = $field->default;
-                switch ($field->type){
-                    case "json": $default = '[]';
-                    break;
-                }
-                if ($default) {
-                    $listField .= '$' . $f . "= $default, ";
+                if ($field->default) {
+                    $listField .= '$' . $f . "= $field->default, ";
                 } else {
                     $listField .= '$' . $f . ", ";
                 }
-                $rules .= "'$f' => '$field->rule', \r\n\t\t";
-                $createFields .= "'$f' => \$this->$f, \r\n\t\t";
+                $rules .= "'$f' => '$field->rule', \r\n\t\t\t";
+                $createFields .= "'$f' => \$this->$f, \r\n\t\t\t";
+                $mountFields .= "\$this->$f = \$data->$f; \r\n\t\t";
             }
         }
         $listField = trim($listField, ', ');
-        $routes = $this->getArrRoutes('create');
+        $routes = $this->getArrRoutes("edit");
         $breadcrumb = "";
         foreach ($routes as $k => $title) {
             $breadcrumb .= 'lForm()->pushBreadcrumb(route("' . $k . '"),"' . $title . '");' . " \r\n\t\t";
@@ -64,8 +61,9 @@ class MakeCreate extends Command
             , 'DumpMyListFields'
             , 'DumpMyRules'
             , 'DumpMyPermission'
+            , 'DumpMyMountFields'
             , 'DumpMyModelClassName'
-            , 'DumpMyCreateFields'
+            , 'DumpMyEditFields'
             , 'DumpMyRoute'
             , 'DumpMyView'
             , 'DumpMyModuleName'
@@ -77,6 +75,7 @@ class MakeCreate extends Command
             , $listField
             , $rules
             , $this->getPermissionName()
+            , $mountFields
             , $this->modelName
             , $createFields
             , $this->getRouteName()
@@ -85,22 +84,19 @@ class MakeCreate extends Command
             , $breadcrumb
             , $this->getHeadline($this->pageName)
         ], $stub);
-        $pathSave = $this->classPath . "/Create.php";
+        $pathSave = $this->classPath . "/Edit.php";
         $this->writeFile($pathSave, $template);
     }
 
     private function createView()
     {
-        $stub = $this->getStub("create.blade.php.stub");
+        $stub = $this->getStub("edit.blade.php.stub");
         $fields = "";
         foreach ($this->fields as $f => $field) {
-            if(in_array($f,$this->reservedColumn)) continue;
+            if (in_array($f, $this->reservedColumn)) continue;
             switch ($field->type) {
                 case "boolean":
                     $fields .= '<x-lf.form.toggle name="' . $f . '" label="' . $field->label . '" />' . " \r\n\t\t";
-                    break;
-                case "text":
-                    $fields .= '<x-lf.form.textarea name="' . $f . '" label="' . $field->label . '" />' . " \r\n\t\t";
                     break;
                 case "json":
                     $fields .= '<x-lf.form.array name="' . $f . '" label="' . $field->label . '" placeholder="' . $field->label . ' ..." :params="$' . $f . '"/>' . " \r\n\t\t";
@@ -112,13 +108,15 @@ class MakeCreate extends Command
         $template = str_replace([
             'DumpMyFields'
             , 'DumpMyRoute'
+            ,'DumpMyPermission'
         ],
             [
                 $fields
                 , $this->getRouteName()
+                ,$this->getPermissionName()
             ],
             $stub);
-        $pathSave = $this->viewPath . "/create.blade.php";
+        $pathSave = $this->viewPath . "/edit.blade.php";
         $this->writeFile($pathSave, $template);
     }
 
