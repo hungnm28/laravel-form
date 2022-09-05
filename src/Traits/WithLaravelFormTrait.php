@@ -4,6 +4,7 @@ namespace Hungnm28\LaravelForm\Traits;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
+use Nwidart\Modules\Facades\Module;
 
 trait WithLaravelFormTrait
 {
@@ -85,6 +86,40 @@ trait WithLaravelFormTrait
                 $this->redirect(route($route));
         }
     }
+
+    private function saveNavbar($module,$data){
+        $module = Module::findOrFail($module);
+
+        $navString = "<?php \n return [\n\t'navbar' => [ \n ";
+        foreach($data as $nav){
+            $navString .= "\t\t[ \n";
+            $navString .= "\t\t\t'label' => '". $nav['label'] . "',\n";
+            $navString .= "\t\t\t'icon' => '". $nav['icon'] . "',\n";
+            $navString .= "\t\t\t'route' => '". $nav['route'] . "',\n";
+            $navString .= "\t\t\t'permission' => '". $nav['permission'] . "',\n";
+            $childrenText = "[\n";
+            $children = data_get($nav,"children",[]);
+            if(!empty($children)){
+                foreach($children as $child){
+                    $childrenText.= "\t\t\t\t[ \n";
+                    $childrenText .= "\t\t\t\t\t'label' => '". $child['label'] . "',\n";
+                    $childrenText .= "\t\t\t\t\t'icon' => '". $child['icon'] . "',\n";
+                    $childrenText .= "\t\t\t\t\t'route' => '". $child['route'] . "',\n";
+                    $childrenText .= "\t\t\t\t\t'permission' => '". $child['permission'] . "',\n";
+                    $childrenText.="\t\t\t\t],\n";
+
+                }
+            }
+            $childrenText .= "\t\t\t],\n";
+            $navString .= "\t\t\t'children' => " . $childrenText;
+            $navString.="\t\t],\n";
+        }
+        $navString .="\n\t]\n];";
+        $configPath = $module->getPath() . "/Config/navbar.php";
+        file_put_contents($configPath,$navString);
+
+    }
+
 
     public function postSort($name)
     {

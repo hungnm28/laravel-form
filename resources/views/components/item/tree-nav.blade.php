@@ -11,6 +11,7 @@
         <span class="tools">
             <a href="{{route($route.'.show',$key)}}" class="btn-info xs">{!! lfIcon("launch",11) !!}</a>
             <a href="{{route($route.'.edit',$key)}}" class="btn-warning xs">{!! lfIcon("edit",11) !!}</a>
+            <span class="btn-danger xs" wire:click="delete('{{$key}}')">{!! lfIcon("delete",11) !!}</span>
         </span>
     </div>
 

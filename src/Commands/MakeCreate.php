@@ -53,7 +53,7 @@ class MakeCreate extends Command
             }
         }
         $listField = trim($listField, ', ');
-        $routes = $this->getArrRoutes('create');
+        $routes = $this->getArrRoutes();
         $breadcrumb = "";
         foreach ($routes as $k => $title) {
             $breadcrumb .= 'lForm()->pushBreadcrumb(route("' . $k . '"),"' . $title . '");' . " \r\n\t\t";

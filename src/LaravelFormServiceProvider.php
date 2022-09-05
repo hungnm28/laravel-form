@@ -20,6 +20,7 @@ class LaravelFormServiceProvider extends ServiceProvider
         ,Commands\MakeEdit::class
         ,Commands\MakeShow::class
         ,Commands\MakeListing::class
+        ,Commands\MakePage::class
     ];
 
     public function register()
