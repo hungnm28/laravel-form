@@ -48,6 +48,29 @@ header{
 #lf-page{
     @apply flex-auto overflow-hidden;
 }
+#lf-header{
+    @apply w-full border-b  flex justify-between items-center px-1 py-2 md:px-4 text-slate-700;
+    .lf-title{
+        @apply font-bold text-3xl;
+    }
+    .breadcrumb{
+        @apply flex-none flex items-center;
+        .item{
+            @apply flex-auto flex items-center;
+            a{
+                @apply block;
+            }
+            span{
+                @apply block px-2;
+            }
+            &:last-child{
+                span{
+                    @apply hidden;
+                }
+            }
+        }
+    }
+}
 #lfp-content{
     @apply w-full min-h-screen overflow-hidden;
 }

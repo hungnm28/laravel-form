@@ -10,7 +10,7 @@ class InitModule extends Command
 {
     use WithCommandTrait;
 
-    protected $signature = 'lf:init-module {name} {--all} {--icon} {--mix} {--layout} {--provider} {--route}';
+    protected $signature = 'lf:init-module {name} {--all} {--icon} {--mix} {--layout} {--provider} {--route} {--gitignore}';
 
     protected $description = 'Init module: ';
 
@@ -37,6 +37,9 @@ class InitModule extends Command
         }
         if($this->option("icon") || $this->option("all")){
             $this->call('lf:init-icon');
+        }
+        if($this->option("gitignore") || $this->option("all")){
+            $this->call('lf:init-gitignore',['name' => $name]);
         }
 
         return true;

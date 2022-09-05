@@ -14,6 +14,7 @@ class LaravelFormServiceProvider extends ServiceProvider
         ,Commands\InitProvider::class
         ,Commands\InitIcon::class
         ,Commands\InitRoute::class
+        ,Commands\InitGitignore::class
         ,Commands\InitModule::class
         ,Commands\MakeCreate::class
         ,Commands\MakeEdit::class

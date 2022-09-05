@@ -1,0 +1,12 @@
+.tree{
+    @apply w-full pl-3 ;
+    .item{
+        @apply w-full block;
+        .item-content{
+            @apply w-full flex items-center bg-slate-100 border my-1 hover:bg-slate-200;
+            .tools{
+                @apply flex-none pr-2;
+            }
+        }
+    }
+}

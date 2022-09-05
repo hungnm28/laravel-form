@@ -118,14 +118,14 @@
     }
 
     .form-toggle{
-        @apply w-12 h-4 inline-block bg-slate-400 rounded-full mt-3 flex-auto  items-center shadow-lg  ;
+        @apply w-8 h-3 inline-block bg-slate-400 rounded-full mt-3 flex-auto  items-center shadow-lg  ;
         .dot{
-            @apply flex-none w-8 h-8 bg-slate-500 rounded-full inline-block -mt-2 cursor-pointer shadow;
+            @apply flex-none w-5 h-5 bg-slate-500 rounded-full inline-block -mt-2 cursor-pointer shadow;
         }
         input{
             @apply hidden;
             &:checked + .dot{
-                @apply bg-blue-600 ml-5
+                @apply bg-blue-600 ml-3
             }
         }
     }
@@ -150,5 +150,22 @@
     @apply inline-flex hover:bg-slate-300 cursor-pointer text-blue-800 px-1 items-center;
     .label{
         @apply whitespace-nowrap;
+    }
+}
+.form-finished{
+    @apply w-full border-t p-2 mt-2;
+    .item{
+        @apply flex-none flex items-center mr-4 cursor-pointer text-xs;
+        .title{
+            @apply font-bold pl-1;
+        }
+        &:hover{
+            @apply text-blue-700;
+        }
+        input:checked{
+            &+ .title{
+                @apply text-blue-700;
+            }
+        }
     }
 }

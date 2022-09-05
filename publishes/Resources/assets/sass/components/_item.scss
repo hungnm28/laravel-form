@@ -1,0 +1,6 @@
+.tags{
+    @apply flex flex-wrap;
+    .item{
+        @apply flex-none mb-1 mr-1 whitespace-nowrap bg-slate-200 px-1;
+    }
+}
