@@ -23,7 +23,7 @@
             </div>
             <div id="lf-footer">
                 <span class="flex-auto">Copyright © 2022 &nbsp <span class="text-teal-500 font-bold"> {{env("APP_NAME")}} </span>. All rights reserved.</span>
-                <span class="flex-none">Version: {{LForm::getVersion()}}</span>
+                <span class="flex-none">Version: {{lForm()->getVersion()}}</span>
             </div>
         </div>
         <label for="lf-control" id="lf-overlay"></label>
