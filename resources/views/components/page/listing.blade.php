@@ -22,7 +22,7 @@
                     @foreach($fields as $k =>$field)
                         <label class="flex items-center p-2 px-4 border-b last:border-none text-sm">
                             <input type="checkbox" class="mr-1" wire:model="fields.{{$k}}.status"/>
-                            <span class="whitespace-nowrap">{{$field['label']}}</span>
+                            <span class="whitespace-nowrap text-slate-700">{{$field['label']}}</span>
                         </label>
                     @endforeach
                 </div>
