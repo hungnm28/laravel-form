@@ -1,6 +1,4 @@
 <?php
-Route::prefix('DumpMyPrefix')->name('DumpMyName')->middleware(['auth:sanctum', 'verified'])->group(function() {
-    Route::get('/', [\Modules\DumpMyModule\Http\Controllers\DumpMyModuleController::class,"index"]);
+Route::get('/', [\Modules\DumpMyModule\Http\Controllers\HomeController::class,"index"]);
 
-    /** Add New Routes **/
-});
+//---END-OF-ROUTES---//

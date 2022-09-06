@@ -50,7 +50,7 @@ class MakeEdit extends Command
             }
         }
         $listField = trim($listField, ', ');
-        $routes = $this->getArrRoutes("edit");
+        $routes = $this->getArrRoutes();
         $breadcrumb = "";
         foreach ($routes as $k => $title) {
             $breadcrumb .= 'lForm()->pushBreadcrumb(route("' . $k . '"),"' . $title . '");' . " \r\n\t\t";

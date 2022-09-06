@@ -5,7 +5,6 @@ namespace Hungnm28\LaravelForm\Commands;
 
 use Hungnm28\LaravelForm\Traits\WithCommandTrait;
 use Illuminate\Console\Command;
-use Illuminate\Support\Str;
 
 class InitLayout extends Command
 {
@@ -30,6 +29,7 @@ class InitLayout extends Command
         $this->copyHeaderBar();
         $this->copyNavbar();
         $this->copyLayout();
+        $this->copyHomeController();
         $this->copyHomePage();
         return true;
     }
@@ -42,7 +42,7 @@ class InitLayout extends Command
             ,"DumpMyComponent"
         ],[
             $this->module
-            ,Str::slug($this->module)
+            ,$this->getModuleSug($this->module)
         ],$stub);
         $this->writeFile(module_path($this->module,"Views/Components/HeaderBar.php"),$tempplate);
 
@@ -55,7 +55,7 @@ class InitLayout extends Command
             ,"DumpMyAssets"
         ],[
             $this->module
-            ,Str::slug($this->module)
+            ,$this->getModuleSug($this->module)
         ],$stub);
         $this->writeFile(module_path($this->module,"Resources/views/components/header-bar.blade.php"),$tempplate);
 
@@ -69,9 +69,9 @@ class InitLayout extends Command
             ,"DumpMyModule"
             ,"DumpMyComponent"
         ],[
-            Str::slug($this->module)
+            $this->getModuleSug($this->module)
             ,$this->module
-            ,Str::slug($this->module)
+            ,$this->getModuleSug($this->module)
         ],$stub);
         $this->writeFile(module_path($this->module,"Views/Components/Navbar.php"),$tempplate);
 
@@ -80,7 +80,7 @@ class InitLayout extends Command
         $tempplate = str_replace([
             "DumpMyHomeRoute"
         ],[
-           Str::slug($this->module)
+            $this->getModuleSug($this->module)
         ],$stub);
         $this->writeFile(module_path($this->module,"Resources/views/components/navbar.blade.php"),$tempplate);
 
@@ -96,7 +96,7 @@ class InitLayout extends Command
         ],[
 
             $this->module
-            ,Str::slug($this->module)
+            ,$this->getModuleSug($this->module)
         ],$stub);
         $this->writeFile(module_path($this->module,"Views/Components/LayoutMaster.php"),$tempplate);
 
@@ -109,8 +109,8 @@ class InitLayout extends Command
             ,"DumpMyComponent"
         ],[
             $this->module
-            ,Str::slug($this->module)
-            ,Str::slug($this->module)
+            ,$this->getModuleSug($this->module)
+            ,$this->getModuleSug($this->module)
         ],$stub);
         $this->writeFile(module_path($this->module,"Resources/views/layouts/master.blade.php"),$tempplate);
 
@@ -123,10 +123,23 @@ class InitLayout extends Command
             "DumpMyComponent"
             ,"DumpMyModule"
         ],[
-            Str::slug($this->module)
+            $this->getModuleSug($this->module)
             ,$this->module
         ],$stub);
         $this->writeFile(module_path($this->module,"Resources/views/index.blade.php"),$tempplate);
+
+    }
+    private function copyHomeController(){
+        $this->info("Copy HomeController.php");
+        $stub = $this->getStub('/HomeController.php.stub');
+        $tempplate = str_replace([
+            "DumpMyModuleName"
+            ,"DumpMyModuleSlug"
+        ],[
+            $this->module
+            ,$this->getModuleSug($this->module)
+        ],$stub);
+        $this->writeFile(module_path($this->module,"Http/Controllers/HomeController.php"),$tempplate);
 
     }
 }

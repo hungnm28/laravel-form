@@ -51,6 +51,7 @@ class Edit extends Component
     {
         lForm()->setTitle("DumpMyPageName");
         DumpMyBreadcrumb
+        lForm()->pushBreadcrumb(route("DumpMyRoute.edit",$this->record_id),"Edit");
 
         return view("DumpMyModuleName::livewire.DumpMyView.edit")
             ->layout('DumpMyModuleName::layouts.master', ['title' => 'DumpMyPageName Edit']);

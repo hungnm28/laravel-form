@@ -91,7 +91,7 @@ trait WithCommandTrait
 
     private function getRouteName($name = "")
     {
-        $route = Str::slug($this->module->getName());
+        $route = $this->getModuleSug($this->module->getName());
         if ($this->prePath) {
             $arrPre = explode("/", $this->prePath);
             foreach ($arrPre as $pre) {
@@ -194,7 +194,12 @@ trait WithCommandTrait
     }
     private function getHeadline($str='')
     {
-        return Str::headline(Str::replace("/", " ", $str));
+        $str = Str::replace("/", " ", $str);
+        $str = Str::snake($str, "-");
+        return Str::headline($str);
     }
 
+    private function getModuleSug($name){
+        return $this->getSnakeString($name);
+    }
 }

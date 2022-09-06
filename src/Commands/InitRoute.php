@@ -41,9 +41,24 @@ class InitRoute extends Command
         ],$stub);
         $this->writeFile(module_path($name,"Routes/web.php"),$template);
 
-
+        $this->replaceRouteServiceProvider();
         return true;
     }
 
+
+    private function replaceRouteServiceProvider(){
+        $name = $this->argument("name");
+        $stub = $this->getStub("RouteServiceProvider.php.stub");
+        $template = str_replace([
+            "DumpMyModuleName"
+            ,"DumpMyModuleSlug"
+        ],[
+            $name,
+            $this->getModuleSug($name)
+        ],$stub);
+        $this->writeFile(module_path($name,"Providers/RouteServiceProvider.php"),$template);
+
+
+    }
 
 }

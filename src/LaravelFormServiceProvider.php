@@ -59,9 +59,7 @@ class LaravelFormServiceProvider extends ServiceProvider
         $this->registerComponent('item.tags');
         $this->registerComponent('item.tree-nav');
 
-        $this->registerComponent('page.create');
-        $this->registerComponent('page.edit');
-        $this->registerComponent('page.show');
+        $this->registerComponent('page.header');
         $this->registerComponent('page.listing');
 
         $this->registerComponent('filter.label');

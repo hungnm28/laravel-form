@@ -32,7 +32,7 @@ class MakeShow extends Command
     private function createClass()
     {
         $stub = $this->getStub("Show.php.stub");
-        $routes = $this->getArrRoutes("edit");
+        $routes = $this->getArrRoutes();
         $breadcrumb = "";
         foreach ($routes as $k => $title) {
             $breadcrumb .= 'lForm()->pushBreadcrumb(route("' . $k . '"),"' . $title . '");' . " \r\n\t\t";
@@ -68,10 +68,23 @@ class MakeShow extends Command
         $fields = "";
         foreach ($this->fields as $f => $field) {
             if (in_array($f, $this->reservedColumn)) continue;
-            $fields .= '<tr>
-                <th class="text-right pr-2">' . $f . ':</th>
-                <td>{{$data->' . $f . '}}</td>
-            </tr>';
+            switch ($field->type) {
+                case "array":
+                case "object":
+                case "json":
+                    $fields .= '<tr>
+                            <th class="text-right pr-2">' . $f . ':</th>
+                            <td><x-lf.item.tags :params="$data->' . $f . '" /></td>
+                        </tr>';
+                    break;
+
+                default:
+                    $fields .= '<tr>
+                        <th class="text-right pr-2">' . $f . ':</th>
+                        <td>{{$data->' . $f . '}}</td>
+                    </tr>';
+            }
+
         }
         $template = str_replace([
             'DumpMyFields'

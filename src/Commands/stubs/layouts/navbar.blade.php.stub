@@ -3,7 +3,6 @@
         <li class="item {{ request()->routeIs('DumpMyHomeRoute')? 'active' : '' }} ">
             <a href="{{route('DumpMyHomeRoute')}}" class="link"><span class="icon">{!! lfIcon("home") !!}</span><span class="link-title">Admin</span></a>
         </li>
-
         @foreach($data as $item)
             @if(Route::has($item['route']))
                 <li class="item {{ (request()->routeIs($item['route'])|| request()->routeIs($item['route'].'*') )? 'active' : '' }} ">

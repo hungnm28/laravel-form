@@ -87,20 +87,34 @@ class MakeListing extends Command
             @endif
             ';
 
-            $fields .= '@if(data_get($fields,"' . $f . '.status"))
+            switch ($field->type) {
+                case "array":
+                case "object":
+                case "json":
+                    $fields .= '@if(data_get($fields,"' . $f . '.status"))
+                    <td><x-lf.item.tags :params="$item->' . $f . '" /></td>
+                    @endif
+                    ';
+                    break;
+
+                default:
+                    $fields .= '@if(data_get($fields,"' . $f . '.status"))
                     <td>{{$item->' . $f . '}}</td>
                 @endif
                 ';
+            }
+
+
         }
         $template = str_replace([
             'DumpMyTitleFields'
-            ,'DumpMyFields'
+            , 'DumpMyFields'
             , 'DumpMyRoute'
             , 'DumpMyPermission'
         ],
             [
                 $titleFields
-                ,$fields
+                , $fields
                 , $this->getRouteName()
                 , $this->getPermissionName()
             ],

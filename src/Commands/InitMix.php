@@ -32,7 +32,7 @@ class InitMix extends Command
         $stub = $this->getStub("webpack.mix.js.stub");
         $template = str_replace([
             "DumpMyFile"
-        ],Str::slug($name),$stub);
+        ],$this->getModuleSug($name),$stub);
         $this->writeFile(module_path($name,'webpack.mix.js'),$template);
         return true;
 
