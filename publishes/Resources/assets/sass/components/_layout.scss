@@ -83,7 +83,7 @@ header{
     @apply fixed top-0 left-0 right-0 bottom-0 z-30 bg-black opacity-40 cursor-pointer hidden;
 }
 #lf-menu{
-    @apply fixed top-0 left-0 bottom-0 overflow-auto z-40 hidden w-[230px] md:w-12 bg-white border-r shadow-lg md:static md:block ;
+    @apply fixed top-0 left-0 bottom-0 border-t z-40 w-[230px] md:w-12 bg-white border-r shadow-lg md:static md:block ;
 
     #navbar{
         @apply w-full block text-sm;
@@ -93,11 +93,11 @@ header{
         &:hover{
             >.link{
                 .link-title{
-                    @apply flex border-r border-t border-b;
+                    @apply flex border-r border-t border-b w-60 md:absolute -top-px;
                 }
             }
             .children{
-                @apply block;
+                @apply block md:absolute -top-px;
             }
         }
         &.active{
