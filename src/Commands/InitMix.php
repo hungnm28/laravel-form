@@ -6,7 +6,7 @@ namespace Hungnm28\LaravelForm\Commands;
 use Hungnm28\LaravelForm\Traits\WithCommandTrait;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\File;
 
 
 class InitMix extends Command
@@ -28,7 +28,12 @@ class InitMix extends Command
         }
         (new Filesystem)->copyDirectory(__DIR__ . '/../../publishes/mix', module_path($name));
         $path = module_path($name,'Resources/assets');
-        (new Filesystem)->copyDirectory(__DIR__ . '/../../publishes/Resources/assets', $path);
+        $pathSource = base_path('stubs/laravel-form-stubs/assets');
+        if(!File::exists($pathSource)){
+            $pathSource = __DIR__ . "/../Commands/stubs/assets";
+        }
+
+        (new Filesystem)->copyDirectory($pathSource, $path);
         $stub = $this->getStub("webpack.mix.js.stub");
         $template = str_replace([
             "DumpMyFile"

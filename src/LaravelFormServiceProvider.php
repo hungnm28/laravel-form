@@ -36,6 +36,7 @@ class LaravelFormServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'lf-form');
         $this->configureCommands();
         $this->configureComponents();
+        $this->registerPublishing();
     }
 
     protected function configureComponents()
@@ -81,10 +82,9 @@ class LaravelFormServiceProvider extends ServiceProvider
     }
     protected function registerPublishing()
     {
-        if ($this->app->runningInConsole()) {
-
-
-        }
+        $this->publishes([
+            __DIR__.'/Commands/stubs/' => base_path('stubs/laravel-form-stubs'),
+        ], ['laravel-form-stub']);
     }
 
 }

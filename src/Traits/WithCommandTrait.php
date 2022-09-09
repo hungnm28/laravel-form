@@ -154,9 +154,12 @@ trait WithCommandTrait
         return $return;
     }
 
-    private function getStub($path)
+    private function getStub($file)
     {
-        $path = __DIR__ . "/../Commands/stubs/$path";
+        $path = base_path('stubs/laravel-form-stubs/'.$file);
+        if (!File::exists($path)) {
+            $path = __DIR__ . "/../Commands/stubs/$file";
+        }
         if (!File::exists($path)) {
             $this->error("WHOOPS-IE-TOOTLES  😳 \n");
             $this->error("Stubs not exists: $path \n ");
