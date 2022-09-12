@@ -66,3 +66,12 @@
     }
 
 }
+.lf-dropdown{
+    @apply w-12 h-12 relative;
+    .icon{
+        @apply w-full h-full text-white flex items-center justify-center cursor-pointer;
+    }
+    .box-dropdown{
+        @apply absolute bg-white rounded-b shadow right-0;
+    }
+}

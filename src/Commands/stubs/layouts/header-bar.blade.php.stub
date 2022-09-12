@@ -3,7 +3,7 @@
     <div class="header-bar"></div>
     <div class="h-box-user" x-data="{show: false}">
         <label @click="show = true;" class="h-btn">{!! lfIcon("person") !!}</label>
-        <div x-show="show" @click.away="show = false" class="box-user" style="display: none">
+        <x-lf.btn.dropdown class="h-user" icon="person">
             <div class="user">
                 <span class="icon">{!! lfIcon('person',56) !!}</span>
                 <span class="name">{{Auth::user()->name}}</span>
@@ -15,6 +15,6 @@
                     <button class="btn">Logout</button>
                 </form>
             </div>
-        </div>
+        </x-lf.btn.dropdown>
     </div>
 </header>
