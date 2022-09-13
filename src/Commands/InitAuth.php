@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 use function PHPUnit\Framework\fileExists;
 
 
-class InitIcon extends Command
+class InitAuth extends Command
 {
     use WithCommandTrait;
 
