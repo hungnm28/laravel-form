@@ -55,6 +55,9 @@ class LaravelFormServiceProvider extends ServiceProvider
         $this->registerComponent('form.sort');
         $this->registerComponent('form.toggle');
         $this->registerComponent('form.done');
+        $this->registerComponent('table.label');
+        $this->registerComponent('table.item');
+        $this->registerComponent('table.sort');
 
         $this->registerComponent('btn.delete');
         $this->registerComponent('btn.dropdown');

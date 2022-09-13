@@ -82,26 +82,17 @@ class MakeListing extends Command
         foreach ($this->fields as $f => $field) {
             if ($f == "id") continue;
 
-            $titleFields .= '@if(data_get($fields,"' . $f . '.status"))
-                <th>' . $this->getHeadline($f) . '</th>
-            @endif
-            ';
+            $titleFields .= '<x-lf.table.label name="'.$f.'" :fields="$fields">' . $this->getHeadline($f) . '</x-lf.table.label>'. "\r\n\t\t\t";
 
             switch ($field->type) {
                 case "array":
                 case "object":
                 case "json":
-                    $fields .= '@if(data_get($fields,"' . $f . '.status"))
-                    <td><x-lf.item.tags :params="$item->' . $f . '" /></td>
-                    @endif
-                    ';
+                    $fields .= '<x-lf.table.item name="'.$f.'" :fields="$fields"><x-lf.item.tags :params="$item->' . $f . '" /></x-lf.table.item>' . "\r\n\t\t\t\t";
                     break;
 
                 default:
-                    $fields .= '@if(data_get($fields,"' . $f . '.status"))
-                    <td>{{$item->' . $f . '}}</td>
-                @endif
-                ';
+                    $fields .= '<x-lf.table.item name="'.$f.'" :fields="$fields">{{$item->'.$f.'}}</x-lf.table.item>' . "\r\n\t\t\t\t";
             }
 
 
