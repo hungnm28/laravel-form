@@ -1,0 +1,26 @@
+<?php
+ return [
+	'navbar' => [
+ 		[
+			'label' => 'Cài đặt',
+			'icon' => 'setting',
+			'route' => 'DumpMyLowerName.settings',
+			'permission' => 'DumpMyLowerName.settings',
+			'children' => [
+				[
+					'label' => 'Danh mục',
+					'icon' => 'menu',
+					'route' => 'DumpMyLowerName.settings.menus',
+					'permission' => 'DumpMyLowerName.menus.listing',
+				],
+				[
+					'label' => 'Icon',
+					'icon' => 'app',
+					'route' => 'DumpMyLowerName.settings.icons',
+					'permission' => 'DumpMyLowerName.icons.listing',
+				],
+			],
+		],
+
+	]
+];

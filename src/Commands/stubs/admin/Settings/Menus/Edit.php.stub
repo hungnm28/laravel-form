@@ -1,0 +1,50 @@
+<?php
+
+namespace Modules\DumpMyModuleName\Http\Livewire\Settings\Menus;
+
+use Hungnm28\LaravelForm\Traits\WithLaravelFormTrait;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Artisan;
+use Livewire\Component;
+use Nwidart\Modules\Facades\Module;
+
+class Edit extends Component
+{
+    use WithLaravelFormTrait;
+    public $module,$item;
+    public $label,$icon,$route,$permission,$sort;
+    protected $queryString =["module","item"];
+
+    public function mount(){
+        $module = Module::findOrFail($this->module);
+        $navbars = config($module->getLowerName().".navbar",[]);
+        $data = data_get($navbars,$this->item,[]);
+        $this->label = data_get($data,"label");
+        $this->route = data_get($data,"route");
+        $this->icon = data_get($data,"icon");
+        $this->permission = data_get($data,"permission");
+
+    }
+
+    public function store(){
+        $module = Module::findOrFail($this->module);
+        $navbars = config($module->getLowerName().".navbar",[]);
+        $data = data_get($navbars,$this->item,[]);
+        $data["route"] = $this->route;
+        $data["icon"] = $this->icon;
+        $data["permission"] = $this->permission;
+        $data["label"] = $this->label;
+        Arr::set($navbars,$this->item,$data);
+        $this->saveNavbar($this->module,$navbars);
+        Artisan::call("config:clear");
+        Artisan::call("cache:clear");
+        Artisan::call("route:clear");
+        $this->redirectForm("DumpMyRouteName.settings.menus",1);
+    }
+
+    public function render(){
+        return view("DumpMyModuleView::livewire.settings.menus.edit")
+            ->layout('DumpMyModuleView::layouts.master', ['title' => 'Menu Edit']);
+    }
+
+}

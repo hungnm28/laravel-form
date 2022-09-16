@@ -47,7 +47,7 @@ header{
 }
 
 #lf-page{
-    @apply flex-auto overflow-hidden;
+    @apply flex-auto overflow-hidden w-full;
 }
 #lf-header{
     @apply w-full border-b  flex justify-between items-center px-1 py-2 md:px-4 text-slate-700;

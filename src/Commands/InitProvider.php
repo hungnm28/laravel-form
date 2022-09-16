@@ -6,6 +6,7 @@ namespace Hungnm28\LaravelForm\Commands;
 use Hungnm28\LaravelForm\Traits\WithCommandTrait;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
+use Nwidart\Modules\Facades\Module;
 
 class InitProvider extends Command
 {
@@ -26,7 +27,7 @@ class InitProvider extends Command
         }
         $this->configNavbar($name);
         $this->configPermission($name);
-
+        $module = Module::findOrFail($name);
         $stub = $this->getStub("ModuleServiceProvider.php.stub");
         $template = str_replace([
             "DumpMyNamespace"
@@ -36,7 +37,7 @@ class InitProvider extends Command
         ],[
             $name,
             $name,
-            $this->getModuleSug($name),
+            $module->getLowerName(),
             $this->getModuleSug($name),
         ],$stub);
         $this->writeFile(module_path($name,"Providers/" . $name . "ServiceProvider.php"),$template);

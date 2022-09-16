@@ -9,6 +9,7 @@ class LaravelFormServiceProvider extends ServiceProvider
 {
     protected $commands = [
         Commands\ModelCommand::class
+        ,Commands\InitAuth::class
         ,Commands\InitMix::class
         ,Commands\InitLayout::class
         ,Commands\InitProvider::class
@@ -21,6 +22,7 @@ class LaravelFormServiceProvider extends ServiceProvider
         ,Commands\MakeShow::class
         ,Commands\MakeListing::class
         ,Commands\MakePage::class
+        ,Commands\MakeAdmin::class
     ];
 
     public function register()
