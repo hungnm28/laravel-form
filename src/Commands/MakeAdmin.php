@@ -63,7 +63,7 @@ class MakeAdmin extends Command
             ,'DumpMyRouteName'
             ],[
                 $this->module->getName()
-                ,$this->module->getLowerName()
+                ,$this->getSnakeString($this->module->getName())
                 ,$this->getSnakeString($this->module->getName())
 
         ],$stub);

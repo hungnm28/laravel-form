@@ -5,6 +5,7 @@ namespace Hungnm28\LaravelForm\Commands;
 
 use Hungnm28\LaravelForm\Traits\WithCommandTrait;
 use Illuminate\Console\Command;
+use Nwidart\Modules\Facades\Module;
 
 class InitLayout extends Command
 {
@@ -62,6 +63,7 @@ class InitLayout extends Command
     }
 
     private function copyNavbar(){
+        $module= Module::findOrFail($this->module);
         $this->info("Copy Navbar.php");
         $stub = $this->getStub('layouts/Navbar.php.stub');
         $tempplate = str_replace([
@@ -69,7 +71,7 @@ class InitLayout extends Command
             ,"DumpMyModule"
             ,"DumpMyComponent"
         ],[
-            $this->getModuleSug($this->module)
+            $module->getLowerName()
             ,$this->module
             ,$this->getModuleSug($this->module)
         ],$stub);

@@ -48,7 +48,7 @@ class Listing extends Component
     public function store()
     {
         $this->validate();
-        $this->data[$this->name] = '<symbol id="' . $this->name . '" fill="currentColor" viewbox="0 0 ' . $this->width . ' ' . $this->height . '" enable-background="0 0 ' . $this->width . ' ' . $this->height . '">' . $this->path . '</symbol>';;
+        $this->data[$this->name] = '<symbol id="' . $this->name . '" fill="currentColor" viewBox="0 0 ' . $this->width . ' ' . $this->height . '" enable-background="0 0 ' . $this->width . ' ' . $this->height . '">' . $this->path . '</symbol>';;
         $data = $this->data;
         ksort($data);
         $svg = '<?xml version="1.0" encoding="utf-8"?>
