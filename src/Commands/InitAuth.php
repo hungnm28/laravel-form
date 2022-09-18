@@ -13,7 +13,7 @@ class InitAuth extends Command
 {
     use WithCommandTrait;
 
-    protected $signature = 'lf:init-auth';
+    protected $signature = 'lf:init-auth {--force}';
 
     protected $description = 'Make admin middleware ';
 

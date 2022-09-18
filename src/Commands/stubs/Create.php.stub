@@ -43,7 +43,7 @@ class   Create extends Component
     {
         lForm()->setTitle("DumpMyPageName");
         DumpMyBreadcrumb
-        return view("DumpMyModuleName::livewire.DumpMyView.create")
-            ->layout('DumpMyModuleName::layouts.master', ['title' => 'DumpMyPageName Create']);
+        return view("DumpMyModuleSlug::livewire.DumpMyView.create")
+            ->layout('DumpMyModuleSlug::layouts.master', ['title' => 'DumpMyPageName Create']);
     }
 }

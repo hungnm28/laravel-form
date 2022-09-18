@@ -1,0 +1,7 @@
+Route::prefix("DumpMyPrefix")->name(".DumpMyRouteName")->group(function (){
+    Route::get("/", \Modules\DumpMyModuleName\Http\Livewire\DumpMyClassPath\Listing::class)->can("DumpMyPermission.listing");
+    Route::get("/create", \Modules\DumpMyModuleName\Http\Livewire\DumpMyClassPath\Create::class)->name(".create")->can("DumpMyPermission.create");
+    Route::get("/edit", \Modules\DumpMyModuleName\Http\Livewire\DumpMyClassPath\Edit::class)->name(".edit")->can("DumpMyPermission.edit");
+    Route::get("/show/{record_id}", \Modules\DumpMyModuleName\Http\Livewire\DumpMyClassPath\Show::class)->name(".show")->can("DumpMyPermission.edit");
+    DumpMyTag
+});

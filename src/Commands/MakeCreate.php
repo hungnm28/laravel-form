@@ -12,18 +12,17 @@ class MakeCreate extends Command
 {
     use WithCommandTrait;
 
-    protected $signature = 'lf:make-create {name} {module} {--pre=} {--model=}';
+    protected $signature = 'lf:make-create {name} {module} {--force} {--model=}';
 
-    protected $description = 'Make create Page: ';
-
-    protected $folder;
+    protected $description = 'Make create Page ';
 
     public function handle()
     {
 
-        $this->initPage();
-        $this->info($this->description . $this->pageName);
-        $this->getModelFields($this->modelName);
+        $this->info("make Create file: " . $this->argument("name"));
+        $this->initPath($this->argument("name"));
+        $this->initModule($this->argument("module"));
+        $this->initModel($this->argument("name"));
         $this->createClass();
         $this->createView();
         return true;
@@ -36,7 +35,7 @@ class MakeCreate extends Command
         $rules = '';
         $createFields = '';
 
-        foreach ($this->fields as $f => $field) {
+        foreach ($this->getModelFields() as $f => $field) {
             if (!in_array($f, $this->reservedColumn)) {
                 $default = $field->default;
                 switch ($field->type){
@@ -48,44 +47,29 @@ class MakeCreate extends Command
                 } else {
                     $listField .= '$' . $f . ", ";
                 }
-                $rules .= "'$f' => '$field->rule', \r\n\t\t";
-                $createFields .= "'$f' => \$this->$f, \r\n\t\t";
+                $rules .= "'$f' => '$field->rule'," . $this->showNewLine(4);
+                $createFields .= "'$f' => \$this->$f," . $this->showNewLine(5);
             }
         }
         $listField = trim($listField, ', ');
         $routes = $this->getArrRoutes("create");
         $breadcrumb = "";
         foreach ($routes as $k => $title) {
-            $breadcrumb .= 'lForm()->pushBreadcrumb(route("' . $k . '"),"' . $title . '");' . " \r\n\t\t";
+            $breadcrumb .= 'lForm()->pushBreadcrumb(route("' . $k . '"),"' . $title . '");' . $this->showNewLine(4);
         }
         $template = str_replace([
-            'DumpMyNamespace'
-            , 'DumpMyModelNamespace'
-            , 'DumpMyListFields'
+             'DumpMyListFields'
             , 'DumpMyRules'
-            , 'DumpMyPermission'
-            , 'DumpMyModelClassName'
             , 'DumpMyCreateFields'
-            , 'DumpMyRoute'
-            , 'DumpMyView'
-            , 'DumpMyModuleName'
-            , 'DumpMyBreadcrumb'
-            , 'DumpMyPageName'
+            ,'DumpMyBreadcrumb'
         ], [
-            $this->getNamespace()
-            , $this->getModelNamspace()
-            , $listField
+            $listField
             , $rules
-            , $this->getPermissionName()
-            , $this->modelName
             , $createFields
-            , $this->getRouteName()
-            , $this->gerViewDot()
-            , $this->getSnakeString($this->module->getName())
             , $breadcrumb
-            , $this->getHeadline($this->pageName)
         ], $stub);
-        $pathSave = $this->classPath . "/Create.php";
+        $template = $this->generateData($template);
+        $pathSave = $this->getClassFile("Create.php");
         $this->writeFile($pathSave, $template);
     }
 
@@ -93,32 +77,32 @@ class MakeCreate extends Command
     {
         $stub = $this->getStub("create.blade.php.stub");
         $fields = "";
-        foreach ($this->fields as $f => $field) {
+        foreach ($this->getModelFields() as $f => $field) {
             if(in_array($f,$this->reservedColumn)) continue;
             switch ($field->type) {
                 case "boolean":
-                    $fields .= '<x-lf.form.toggle name="' . $f . '" label="' . $field->label . '" />' . " \r\n\t\t";
+                    $form = '<x-lf.form.toggle name="' . $f . '" label="' . $field->label . '" />';
                     break;
                 case "text":
-                    $fields .= '<x-lf.form.textarea name="' . $f . '" label="' . $field->label . '" />' . " \r\n\t\t";
+                    $form = '<x-lf.form.textarea name="' . $f . '" label="' . $field->label . '" />';
                     break;
                 case "json":
-                    $fields .= '<x-lf.form.array name="' . $f . '" label="' . $field->label . '" placeholder="' . $field->label . ' ..." :params="$' . $f . '"/>' . " \r\n\t\t";
+                    $form = '<x-lf.form.array name="' . $f . '" label="' . $field->label . '" placeholder="' . $field->label . ' ..." :params="$' . $f . '"/>';
                     break;
                 default:
-                    $fields .= '<x-lf.form.input name="' . $f . '" type="' . $field->type . '" label="' . $field->label . '" placeholder="' . $field->label . ' ..."/>' . " \r\n\t\t";
+                    $form = '<x-lf.form.input name="' . $f . '" type="' . $field->type . '" label="' . $field->label . '" placeholder="' . $field->label . ' ..."/>';
             }
+            $fields .= $form . $this->showNewLine(4);
         }
         $template = str_replace([
             'DumpMyFields'
-            , 'DumpMyRoute'
         ],
             [
                 $fields
-                , $this->getRouteName()
             ],
             $stub);
-        $pathSave = $this->viewPath . "/create.blade.php";
+        $template = $this->generateData($template);
+        $pathSave = $this->getViewFile("create.blade.php");
         $this->writeFile($pathSave, $template);
     }
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\DumpMyModule\Views\Components;
+namespace Modules\DumpMyModuleName\Views\Components;
 
 use Illuminate\View\Component;
 
@@ -9,7 +9,8 @@ class Navbar extends Component
 
     public function render()
     {
-        $data = config("DumpMyConfig.navbar");
-        return view("DumpMyComponent::components.navbar", compact("data"));
+        $data = config("DumpMyModuleLowerName.navbar");
+
+        return view("DumpMyModuleSlug::components.navbar", compact("data"));
     }
 }

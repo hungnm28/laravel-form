@@ -13,135 +13,74 @@ class InitLayout extends Command
 
     protected $signature = 'lf:init-layout {name} {--force}';
 
-    protected $description = 'Init layout: ';
+    protected $description = 'Init layout ';
 
-    private $module;
 
     public function handle()
     {
         $name = $this->argument("name");
-        $this->module = $name;
-        $this->info($this->description . $name);
-        if (!$this->checkModule($name)) {
-            $this->error("Module: $name not exits");
-            return false;
-        }
+
+        $this->info("Init Layout" . $name);
+        $this->initModule($name);
 
         $this->copyHeaderBar();
         $this->copyNavbar();
         $this->copyLayout();
-        $this->copyHomeController();
         $this->copyHomePage();
         return true;
     }
 
     private function copyHeaderBar(){
         $this->info("Copy HeaderBar.php");
-        $stub = $this->getStub('layouts/HeaderBar.php.stub');
-        $tempplate = str_replace([
-            "DumpMyModule"
-            ,"DumpMyComponent"
-        ],[
-            $this->module
-            ,$this->getModuleSug($this->module)
-        ],$stub);
-        $this->writeFile(module_path($this->module,"Views/Components/HeaderBar.php"),$tempplate);
-
+        $this->makeFile('layouts/HeaderBar.php.stub', $this->getModulepath("Views/Components/HeaderBar.php"));
 
         $this->info("Copy header-bar.blade.php");
-
-        $stub = $this->getStub("layouts/header-bar.blade.php.stub");
-        $tempplate = str_replace([
-            "DumpMyModule"
-            ,"DumpMyAssets"
-        ],[
-            $this->module
-            ,$this->getModuleSug($this->module)
-        ],$stub);
-        $this->writeFile(module_path($this->module,"Resources/views/components/header-bar.blade.php"),$tempplate);
-
+        $this->makeFile('layouts/header-bar.blade.php.stub', $this->getModulepath("Resources/views/components/header-bar.blade.php"));
     }
 
     private function copyNavbar(){
         $module= Module::findOrFail($this->module);
         $this->info("Copy Navbar.php");
-        $stub = $this->getStub('layouts/Navbar.php.stub');
-        $tempplate = str_replace([
-            "DumpMyConfig"
-            ,"DumpMyModule"
-            ,"DumpMyComponent"
-        ],[
-            $module->getLowerName()
-            ,$this->module
-            ,$this->getModuleSug($this->module)
-        ],$stub);
-        $this->writeFile(module_path($this->module,"Views/Components/Navbar.php"),$tempplate);
+        $this->makeFile('layouts/Navbar.php.stub', $this->getModulepath("Views/Components/Navbar.php"));
 
         $this->info("Copy navbar.blade.php");
-        $stub = $this->getStub("layouts/navbar.blade.php.stub");
-        $tempplate = str_replace([
-            "DumpMyHomeRoute"
-        ],[
-            $this->getModuleSug($this->module)
-        ],$stub);
-        $this->writeFile(module_path($this->module,"Resources/views/components/navbar.blade.php"),$tempplate);
-
+        $this->makeFile('layouts/navbar.blade.php.stub', $this->getModulepath("Resources/views/components/navbar.blade.php"));
     }
 
 
     private function copyLayout(){
         $this->info("Copy LayoutMaster.php");
-        $stub = $this->getStub('layouts/LayoutMaster.php.stub');
-        $tempplate = str_replace([
-           "DumpMyModule"
-            ,"DumpMyComponent"
-        ],[
-
-            $this->module
-            ,$this->getModuleSug($this->module)
-        ],$stub);
-        $this->writeFile(module_path($this->module,"Views/Components/LayoutMaster.php"),$tempplate);
+        $this->makeFile('layouts/LayoutMaster.php.stub', $this->getModulepath("Views/Components/LayoutMaster.php"));
 
         $this->info("Copy master.blade.php");
-
-        $stub = $this->getStub("layouts/master.blade.php.stub");
-        $tempplate = str_replace([
-            "DumpMyModule"
-            ,"DumpMyAssets"
-            ,"DumpMyComponent"
-        ],[
-            $this->module
-            ,$this->getModuleSug($this->module)
-            ,$this->getModuleSug($this->module)
-        ],$stub);
-        $this->writeFile(module_path($this->module,"Resources/views/layouts/master.blade.php"),$tempplate);
-
+        $this->makeFile('layouts/master.blade.php.stub', $this->getModulepath("Resources/views/layouts/master.blade.php"));
     }
 
     private function copyHomePage(){
         $this->info("Copy index.blade.php");
-        $stub = $this->getStub('layouts/index.blade.php.stub');
-        $tempplate = str_replace([
-            "DumpMyComponent"
-            ,"DumpMyModule"
-        ],[
-            $this->getModuleSug($this->module)
-            ,$this->module
-        ],$stub);
-        $this->writeFile(module_path($this->module,"Resources/views/index.blade.php"),$tempplate);
+        $this->makeFile('layouts/index.blade.php.stub', $this->getModulepath("Resources/views/index.blade.php"));
+        $this->info("Copy HomeController.php");
+        $this->makeFile('HomeController.php.stub', $this->getModulepath("Http/Controllers/HomeController.php"));
 
     }
-    private function copyHomeController(){
-        $this->info("Copy HomeController.php");
-        $stub = $this->getStub('/HomeController.php.stub');
+
+    private function makeFile($stubPath,$pathSave){
+        $stub = $this->getStub($stubPath);
         $tempplate = str_replace([
             "DumpMyModuleName"
+            ,"DumpMyModuleLowerName"
+            ,"DumpMyModuleHeadName"
             ,"DumpMyModuleSlug"
+            ,"DumpMyRoute"
+            ,"DumpMyAssets"
         ],[
-            $this->module
-            ,$this->getModuleSug($this->module)
+            $this->getModuleName()
+            ,$this->getModuleLowerName()
+            ,$this->getModuleHeadName()
+            ,$this->getModuleSug()
+            ,$this->getRouteName()
+            ,$this->getModuleSug()
         ],$stub);
-        $this->writeFile(module_path($this->module,"Http/Controllers/HomeController.php"),$tempplate);
-
+        $this->writeFile($pathSave,$tempplate);
     }
 }

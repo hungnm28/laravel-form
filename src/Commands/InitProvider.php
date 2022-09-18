@@ -25,6 +25,7 @@ class InitProvider extends Command
             $this->error("Module: $name not exits");
             return false;
         }
+        $this->initModule($name);
         $this->configNavbar($name);
         $this->configPermission($name);
         $module = Module::findOrFail($name);
@@ -38,7 +39,7 @@ class InitProvider extends Command
             $name,
             $name,
             $module->getLowerName(),
-            $this->getModuleSug($name),
+            $this->getModuleSug(),
         ],$stub);
         $this->writeFile(module_path($name,"Providers/" . $name . "ServiceProvider.php"),$template);
 

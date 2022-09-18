@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{isset($title)?$title:"DumpMyModule"}}</title>
+    <title>{{isset($title)?$title:"DumpMyModuleHeadName"}}</title>
     <!-- Styles -->
     <link rel="stylesheet" href="{{ asset('css/DumpMyAssets.css') }}">
     <!-- Scripts -->
@@ -14,9 +14,9 @@
 <body >
 <input type="checkbox" class="hidden" id="lf-control" />
 <div id="lf-container">
-   <x-DumpMyComponent::header-bar />
+   <x-DumpMyModuleSlug::header-bar />
     <div id="lf-content">
-        <x-DumpMyComponent::navbar />
+        <x-DumpMyModuleSlug::navbar />
         <div id="lf-page">
             <div id="lfp-content">
                 <x-lf.page.header />

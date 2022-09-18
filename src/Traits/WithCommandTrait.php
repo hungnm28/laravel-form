@@ -10,143 +10,129 @@ use Nwidart\Modules\Facades\Module;
 
 trait WithCommandTrait
 {
-    private $module, $pageName, $modelName, $tableName, $fields = [], $prePath, $viewPath, $classPath, $dotpath;
+    private $module, $model, $path;
 
     private $reservedColumn = [
         'id', 'created_at', 'updated_at', 'deleted_at', 'remember_token', 'two_factor_recovery_codes', 'two_factor_secret'
     ];
 
-    private function initPage()
+    private function initModule($name)
     {
-        $name = $this->argument("name");
+        $this->module = Module::findOrFail($name);
+    }
+
+    private function initPath($path)
+    {
+        $name = Str::afterLast($path, "/");
+        $pre = Str::beforeLast($path, $name);
         $name = Str::plural($name);
         $name = Str::studly($name);
-        $this->pageName = $name;
-
-        $pre = $this->option("pre");
-        if ($pre) {
-            $arrPre = explode("/", $pre);
-            foreach ($arrPre as $k => $prePath) {
-                $prePath = Str::plural($prePath);
-                $prePath = Str::studly($prePath);
-                if ($k > 0) {
-                    $this->prePath .= "/";
-                }
-                $this->prePath .= $prePath;
-            }
-
-
-        }
-
-        $modelName = $this->option("model");
-        if (!$modelName) {
-            $modelName = Str::singular($this->pageName);
-            $this->modelName = $modelName;
-        }
-
-        $this->module = Module::findOrFail($this->argument("module"));
-
-        $this->classPath = $this->module->getPath() . "/Http/Livewire";
-        $this->viewPath = $this->module->getPath() . "/Resources/views/livewire";
-        if ($this->prePath) {
-            $this->classPath .= "/$this->prePath";
-            $arrPre = explode("/", $this->prePath);
-            foreach ($arrPre as $item) {
-                $item = $this->getSnakeString($item);
-                $this->viewPath .= "/$item";
-            }
-        }
-        $this->classPath .= "/$this->pageName";
-        $this->viewPath .= "/" . $this->getSnakeString($this->pageName);
-
-
+        $this->path = $pre . $name;
     }
+
+    private function initModel($path)
+    {
+        $modelName = null;
+        if ($this->option("model")) {
+            $modelName = $this->option("model");
+        }
+        if (!$modelName) {
+            $modelName = Str::afterLast($path, "/");
+            $modelName = Str::singular($modelName);
+            $modelGenerator = new ModelGenerator($modelName);
+            $this->model = [
+                "name" => $modelName
+                , "table" => $modelGenerator->model->getTable()
+                , "fields" => $modelGenerator->getFields()
+            ];
+        }
+    }
+
 
     private function getNamespace()
     {
-        $namespace = "Modules/" . $this->module->getName() . "/Http/Livewire";
-        if ($this->prePath) {
-            $namespace .= "/$this->prePath";
-        }
-        $namespace .= "/$this->pageName";
+        $namespace = "Modules/" . $this->module->getName() . "/Http/Livewire/" . $this->path;
         $namespace = str_replace("/", "\\", $namespace);
         return $namespace;
     }
 
-    private function gerViewDot($name = '')
+    private function getModulepath($path = "")
     {
-        $return = "";
-        if ($this->prePath) {
-            foreach (explode("/", $this->prePath) as $pre) {
-                $return .= "." . $this->getSnakeString($pre);
-            }
+        return $this->module->getPath() . "/$path";
+    }
+
+    private function getDots()
+    {
+        $data = [];
+        foreach (explode("/", $this->path) as $name) {
+            $data[] = $this->getSnakeString($name);
         }
-        $return .= "." . $this->getSnakeString($this->pageName);
-        if ($name) {
-            $return .= ".$name";
+        return implode(".", $data);
+    }
+
+    private function getClassFile($name)
+    {
+        return $this->getModulepath("Http/Livewire/$this->path/$name");
+    }
+
+    private function getViewFile($name)
+    {
+        $data = [];
+        foreach (explode("/", $this->path) as $path) {
+            $data[] = $this->getSnakeString($path);
         }
-        $return = trim($return, ". ");
-        return $return;
+        $path = implode("/", $data);
+        return $this->getModulepath("Resources/views/livewire/$path/$name");
+    }
+
+    private function getPageName()
+    {
+        $name = Str::afterLast($this->path, "/");
+        return $this->getHeadline($name);
     }
 
     private function getRouteName($name = "")
     {
-        $route = $this->getModuleSug($this->module->getName());
-        if ($this->prePath) {
-            $arrPre = explode("/", $this->prePath);
-            foreach ($arrPre as $pre) {
-                $route .= "." . $this->getSnakeString($pre);
+        $str = $this->getModuleSug();
+        foreach (explode("/", $this->path) as $path) {
+
+            if($this->getSnakeString($path) !=""){
+                $str .= "." . $this->getSnakeString($path);
             }
         }
-        $route .= "." . $this->getSnakeString($this->pageName);
         if ($name) {
-            $route .= ".$name";
+            $str .= ".$name";
         }
-        return $route;
+        return $str;
     }
 
     private function getPermissionName($name = "")
     {
-        $permission = $this->getSnakeString($this->module->getName());
-        if ($this->prePath) {
-            $arrPre = explode("/", $this->prePath);
-            foreach ($arrPre as $pre) {
-                $permission .= "." . $this->getSnakeString($pre);
-            }
+        $str = $this->getModuleSug();
+        foreach (explode("/", $this->path) as $path) {
+            $str .= "." . $this->getSnakeString($path);
         }
-        $permission .= "." . $this->getSnakeString($this->pageName);
         if ($name) {
-            $permission .= ".$name";
+            $str .= ".$name";
         }
-        return $permission;
-    }
-
-    private function getModelFields($name)
-    {
-        $modelGenerator = new ModelGenerator($name);
-        $this->tableName = $modelGenerator->model->getTable();
-        $this->fields = $modelGenerator->getFields();
-        return $this->fields;
+        return $str;
     }
 
     private function getModelNamspace()
     {
-        return "App\\Models\\$this->modelName";
+        return "App\\Models\\" . $this->model["name"];
     }
 
-    private function getArrRoutes($name=""){
+    private function getArrRoutes($name = "")
+    {
         $return = [];
-        $route = $this->getSnakeString($this->module->getName());
-        $return[$route] = $this->module->getName();
-        if($this->prePath){
-            foreach(explode("/",$this->prePath) as $pre){
-                $route .= '.' .$this->getSnakeString($pre);
-                $return[$route] = $this->getHeadline($pre);
-            }
+        $route = $this->getModuleSug();
+        $return[$route] = $this->getModuleHeadName();
+        foreach (explode("/", $this->path) as $path) {
+            $route .= '.' . $this->getSnakeString($path);
+            $return[$route] = $this->getHeadline($path);
         }
-        $route .= '.' .$this->getSnakeString($this->pageName);
-        $return[$route] = $this->getHeadline($this->pageName);
-        if($name){
+        if ($name) {
             $route .= ".$name";
             $return[$route] = $this->getHeadline($name);
         }
@@ -156,9 +142,13 @@ trait WithCommandTrait
 
     private function getStub($file)
     {
-        $path = base_path('stubs/laravel-form-stubs/'.$file);
-        if (!File::exists($path)) {
+        if ($this->isForce()) {
             $path = __DIR__ . "/../Commands/stubs/$file";
+        } else {
+            $path = base_path('stubs/laravel-form-stubs/' . $file);
+            if (!File::exists($path)) {
+                $path = __DIR__ . "/../Commands/stubs/$file";
+            }
         }
         if (!File::exists($path)) {
             $this->error("WHOOPS-IE-TOOTLES  😳 \n");
@@ -166,6 +156,37 @@ trait WithCommandTrait
             return false;
         }
         return file_get_contents($path);
+    }
+
+    private function generateData($str){
+        return str_replace([
+
+            "DumpMyPageName"
+            ,"DumpMyNamespace"
+             ,"DumpMyModuleName"
+            ,"DumpMyModuleLowerName"
+            ,"DumpMyModuleHeadName"
+            ,"DumpMyModuleSlug"
+            ,"DumpMyModelNamespace"
+            ,"DumpMyModelClassName"
+            ,"DumpMyPermission"
+            ,"DumpMyRoute"
+            ,"DumpMyView"
+            ,"DumpMyAssets"
+        ],[
+            $this->getPageName()
+            ,$this->getNamespace()
+            ,$this->getModuleName()
+            ,$this->getModuleLowerName()
+            ,$this->getModuleHeadName()
+            ,$this->getModuleSug()
+            ,$this->getModelNamspace()
+            ,$this->getModelName()
+            ,$this->getPermissionName()
+            ,$this->getRouteName()
+            ,$this->getDots()
+            ,$this->getModuleSug()
+        ],$str);
     }
 
     private function writeFile($path, $data)
@@ -177,6 +198,19 @@ trait WithCommandTrait
     private function checkModule($name)
     {
         return Module::has($name);
+    }
+
+    private function getModelName()
+    {
+        return data_get($this->model, "name");
+    }
+    private function getTableName()
+    {
+        return data_get($this->model, "table");
+    }
+    private function getModelFields()
+    {
+        return data_get($this->model, "fields",[]);
     }
 
     private function isForce()
@@ -195,14 +229,35 @@ trait WithCommandTrait
         $str = Str::snake($str, "-");
         return Str::slug($str);
     }
-    private function getHeadline($str='')
+
+    private function getHeadline($str = '')
     {
         $str = Str::replace("/", " ", $str);
         $str = Str::snake($str, "-");
         return Str::headline($str);
     }
 
-    private function getModuleSug($name){
-        return $this->getSnakeString($name);
+    private function getModuleName()
+    {
+        return $this->module->getName();
+    }
+
+    private function getModuleLowerName()
+    {
+        return $this->module->getLowerName();
+    }
+
+    private function getModuleHeadName()
+    {
+        return $this->getHeadline($this->module->getName());
+    }
+
+    private function getModuleSug()
+    {
+        return $this->getSnakeString($this->module->getName());
+    }
+
+    private function showNewLine($t=0){
+        return Str::padRight("\r\n",$t,"\t");
     }
 }

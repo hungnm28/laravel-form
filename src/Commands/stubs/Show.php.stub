@@ -21,9 +21,9 @@ class Show extends Component
     {
         $data =  DumpMyModelClassName::findOrFail($this->record_id);
         lForm()->setTitle("DumpMyPageName");
-        DumpMyBreadcrumb
-        lForm()->pushBreadcrumb(route("DumpMyRoute.show",$this->record_id),"Show");
-        return view("DumpMyModuleName::livewire.DumpMyView.show", compact("data"))
-            ->layout('DumpMyModuleName::layouts.master', ['title' => 'DumpMyPageName Show']);
+        DumpMyBreadcrumblForm()->pushBreadcrumb(route("DumpMyRoute.show",$this->record_id),"Show");
+
+        return view("DumpMyModuleSlug::livewire.DumpMyView.show", compact("data"))
+            ->layout('DumpMyModuleSlug::layouts.master', ['title' => 'DumpMyPageName Show']);
     }
 }

@@ -12,7 +12,7 @@ class MakeRoute extends Command
 {
     use WithCommandTrait;
 
-    protected $signature = 'lf:make-route {name} {module} {--pre=}';
+    protected $signature = 'lf:make-route {name} {module} {--force}';
 
     protected $description = 'Make Route Page: ';
 
@@ -20,11 +20,8 @@ class MakeRoute extends Command
 
     public function handle()
     {
-        $moduleName = $this->argument("module");
-        if (!$this->checkModule($moduleName)) {
-            $this->error("Module: $moduleName not exits");
-            return false;
-        }
+        $this->initPath($this->argument("name"));
+        $this->initModule($this->argument("module"));
         $this->info($this->description . $this->argument("name"));
 
         $this->createRoute();
@@ -34,24 +31,46 @@ class MakeRoute extends Command
 
     private function createRoute()
     {
-        $pageName = $this->argument("name");
-        $moduleName = $this->argument("module");
-
+        $path = $this->path;
+        $pageName = Str::afterLast($path,"/");
         $stub = $this->getStub("route.stub");
+        $endTag = "//---END-OF-".Str::upper($pageName)."---//";
         $template = str_replace([
             'DumpMyPrefix'
-            , 'DumMyNamespace'
-            , 'DumMyPermission'
+            ,'DumpMyRouteName'
+            , 'DumpMyModuleName'
+            , 'DumpMyPermission'
+            ,'DumpMyClassPath'
             ,'DumpMyTag'
 
         ], [
-            $this->getModuleSug($this->module)
-            , $this->getModelNamspace()
+            Str::slug(Str::headline($pageName))
+            ,Str::slug(Str::headline($pageName))
+            ,$this->getModuleName()
             , $this->getPermissionName()
-            ,"//---END-OF-".Str::upper($this->pageName)."---//"
+            ,str_replace("/","\\",$this->path)
+            ,$endTag
         ], $stub);
-        $pathSave = module_path($this->module) . "/Route/web.php";
 
-      dd($pathSave,$template);
+        $pre = Str::beforeLast($this->path,"$pageName");
+        $pre = trim($pre,"/");
+        if($pre !=""){
+            $preTag = "//---END-OF-".Str::upper($pre)."---//";
+        }else{
+            $preTag = "//---END-OF-ROUTES---//";
+        }
+        $this->installRoute($template,$preTag);
+
+    }
+
+    protected function installRoute($routes,$flag)
+    {
+        if (!Str::contains($appRoutes = file_get_contents($this->getModulepath('Routes/web.php')), $routes)) {
+            file_put_contents($this->getModulepath('Routes/web.php'), str_replace(
+                $flag,
+                $routes . PHP_EOL . $flag,
+                $appRoutes
+            ));
+        }
     }
 }

@@ -34,7 +34,6 @@ class Listing extends Component
         $this->dispatchBrowserEvent('warning', 'DumpMyPageName successfully destroyed.');
     }
 
-
     public function render()
     {
         $data = new DumpMyModelClassName();
@@ -50,10 +49,9 @@ class Listing extends Component
         }
         $data = $data->paginate(30);
 
-
         lForm()->setTitle("DumpMyPageName");
         DumpMyBreadcrumb
-        return view("DumpMyModuleName::livewire.DumpMyView.listing", compact("data"))
-            ->layout('DumpMyModuleName::layouts.master', ['title' => 'DumpMyPageName Create']);
+        return view("DumpMyModuleSlug::livewire.DumpMyView.listing", compact("data"))
+            ->layout('DumpMyModuleSlug::layouts.master', ['title' => 'DumpMyPageName Create']);
     }
 }

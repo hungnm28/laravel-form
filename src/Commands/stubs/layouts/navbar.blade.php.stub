@@ -1,7 +1,7 @@
 <div id="lf-menu">
     <ul id="navbar">
-        <li class="item {{ request()->routeIs('DumpMyHomeRoute')? 'active' : '' }} ">
-            <a href="{{route('DumpMyHomeRoute')}}" class="link"><span class="icon">{!! lfIcon("home") !!}</span><span class="link-title">Admin</span></a>
+        <li class="item {{ request()->routeIs('DumpMyRoute')? 'active' : '' }} ">
+            <a href="{{route('DumpMyRoute')}}" class="link"><span class="icon">{!! lfIcon("home") !!}</span><span class="link-title">DumpMyModuleHeadName</span></a>
         </li>
         @foreach($data as $item)
             @if(Route::has($item['route']))

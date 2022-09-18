@@ -12,18 +12,16 @@ class MakeListing extends Command
 {
     use WithCommandTrait;
 
-    protected $signature = 'lf:make-listing {name} {module} {--pre=} {--model=}';
+    protected $signature = 'lf:make-listing {name} {module} {--force} {--model=}';
 
-    protected $description = 'Make listing Page: ';
-
-    protected $folder;
+    protected $description = 'Make listing File ';
 
     public function handle()
     {
-
-        $this->initPage();
-        $this->info($this->description . $this->pageName);
-        $this->getModelFields($this->modelName);
+        $this->info("make Listing file: " . $this->name);
+        $this->initPath($this->argument("name"));
+        $this->initModule($this->argument("module"));
+        $this->initModel($this->argument("name"));
         $this->createClass();
         $this->createView();
         return true;
@@ -35,42 +33,23 @@ class MakeListing extends Command
         $routes = $this->getArrRoutes();
         $breadcrumb = "";
         foreach ($routes as $k => $title) {
-            $breadcrumb .= 'lForm()->pushBreadcrumb(route("' . $k . '"),"' . $title . '");' . " \r\n\t\t";
+            $breadcrumb .= 'lForm()->pushBreadcrumb(route("' . $k . '"),"' . $title . '");' .$this->showNewLine(4);
         }
         $fields = "";
-        foreach ($this->fields as $f => $field) {
-            $fields .= '
-            "' . $f . '" => [
-                        "status" => true
-                        , "label" => "' . $this->getHeadline($f) . '"
-                    ],
-            ';
+        $tbFields = data_get($this->model,"fields",[]);
+        foreach ($tbFields as $f => $field) {
+            $fields .= '"' . $f . '" => ["status" => true, "label" => "' . $this->getHeadline($f) . '"],' . $this->showNewLine(4);
         }
 
         $template = str_replace([
-            'DumpMyNamespace'
-            , 'DumpMyModelNamespace'
-            , 'DumpMyFields'
-            , 'DumpMyPermission'
-            , 'DumpMyModelClassName'
+             'DumpMyFields'
             , 'DumpMyBreadcrumb'
-            , 'DumpMyRoute'
-            , 'DumpMyView'
-            , 'DumpMyModuleName'
-            , 'DumpMyPageName'
         ], [
-            $this->getNamespace()
-            , $this->getModelNamspace()
-            , $fields
-            , $this->getPermissionName()
-            , $this->modelName
+             $fields
             , $breadcrumb
-            , $this->getRouteName()
-            , $this->gerViewDot()
-            , $this->getSnakeString($this->module->getName())
-            , $this->getHeadline($this->pageName)
         ], $stub);
-        $pathSave = $this->classPath . "/Listing.php";
+        $template = $this->generateData($template);
+        $pathSave = $this->getClassFile("Listing.php");
         $this->writeFile($pathSave, $template);
     }
 
@@ -79,20 +58,21 @@ class MakeListing extends Command
         $stub = $this->getStub("listing.blade.php.stub");
         $fields = "";
         $titleFields = "";
-        foreach ($this->fields as $f => $field) {
+        $tbField = data_get($this->model,"fields",[]);
+        foreach ($tbField as $f => $field) {
             if ($f == "id") continue;
 
-            $titleFields .= '<x-lf.table.label name="'.$f.'" :fields="$fields">' . $this->getHeadline($f) . '</x-lf.table.label>'. "\r\n\t\t\t";
+            $titleFields .= '<x-lf.table.label name="'.$f.'" :fields="$fields">' . $this->getHeadline($f) . '</x-lf.table.label>'.$this->showNewLine(5);
 
             switch ($field->type) {
                 case "array":
                 case "object":
                 case "json":
-                    $fields .= '<x-lf.table.item name="'.$f.'" :fields="$fields"><x-lf.item.tags :params="$item->' . $f . '" /></x-lf.table.item>' . "\r\n\t\t\t\t";
+                    $fields .= '<x-lf.table.item name="'.$f.'" :fields="$fields"><x-lf.item.tags :params="$item->' . $f . '" /></x-lf.table.item>' . $this->showNewLine(6);
                     break;
 
                 default:
-                    $fields .= '<x-lf.table.item name="'.$f.'" :fields="$fields">{{$item->'.$f.'}}</x-lf.table.item>' . "\r\n\t\t\t\t";
+                    $fields .= '<x-lf.table.item name="'.$f.'" :fields="$fields">{{$item->'.$f.'}}</x-lf.table.item>' . $this->showNewLine(6);
             }
 
 
@@ -100,17 +80,14 @@ class MakeListing extends Command
         $template = str_replace([
             'DumpMyTitleFields'
             , 'DumpMyFields'
-            , 'DumpMyRoute'
-            , 'DumpMyPermission'
         ],
             [
                 $titleFields
                 , $fields
-                , $this->getRouteName()
-                , $this->getPermissionName()
             ],
             $stub);
-        $pathSave = $this->viewPath . "/listing.blade.php";
+        $template = $this->generateData($template);
+        $pathSave = $this->getViewFile("listing.blade.php");
         $this->writeFile($pathSave, $template);
     }
 

@@ -22,6 +22,7 @@ class InitMix extends Command
     {
         $name = $this->argument("name");
         $this->info($this->description . $name);
+        $this->initModule($name);
         if(!$this->checkModule($name)){
             $this->error("Module: $name not exits");
             return false;
@@ -37,7 +38,7 @@ class InitMix extends Command
         $stub = $this->getStub("webpack.mix.js.stub");
         $template = str_replace([
             "DumpMyFile"
-        ],$this->getModuleSug($name),$stub);
+        ],$this->getModuleSug(),$stub);
         $this->writeFile(module_path($name,'webpack.mix.js'),$template);
         return true;
 

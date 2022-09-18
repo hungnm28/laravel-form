@@ -10,9 +10,9 @@ class ModelCommand extends Command
 {
     use WithCommandTrait;
 
-    protected $signature = 'lf:model {name} {--force}';
+    protected $signature = 'lf:model {name} {--model=} {--force}';
 
-    protected $description = 'Generate model: ';
+    protected $description = 'Generate Model class ';
 
     protected $castType = [
         "json" => "JsonCast"
@@ -35,15 +35,16 @@ class ModelCommand extends Command
 
     public function handle()
     {
-        $this->info($this->description . $this->argument("name"));
+        $this->info("Generate Model: " . $this->argument("name"));
         $this->info("Run migrate");
         $this->call('migrate');
-        $fields = $this->getModelFields($this->argument("name"));
-        $this->createModel($fields);
+        $this->initModel($this->argument("name"));
+        $this->createModel();
     }
 
-    protected function createModel($fields)
+    protected function createModel()
     {
+        $fields = data_get($this->model,"fields",[]);
         $dumpFields = "";
         $dumpCastClass = [];
         $dumpCasts = "";
@@ -76,8 +77,8 @@ class ModelCommand extends Command
             ],
             [
                 implode("\n", $dumpCastClass),
-                $this->argument("name"),
-                $this->tableName,
+                data_get($this->model,"name"),
+                data_get($this->model,"table"),
                 $dumpFields,
                 $dumpListFields,
                 $dumpCasts

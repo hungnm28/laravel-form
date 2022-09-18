@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\DumpMyModule\Views\Components;
+namespace Modules\DumpMyModuleName\Views\Components;
 
 use Illuminate\View\Component;
 
@@ -14,6 +14,6 @@ class LayoutMaster extends Component
     public function render()
     {
 
-        return view('DumpMyComponent::layouts.master');
+        return view('DumpMyModuleSlug::layouts.master');
     }
 }

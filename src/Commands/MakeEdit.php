@@ -12,7 +12,7 @@ class MakeEdit extends Command
 {
     use WithCommandTrait;
 
-    protected $signature = 'lf:make-edit {name} {module} {--pre=} {--model=}';
+    protected $signature = 'lf:make-edit {name} {module} {--force} {--model=}';
 
     protected $description = 'Make edit Page: ';
 
@@ -21,11 +21,12 @@ class MakeEdit extends Command
     public function handle()
     {
 
-        $this->initPage();
-        $this->info($this->description . $this->pageName);
-        $this->getModelFields($this->modelName);
+        $this->info("make Edit file: " . $this->name);
+        $this->initPath($this->argument("name"));
+        $this->initModule($this->argument("module"));
+        $this->initModel($this->argument("name"));
         $this->createClass();
-          $this->createView();
+        $this->createView();
         return true;
     }
 
@@ -37,54 +38,39 @@ class MakeEdit extends Command
         $rules = '';
         $createFields = '';
         $mountFields = '';
-        foreach ($this->fields as $f => $field) {
+        foreach ($this->getModelFields() as $f => $field) {
             if (!in_array($f, $this->reservedColumn)) {
                 if ($field->default) {
                     $listField .= '$' . $f . "= $field->default, ";
                 } else {
                     $listField .= '$' . $f . ", ";
                 }
-                $rules .= "'$f' => '$field->rule', \r\n\t\t\t";
-                $createFields .= "'$f' => \$this->$f, \r\n\t\t\t";
-                $mountFields .= "\$this->$f = \$data->$f; \r\n\t\t";
+                $rules .= "'$f' => '$field->rule'," . $this->showNewLine(5);
+                $createFields .= "'$f' => \$this->$f," . $this->showNewLine(5);
+                $mountFields .= "\$this->$f = \$data->$f;" . $this->showNewLine(4);
             }
         }
         $listField = trim($listField, ', ');
         $routes = $this->getArrRoutes();
         $breadcrumb = "";
         foreach ($routes as $k => $title) {
-            $breadcrumb .= 'lForm()->pushBreadcrumb(route("' . $k . '"),"' . $title . '");' . " \r\n\t\t";
+            $breadcrumb .= 'lForm()->pushBreadcrumb(route("' . $k . '"),"' . $title . '");' . $this->showNewLine(4);
         }
         $template = str_replace([
-            'DumpMyNamespace'
-            , 'DumpMyModelNamespace'
-            , 'DumpMyListFields'
+            'DumpMyListFields'
             , 'DumpMyRules'
-            , 'DumpMyPermission'
             , 'DumpMyMountFields'
-            , 'DumpMyModelClassName'
             , 'DumpMyEditFields'
-            , 'DumpMyRoute'
-            , 'DumpMyView'
-            , 'DumpMyModuleName'
             , 'DumpMyBreadcrumb'
-            , 'DumpMyPageName'
         ], [
-            $this->getNamespace()
-            , $this->getModelNamspace()
-            , $listField
+            $listField
             , $rules
-            , $this->getPermissionName()
             , $mountFields
-            , $this->modelName
             , $createFields
-            , $this->getRouteName()
-            , $this->gerViewDot()
-            , $this->getSnakeString($this->module->getName())
             , $breadcrumb
-            , $this->getHeadline($this->pageName)
         ], $stub);
-        $pathSave = $this->classPath . "/Edit.php";
+        $template = $this->generateData($template);
+        $pathSave = $this->getClassFile("Edit.php");
         $this->writeFile($pathSave, $template);
     }
 
@@ -92,31 +78,28 @@ class MakeEdit extends Command
     {
         $stub = $this->getStub("edit.blade.php.stub");
         $fields = "";
-        foreach ($this->fields as $f => $field) {
+        foreach ($this->getModelFields() as $f => $field) {
             if (in_array($f, $this->reservedColumn)) continue;
             switch ($field->type) {
                 case "boolean":
-                    $fields .= '<x-lf.form.toggle name="' . $f . '" label="' . $field->label . '" />' . " \r\n\t\t";
+                    $fields .= '<x-lf.form.toggle name="' . $f . '" label="' . $field->label . '" />' . $this->showNewLine(4);
                     break;
                 case "json":
-                    $fields .= '<x-lf.form.array name="' . $f . '" label="' . $field->label . '" placeholder="' . $field->label . ' ..." :params="$' . $f . '"/>' . " \r\n\t\t";
+                    $fields .= '<x-lf.form.array name="' . $f . '" label="' . $field->label . '" placeholder="' . $field->label . ' ..." :params="$' . $f . '"/>' . $this->showNewLine(4);
                     break;
                 default:
-                    $fields .= '<x-lf.form.input name="' . $f . '" type="' . $field->type . '" label="' . $field->label . '" placeholder="' . $field->label . ' ..."/>' . " \r\n\t\t";
+                    $fields .= '<x-lf.form.input name="' . $f . '" type="' . $field->type . '" label="' . $field->label . '" placeholder="' . $field->label . ' ..."/>' . $this->showNewLine(4);
             }
         }
         $template = str_replace([
             'DumpMyFields'
-            , 'DumpMyRoute'
-            ,'DumpMyPermission'
-        ],
+            ],
             [
                 $fields
-                , $this->getRouteName()
-                ,$this->getPermissionName()
             ],
             $stub);
-        $pathSave = $this->viewPath . "/edit.blade.php";
+        $template = $this->generateData($template);
+        $pathSave = $this->getViewFile("edit.blade.php");
         $this->writeFile($pathSave, $template);
     }
 

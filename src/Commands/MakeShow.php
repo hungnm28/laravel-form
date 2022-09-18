@@ -12,7 +12,7 @@ class MakeShow extends Command
 {
     use WithCommandTrait;
 
-    protected $signature = 'lf:make-show {name} {module} {--pre=} {--model=}';
+    protected $signature = 'lf:make-show {name} {module} {--force=} {--model=}';
 
     protected $description = 'Make show Page: ';
 
@@ -20,10 +20,10 @@ class MakeShow extends Command
 
     public function handle()
     {
-
-        $this->initPage();
-        $this->info($this->description . $this->pageName);
-        $this->getModelFields($this->modelName);
+        $this->info("Make show page: " . $this->argument("name"));
+        $this->initPath($this->argument("name"));
+        $this->initModel($this->argument("name"));
+        $this->initModule($this->argument("module"));
         $this->createClass();
         $this->createView();
         return true;
@@ -35,30 +35,15 @@ class MakeShow extends Command
         $routes = $this->getArrRoutes();
         $breadcrumb = "";
         foreach ($routes as $k => $title) {
-            $breadcrumb .= 'lForm()->pushBreadcrumb(route("' . $k . '"),"' . $title . '");' . " \r\n\t\t";
+            $breadcrumb .= 'lForm()->pushBreadcrumb(route("' . $k . '"),"' . $title . '");' .$this->showNewLine(4);
         }
         $template = str_replace([
-            'DumpMyNamespace'
-            , 'DumpMyModelNamespace'
-            , 'DumpMyPermission'
-            , 'DumpMyModelClassName'
-            , 'DumpMyBreadcrumb'
-            , 'DumpMyRoute'
-            , 'DumpMyView'
-            , 'DumpMyModuleName'
-            , 'DumpMyPageName'
+           'DumpMyBreadcrumb'
         ], [
-            $this->getNamespace()
-            , $this->getModelNamspace()
-            , $this->getPermissionName()
-            , $this->modelName
-            , $breadcrumb
-            , $this->getRouteName()
-            , $this->gerViewDot()
-            , $this->getSnakeString($this->module->getName())
-            , $this->getHeadline($this->pageName)
+            $breadcrumb
         ], $stub);
-        $pathSave = $this->classPath . "/Show.php";
+        $template = $this->generateData($template);
+        $pathSave = $this->getClassFile("Show.php");
         $this->writeFile($pathSave, $template);
     }
 
@@ -66,38 +51,29 @@ class MakeShow extends Command
     {
         $stub = $this->getStub("show.blade.php.stub");
         $fields = "";
-        foreach ($this->fields as $f => $field) {
+        foreach ($this->getModelFields() as $f => $field) {
             if (in_array($f, $this->reservedColumn)) continue;
             switch ($field->type) {
                 case "array":
                 case "object":
                 case "json":
-                    $fields .= '<tr>
-                            <th class="text-right pr-2">' . $f . ':</th>
-                            <td><x-lf.item.tags :params="$data->' . $f . '" /></td>
-                        </tr>';
+                    $fields .= $this->showNewLine(5).'<tr>'.$this->showNewLine(6).'<th class="text-right pr-2">' . $f . ':</th>'.$this->showNewLine(6).'<td><x-lf.item.tags :params="$data->' . $f . '" /></td>'.$this->showNewLine(5).'</tr>';
                     break;
 
                 default:
-                    $fields .= '<tr>
-                        <th class="text-right pr-2">' . $f . ':</th>
-                        <td>{{$data->' . $f . '}}</td>
-                    </tr>';
+                    $fields .= $this->showNewLine(5).'<tr>'.$this->showNewLine(6).'<th class="text-right pr-2">' . $f . ':</th>'.$this->showNewLine(6).'<td>{{$data->' . $f . '}}</td>'.$this->showNewLine(5).'</tr>';
             }
 
         }
         $template = str_replace([
             'DumpMyFields'
-            , 'DumpMyRoute'
-            , 'DumpMyPermission'
         ],
             [
                 $fields
-                , $this->getRouteName()
-                , $this->getPermissionName()
             ],
             $stub);
-        $pathSave = $this->viewPath . "/show.blade.php";
+        $template = $this->generateData($template);
+        $pathSave = $this->getViewFile("show.blade.php");
         $this->writeFile($pathSave, $template);
     }
 
