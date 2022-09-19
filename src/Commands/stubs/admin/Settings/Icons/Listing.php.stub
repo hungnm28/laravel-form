@@ -39,7 +39,7 @@ class Listing extends Component
 
     public function updatedFile()
     {
-        $doms = str_get_html(file_get_contents($this->file->temporaryUrl()));
+        $doms = str_get_html(file_get_contents($this->file->getRealPath()));
         $this->icon_url = $this->file->temporaryUrl();
         $dom = $doms->find("svg", 0);
         $this->path = $dom->innertext;
