@@ -4,20 +4,20 @@
  		[
 			'label' => 'Cài đặt',
 			'icon' => 'setting',
-			'route' => 'DumpMyLowerName.settings',
-			'permission' => 'DumpMyLowerName.settings',
+			'route' => 'DumpMyRoute.settings',
+			'permission' => 'DumpMyPermission.settings',
 			'children' => [
 				[
 					'label' => 'Danh mục',
 					'icon' => 'menu',
-					'route' => 'DumpMyLowerName.settings.menus',
-					'permission' => 'DumpMyLowerName.menus.listing',
+					'route' => 'DumpMyRoute.settings.menus',
+					'permission' => 'DumpMyPermission.settings.menus',
 				],
 				[
 					'label' => 'Icon',
 					'icon' => 'app',
-					'route' => 'DumpMyLowerName.settings.icons',
-					'permission' => 'DumpMyLowerName.icons.listing',
+					'route' => 'DumpMyRoute.settings.icons',
+					'permission' => 'DumpMyPermission.settings.icons',
 				],
 			],
 		],
