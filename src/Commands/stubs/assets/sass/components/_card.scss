@@ -12,7 +12,7 @@
     }
 
     .card-content{
-        @apply w-full block overflow-auto;
+        @apply w-full block overflow-auto md:flex flex-wrap;
     }
 
     .card-footer{
