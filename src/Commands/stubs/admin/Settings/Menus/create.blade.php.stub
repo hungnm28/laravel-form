@@ -8,17 +8,12 @@
             </div>
         </div>
         <x-lf.form.select name="module" label="Module" :params="$modules" />
-        <div class="w-full flex flex-wrap">
-            <x-lf.form.select name="route" class="w-full md:w-1/2" label="Chọn Route" :params="$routes" />
-            <x-lf.form.input name="route" class="w-full md:w-1/2" label="Hoặc nhập" placeholder="Route ..." />
-        </div>
-
+        <x-lf.form.select name="route" class="w-full md:w-1/2" label="Chọn Route" :params="$routes" />
+        <x-lf.form.input name="route" class="w-full md:w-1/2" label="Hoặc nhập" placeholder="Route ..." />
         <x-lf.form.icon name="icon" label="Icon" :val="$icon" />
         <x-lf.form.input name="label" label="Label" placeholder="Label ..." />
-        <div class="w-full flex flex-wrap">
-            <x-lf.form.select name="permission" class="w-full md:w-1/2" label="Chọn Permission" :params="$permissions" />
-            <x-lf.form.input name="permission" class="w-full md:w-1/2" label="Hoặc nhập" placeholder="Permission ..." />
-        </div>
+        <x-lf.form.select name="permission" class="w-full md:w-1/2" label="Chọn Permission" :params="$permissions" />
+        <x-lf.form.input name="permission" class="w-full md:w-1/2" label="Hoặc nhập" placeholder="Permission ..." />
         <x-lf.form.select name="parent_id" label="Cấp cha" :params="$parents" />
         <x-lf.form.select name="sort" label="Vị trí" :params="$sorts" />
         <x-lf.form.done :params="['Listing','Create']" />
