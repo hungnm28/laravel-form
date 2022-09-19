@@ -43,6 +43,12 @@ class Edit extends Component
     }
 
     public function render(){
+
+        lForm()->setTitle("Menu Edit");
+        lForm()->pushBreadCrumb(route("DumpMyRouteName"),"Admin");
+        lForm()->pushBreadCrumb(route("DumpMyRouteName.settings"),"Setting");
+        lForm()->pushBreadCrumb(route("DumpMyRouteName.settings.menus"),"Menu");
+        lForm()->pushBreadCrumb(route("DumpMyRouteName.settings.menus.edit"),"Edit");
         return view("DumpMyModuleView::livewire.settings.menus.edit")
             ->layout('DumpMyModuleView::layouts.master', ['title' => 'Menu Edit']);
     }

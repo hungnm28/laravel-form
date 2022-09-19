@@ -116,6 +116,11 @@ class Create extends Component
             }//foreach (Route::getRoutes() as $route)
         }
 
+        lForm()->setTitle("Menu Create");
+        lForm()->pushBreadCrumb(route("DumpMyRouteName"),"Admin");
+        lForm()->pushBreadCrumb(route("DumpMyRouteName.settings"),"Setting");
+        lForm()->pushBreadCrumb(route("DumpMyRouteName.settings.menus"),"Menu");
+        lForm()->pushBreadCrumb(route("DumpMyRouteName.settings.menus.create"),"Create");
         return view("DumpMyModuleView::livewire.settings.menus.create", compact("modules", "parents", "sorts", "routes", "permissions"))
             ->layout('DumpMyModuleView::layouts.master', ['title' => 'Menu Create']);
     }
