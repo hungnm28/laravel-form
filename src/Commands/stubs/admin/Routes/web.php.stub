@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/', [\Modules\DumpMyModuleName\Http\Controllers\DumpMyModuleNameController::class, "index"]);
+Route::get('/', [\Modules\DumpMyModuleName\Http\Controllers\HomeController::class, "index"])->can('DumpMyModuleSlug');
 Route::prefix("settings")->name(".settings")->group(function () {
     Route::get("/", \Modules\DumpMyModuleName\Http\Livewire\Settings\Index::class)->can("admin.settings");
     Route::get("/icons", \Modules\DumpMyModuleName\Http\Livewire\Settings\Icons\Listing::class)->name('.icons')->can("admin.settings.icons");
