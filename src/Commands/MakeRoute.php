@@ -59,13 +59,13 @@ class MakeRoute extends Command
         }else{
             $preTag = "//---END-OF-ROUTES---//";
         }
-        $this->installRoute($template,$preTag);
+        $this->installRoute($template,$preTag,$endTag);
 
     }
 
-    protected function installRoute($routes,$flag)
+    protected function installRoute($routes,$flag,$endTag)
     {
-        if (!Str::contains($appRoutes = file_get_contents($this->getModulepath('Routes/web.php')), $routes)) {
+        if (!Str::contains($appRoutes = file_get_contents($this->getModulepath('Routes/web.php')), $endTag)) {
             file_put_contents($this->getModulepath('Routes/web.php'), str_replace(
                 $flag,
                 $routes . PHP_EOL . $flag,

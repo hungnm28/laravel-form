@@ -26,26 +26,28 @@ class InitRoute extends Command
             return false;
         }
 
-        $comfirm = $this->ask("Please enter Y to replace $name route file, any key to quit");
-        if (strtolower($comfirm) != "y") {
-            return false;
-        }
-        $stub = $this->getStub("web.php.stub");
-        $template = str_replace([
-            "DumpMyPrefix"
-            , "DumpMyName"
-            , "DumpMyModule"
-        ], [
-            $this->getModuleSug()
-            , $this->getModuleName()
-            , $name
-        ], $stub);
-        $this->writeFile(module_path($name, "Routes/web.php"), $template);
-
+        $this->installRoute();
         $this->replaceRouteServiceProvider();
         return true;
     }
 
+    private function installRoute(){
+        $endTag = "//---END-OF-ROUTES---//";
+        if (!Str::contains(file_get_contents($this->getModulepath('Routes/web.php')), $endTag)) {
+            $stub = $this->getStub("web.php.stub");
+            $name = $this->argument("name");
+            $template = str_replace([
+                "DumpMyPrefix"
+                , "DumpMyName"
+                , "DumpMyModule"
+            ], [
+                $this->getModuleSug()
+                , $this->getModuleName()
+                , $name
+            ], $stub);
+            $this->writeFile(module_path($name, "Routes/web.php"), $template);
+        }
+    }
 
     private function replaceRouteServiceProvider()
     {
@@ -58,6 +60,7 @@ class InitRoute extends Command
             $name,
             $this->getModuleSug()
         ], $stub);
+
         $this->writeFile(module_path($name, "Providers/RouteServiceProvider.php"), $template);
 
 

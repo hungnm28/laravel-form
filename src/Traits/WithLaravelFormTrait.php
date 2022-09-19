@@ -4,6 +4,7 @@ namespace Hungnm28\LaravelForm\Traits;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
+use Nwidart\Modules\Facades\Module;
 
 trait WithLaravelFormTrait
 {
@@ -87,7 +88,7 @@ trait WithLaravelFormTrait
     }
 
     private function saveNavbar($module,$data){
-        $module = Nwidart\Modules\Facades\Module::findOrFail($module);
+        $module = Module::findOrFail($module);
 
         $navString = "<?php \n return [\n\t'navbar' => [ \n ";
         foreach($data as $nav){
