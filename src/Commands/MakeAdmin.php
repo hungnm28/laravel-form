@@ -9,7 +9,7 @@ use Nwidart\Modules\Facades\Module;
 class MakeAdmin extends Command
 {
     use WithCommandTrait;
-    protected $signature = 'lf:make-admin {name}';
+    protected $signature = 'lf:make-admin {name} {--force}';
 
     protected $description = 'Make Admin module ';
 
