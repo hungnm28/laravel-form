@@ -40,10 +40,12 @@ class InitRoute extends Command
                 "DumpMyPrefix"
                 , "DumpMyName"
                 , "DumpMyModule"
+                ,"DumpMyPermission"
             ], [
                 $this->getModuleSug()
                 , $this->getModuleName()
                 , $name
+                ,$this->getModuleSug()
             ], $stub);
             $this->writeFile(module_path($name, "Routes/web.php"), $template);
         }

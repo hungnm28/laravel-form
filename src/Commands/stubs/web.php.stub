@@ -1,4 +1,4 @@
 <?php
-Route::get('/', [\Modules\DumpMyModule\Http\Controllers\HomeController::class,"index"]);
+Route::get('/', [\Modules\DumpMyModule\Http\Controllers\HomeController::class,"index"])->can('DumpMyPermission');
 
 //---END-OF-ROUTES---//
