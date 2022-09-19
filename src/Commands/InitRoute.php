@@ -58,9 +58,12 @@ class InitRoute extends Command
         $template = str_replace([
             "DumpMyModuleName"
             , "DumpMyModuleSlug"
+            ,"DumpMyModuleLowerName"
+
         ], [
             $name,
             $this->getModuleSug()
+            ,$this->getModuleLowerName()
         ], $stub);
 
         $this->writeFile(module_path($name, "Providers/RouteServiceProvider.php"), $template);
