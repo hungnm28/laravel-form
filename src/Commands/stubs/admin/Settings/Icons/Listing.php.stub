@@ -47,6 +47,9 @@ class Listing extends Component
 
     public function store()
     {
+         if(!lfCheckLocalhost()){
+             abort("403");
+         }
         $this->validate();
         $this->data[$this->name] = '<symbol id="' . $this->name . '" fill="currentColor" viewBox="0 0 ' . $this->width . ' ' . $this->height . '" enable-background="0 0 ' . $this->width . ' ' . $this->height . '">' . $this->path . '</symbol>';;
         $data = $this->data;
