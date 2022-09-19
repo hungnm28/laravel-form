@@ -100,17 +100,16 @@ class Create extends Component
         $prefix = Str::slug(lfHeadLine($module->getName()));
         foreach (Route::getRoutes() as $route) {
             if (Str::is($prefix . '.*', $route->getName())) {
-
                 $name = $route->getName();
-                $permission = "";
-                if (!in_array($name, $allNav)) {
+                if (!in_array($name, $allNav) && !Str::contains($route->uri,"{")) {
                     foreach ($route->middleware() as $mid) {
                         if (Str::is("can:" . $prefix . ".*", $mid)) {
                             $permission = Str::after($mid, "can:");
+                            $permissions[$permission] = $permission;
                         }
                     }
                     $routes[$name] = $name;
-                    $permissions[$permission] = $permission;
+
                 }//if(!in_array($name,$allNav))
 
             }//foreach (Route::getRoutes() as $route)

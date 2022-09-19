@@ -16,9 +16,15 @@ class Edit extends Component
     protected $queryString =["module","item"];
 
     public function mount(){
+        if(!$this->module || $this->module ==""){
+            return  redirect(route('DumpMyRouteName.settings.menus'));
+        }
         $module = Module::findOrFail($this->module);
         $navbars = config($module->getLowerName().".navbar",[]);
         $data = data_get($navbars,$this->item,[]);
+        if(empty($data)){
+           return redirect(route('DumpMyRouteName.settings.menus'));
+        }
         $this->label = data_get($data,"label");
         $this->route = data_get($data,"route");
         $this->icon = data_get($data,"icon");
