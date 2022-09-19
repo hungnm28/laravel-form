@@ -13,12 +13,12 @@
 
 Route::get('/', [\Modules\DumpMyModuleName\Http\Controllers\HomeController::class, "index"])->can('DumpMyModuleSlug');
 Route::prefix("settings")->name(".settings")->group(function () {
-    Route::get("/", \Modules\DumpMyModuleName\Http\Livewire\Settings\Index::class)->can("admin.settings");
-    Route::get("/icons", \Modules\DumpMyModuleName\Http\Livewire\Settings\Icons\Listing::class)->name('.icons')->can("admin.settings.icons");
+    Route::get("/", \Modules\DumpMyModuleName\Http\Livewire\Settings\Index::class)->can("DumpMyModuleSlug.settings");
+    Route::get("/icons", \Modules\DumpMyModuleName\Http\Livewire\Settings\Icons\Listing::class)->name('.icons')->can("DumpMyModuleSlug.settings.icons");
     Route::prefix("menus")->name(".menus")->group(function (){
-        Route::get("/", \Modules\DumpMyModuleName\Http\Livewire\Settings\Menus\Listing::class)->can("admin.settings.menus");
-        Route::get("/create", \Modules\DumpMyModuleName\Http\Livewire\Settings\Menus\Create::class)->name(".create")->can("admin.settings.menus.create");
-        Route::get("/edit", \Modules\DumpMyModuleName\Http\Livewire\Settings\Menus\Edit::class)->name(".edit")->can("admin.menus.settings.edit");
+        Route::get("/", \Modules\DumpMyModuleName\Http\Livewire\Settings\Menus\Listing::class)->can("DumpMyModuleSlug.settings.menus");
+        Route::get("/create", \Modules\DumpMyModuleName\Http\Livewire\Settings\Menus\Create::class)->name(".create")->can("DumpMyModuleSlug.settings.menus.create");
+        Route::get("/edit", \Modules\DumpMyModuleName\Http\Livewire\Settings\Menus\Edit::class)->name(".edit")->can("DumpMyModuleSlug.menus.settings.edit");
     });
     //---END-OF-SETTING---//
 });

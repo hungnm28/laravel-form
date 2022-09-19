@@ -5,19 +5,19 @@
 			'label' => 'Cài đặt',
 			'icon' => 'setting',
 			'route' => 'DumpMyRoute.settings',
-			'permission' => 'DumpMyPermission.settings',
+			'permission' => 'DumpMyRoute.settings',
 			'children' => [
 				[
 					'label' => 'Danh mục',
 					'icon' => 'menu',
 					'route' => 'DumpMyRoute.settings.menus',
-					'permission' => 'DumpMyPermission.settings.menus',
+					'permission' => 'DumpMyRoute.settings.menus',
 				],
 				[
 					'label' => 'Icon',
 					'icon' => 'app',
 					'route' => 'DumpMyRoute.settings.icons',
-					'permission' => 'DumpMyPermission.settings.icons',
+					'permission' => 'DumpMyRoute.settings.icons',
 				],
 			],
 		],
