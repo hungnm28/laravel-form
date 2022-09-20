@@ -75,3 +75,18 @@
         @apply absolute bg-white rounded-b shadow right-0;
     }
 }
+.lf-toggle{
+    @apply inline-block;
+    .bar{
+        @apply w-10 h-4 relative bg-gray-500 rounded-l-full rounded-r-full block cursor-pointer;
+        .dot{
+            @apply w-6 h-6 rounded-full absolute -top-1 shadow bg-slate-400 absolute;
+        }
+    }
+    .toggle:checked + .bar{
+        @apply bg-green-600;
+        .dot{
+            @apply bg-green-700 right-0;
+        }
+    }
+}
