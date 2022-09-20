@@ -1,0 +1,39 @@
+<?php
+
+namespace Modules\DumpMyModuleName\Http\Livewire\Settings\Permissions;
+
+use Hungnm28\LaravelForm\Traits\WithLaravelFormTrait;
+use Illuminate\Support\Arr;
+use Livewire\Component;
+use Nwidart\Modules\Facades\Module;
+
+class Listing extends Component
+{
+    use WithLaravelFormTrait;
+
+    public function delete($module, $item)
+    {
+        $this->onlyLocalhost();
+        $module = Module::findOrFail($module);
+        $permissions = config($module->getLowerName() . ".permissions", []);
+        Arr::forget($permissions, $item);
+        Arr::sort($permissions);
+        $this->savePermission($module->getName(), $permissions);
+        $this->redirect(route("DumpMyRouteName.settings.permissions"));
+    }
+
+    public function render()
+    {
+        lForm()->setTitle("Permissions");
+        lForm()->pushBreadCrumb(route("DumpMyRouteName"), "Admin");
+        lForm()->pushBreadCrumb(route("DumpMyRouteName.settings"), "Setting");
+        lForm()->pushBreadCrumb(route("DumpMyRouteName.settings.permissions"), "Permissions");
+        $modules = Module::all();
+        $data = [];
+        foreach ($modules as $module) {
+            $data[$module->getName()] = config($module->getLowerName() . ".permissions", []);
+        }
+        return view("DumpMyModuleView::livewire.settings.permissions.listing", compact("data"))
+            ->layout('DumpMyModuleView::layouts.master', ['title' => 'Permissions']);
+    }
+}

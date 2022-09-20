@@ -1,0 +1,23 @@
+<div class="w-full  p-4 max-w-screen-lg">
+    <x-lf.card title="Edit" class="warning">
+        <div class="w-full p-4">
+            <div class="w-full p-4 border-orange-500 border bg-orange-200 text-red-800">
+                <b>Lưu ý:</b>
+                <div>- Chỉ thực hiện thêm, sửa, xóa permissions ở <b>localhost</b>.</div>
+                <div>- Không thêm, sửa, xóa permissions ở <b>server</b>.</div>
+            </div>
+        </div>
+        <x-lf.form.input name="permission" class="w-full" label="Hoặc nhập" placeholder="Permission ..." />
+        <x-lf.form.input name="label" class="w-full" label="Label" placeholder="Label ..." />
+        <x-lf.form.done :params="['Listing','Create']" />
+        <x-slot:tools>
+            <a class="btn-primary sm" href="{{route('DumpMyRouteName.settings.permissions')}}">{!! lfIcon("list") !!}</a>
+        </x-slot:tools>
+        <x-slot:footer>
+            <div class="card-footer flex justify-between">
+                <label class="btn-primary flex-none" wire:click="store">Update</label>
+                <a class="btn" href="{{route("DumpMyRouteName.settings.permissions")}}">Cancel</a>
+            </div>
+        </x-slot:footer>
+    </x-lf.card>
+</div>

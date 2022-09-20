@@ -21,10 +21,10 @@ Route::prefix("settings")->name(".settings")->group(function () {
         Route::get("/edit", \Modules\DumpMyModuleName\Http\Livewire\Settings\Menus\Edit::class)->name(".edit")->can("DumpMyModuleSlug.settings.menus.edit");
     });
     Route::prefix("permissions")->name(".permissions")->group(function (){
-            Route::get("/", \Modules\DumpMyModuleName\Http\Livewire\Settings\Menus\Listing::class)->can("DumpMyModuleSlug.settings.permissions");
-            Route::get("/create", \Modules\DumpMyModuleName\Http\Livewire\Settings\Menus\Create::class)->name(".create")->can("DumpMyModuleSlug.settings.permissions.create");
-            Route::get("/edit", \Modules\DumpMyModuleName\Http\Livewire\Settings\Menus\Edit::class)->name(".edit")->can("DumpMyModuleSlug.settings.permissions.edit");
-        });
+        Route::get("/", \Modules\DumpMyModuleName\Http\Livewire\Settings\Menus\Listing::class)->can("DumpMyModuleSlug.settings.permissions");
+        Route::get("/create", \Modules\DumpMyModuleName\Http\Livewire\Settings\Menus\Create::class)->name(".create")->can("DumpMyModuleSlug.settings.permissions.create");
+        Route::get("/edit", \Modules\DumpMyModuleName\Http\Livewire\Settings\Menus\Edit::class)->name(".edit")->can("DumpMyModuleSlug.settings.permissions.edit");
+    });
     //---END-OF-SETTING---//
 });
 //---END-OF-ROUTE---//

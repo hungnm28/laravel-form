@@ -33,19 +33,23 @@ trait WithCommandTrait
     private function initModel($path)
     {
         $modelName = null;
+
         if ($this->option("model")) {
             $modelName = $this->option("model");
         }
+
         if (!$modelName) {
             $modelName = Str::afterLast($path, "/");
             $modelName = Str::singular($modelName);
-            $modelGenerator = new ModelGenerator($modelName);
-            $this->model = [
-                "name" => $modelName
-                , "table" => $modelGenerator->model->getTable()
-                , "fields" => $modelGenerator->getFields()
-            ];
+
         }
+        $modelGenerator = new ModelGenerator($modelName);
+        $this->model = [
+            "name" => $modelName
+            , "table" => $modelGenerator->model->getTable()
+            , "fields" => $modelGenerator->getFields()
+        ];
+
     }
 
 

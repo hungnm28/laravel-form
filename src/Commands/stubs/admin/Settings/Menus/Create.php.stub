@@ -17,19 +17,19 @@ class Create extends Component
     public $module, $route, $label, $icon, $permission, $parent_id = -1, $sort = -1;
     public $queryString = ["module"];
 
+    protected $rules = [
+        "permission"=>"string|required"
+        ,"label"=>"string|required"
+    ];
     public function mount()
     {
         $this->done = 1;
-        if (!lfCheckLocalhost()) {
-            return abort(403);
-        }
+        $this->onlyLocalhost();
     }
 
     public function store()
     {
-        if (!lfCheckLocalhost()) {
-            return abort(403);
-        }
+        $this->onlyLocalhost();
         $module = Module::findOrFail($this->module);
         $navbars = config($module->getLowerName() . '.navbar', []);
         if ($this->parent_id == -1) {
@@ -63,6 +63,7 @@ class Create extends Component
             $navbars[$this->parent_id]["children"] = $siblings;
         }
         $this->saveNavbar( $this->module,$navbars);
+        session()->flash('message','done');
         $this->redirectForm("DumpMyRouteName.settings.menus", 1, ["module" => $this->module]);
     }
 

@@ -65,7 +65,7 @@ trait WithLaravelFormTrait
         }
     }
 
-    public function redirectForm($route, $id, $params = [])
+    public function redirectForm($route, $id=0, $params = [])
     {
         switch ($this->done) {
             case 0:
@@ -75,16 +75,33 @@ trait WithLaravelFormTrait
                 $this->redirect(route("$route.create", $params));
                 break;
             case 2:
-                $params["record_id"] = $id;
-                $this->redirect(route("$route.show", $params));
-                break;
+                if($id>0){
+                    $params["record_id"] = $id;
+                    $this->redirect(route("$route.show", $params));
+                    break;
+                }
+
             case 3:
-                $params["record_id"] = $id;
-                $this->redirect(route("$route.edit", $params));
-                break;
+                if($id >0){
+                    $params["record_id"] = $id;
+                    $this->redirect(route("$route.edit", $params));
+                    break;
+                }
+
             default:
                 $this->redirect(route($route));
         }
+    }
+    private function savePermission($module,$data){
+        $this->onlyLocalhost();
+        $module = Module::findOrFail($module);
+        $str = "<?php \nreturn [\n\t'permissions' => [ \n";
+        foreach($data as $key =>$label){
+            $str .= "\t\t\t'$key' => '$label',\n";
+        }
+        $str.="\t\t]\n];";
+        $configPath = $module->getPath() . "/Config/permission.php";
+        file_put_contents($configPath,$str);
     }
 
     private function saveNavbar($module,$data){
@@ -133,5 +150,11 @@ trait WithLaravelFormTrait
     public function resetForm()
     {
         $this->redirect(request()->header('Referer'));
+    }
+
+    private function onlyLocalhost(){
+        if(!lfCheckLocalhost()){
+            abort(403);
+        }
     }
 }

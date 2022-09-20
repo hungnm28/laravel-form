@@ -1,0 +1,54 @@
+<?php
+
+namespace Modules\DumpMyModuleName\Http\Livewire\Settings\Permissions;
+
+use Hungnm28\LaravelForm\Traits\WithLaravelFormTrait;
+use Illuminate\Support\Arr;
+use Livewire\Component;
+use Nwidart\Modules\Facades\Module;
+
+class Edit extends Component
+{
+    use WithLaravelFormTrait;
+    public $module,$item, $permission,$label;
+    public $queryString = ["module","item"];
+
+    protected $rules = [
+        "permission"=>"string|required"
+        ,"label"=>"string|required"
+    ];
+    public function mount(){
+        $this->onlyLocalhost();
+       $module = Module::findOrFail($this->module);
+       $permissions = config($module->getLowerName(). ".permissions",[]);
+       if(isset($permissions[$this->item])){
+            $this->permission = $this->item;
+            $this->label = $permissions[$this->item];
+       }else{
+           abort(404);
+       }
+    }
+
+    public function store(){
+        $this->onlyLocalhost();
+        $this->validate();
+        $module = Module::findOrFail($this->module);
+        $permissions = config($module->getLowerName(). ".permissions",[]);
+        Arr::forget($permissions,$this->item);
+        $permissions[$this->permission] = $this->label;
+        ksort($permissions);
+        $this->savePermission($this->module,$permissions);
+        $this->redirectForm("DumpMyRouteName.settings.permissions");
+    }
+    public function render()
+    {
+        lForm()->setTitle("Permissions");
+        lForm()->pushBreadCrumb(route("DumpMyRouteName"),"Admin");
+        lForm()->pushBreadCrumb(route("DumpMyRouteName.settings"),"Setting");
+        lForm()->pushBreadCrumb(route("DumpMyRouteName.settings.permissions"),"Permissions");
+        lForm()->pushBreadCrumb(route("DumpMyRouteName.settings.permissions.edit",["module"=>$this->module,"item"=>$this->item]),"Edit");
+
+        return view("DumpMyModuleView::livewire.settings.permissions.edit")
+            ->layout('DumpMyModuleView::layouts.master', ['title' => 'Permissions Create']);
+    }
+}

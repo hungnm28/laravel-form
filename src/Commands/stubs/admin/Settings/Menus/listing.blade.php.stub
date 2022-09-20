@@ -60,4 +60,21 @@
             </div>
         @endforeach
     </x-lf.card>
+    @if (session()->has('message') && session('message')=="done")
+            <div x-data="{time:10,
+                    init() {
+                    setInterval(() => {
+                            this.time--
+                            if(this.time <=0){
+                                window.location.reload();
+                            }
+                          }, 1000)
+                        }
+                    }"
+                 class="fixed left-0 top-0 right-0 bottom-0 bg-black bg-opacity-50 flex items-center justify-center">
+                <div class="w-full max-w-sm bg-white rounded p-4 text-2xl text-center">
+                    Đợi <span x-text="time"></span>s để đồng bộ dữ liệu
+                </div>
+            </div>
+        @endif
 </div>

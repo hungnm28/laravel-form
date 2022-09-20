@@ -19,6 +19,12 @@
 					'route' => 'DumpMyRoute.settings.icons',
 					'permission' => 'DumpMyRoute.settings.icons',
 				],
+				[
+                    'label' => 'Permissions',
+                    'icon' => 'security',
+                    'route' => 'DumpMyRoute.settings.permissions',
+                    'permission' => 'DumpMyRoute.settings.permissions',
+                ],
 			],
 		],
 
