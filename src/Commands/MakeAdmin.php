@@ -112,10 +112,12 @@ class MakeAdmin extends Command
             'DumpMyModuleName'
             , 'DumpMyModuleView'
             , 'DumpMyRouteName'
+            , 'DumpMyModuleSlug'
         ], [
             $this->module->getName()
             , $this->module->getLowerName()
-            , $this->getSnakeString($this->module->getName())
+            , $this->getRouteName()
+            , $this->getModuleSug()
 
         ], $stub);
 
