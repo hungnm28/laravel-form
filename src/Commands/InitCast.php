@@ -35,7 +35,8 @@ class InitCast extends Command
 
     private function copyCast($name)
     {
-        $pathSave = app_path("Cast/$name");
+        $pathSave = app_path("Casts/$name");
+        $this->ensureDirectoryExists($pathSave);
         if(!file_exists($pathSave)){
             $this->info("Make File: $pathSave");
             (new Filesystem())->copy(__DIR__ . "/stubs/app/Casts/$name.stub", $pathSave);
