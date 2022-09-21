@@ -21,13 +21,13 @@ return new class extends Migration {
         Schema::create('roles', function (Blueprint $table) {
             $table->id();
             $table->string("name")->unique();
-            $table->string("title");
+            $table->string("label");
             $table->timestamps();
         });
         Schema::create('permissions', function (Blueprint $table) {
             $table->id();
             $table->string("name")->unique();
-            $table->string("title");
+            $table->string("label");
             $table->unsignedBigInteger("parent_id")->nullable()->default(0);
             $table->timestamps();
         });
