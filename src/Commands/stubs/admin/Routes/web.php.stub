@@ -27,5 +27,5 @@ Route::prefix("settings")->name(".settings")->group(function () {
     });
     //---END-OF-SETTING---//
 });
-//---END-OF-ROUTE---//
+//---END-OF-ROUTES---//
 
