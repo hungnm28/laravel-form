@@ -93,6 +93,9 @@ class LaravelFormServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/Commands/stubs/' => base_path('stubs/laravel-form-stubs'),
         ], ['laravel-form-stub']);
+        $this->publishes([
+            __DIR__ . '/../publishes/database' => database_path()
+        ], 'laravel-form-database');
     }
 
 }

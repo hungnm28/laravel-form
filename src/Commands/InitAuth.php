@@ -20,10 +20,24 @@ class InitAuth extends Command
     public function handle()
     {
         $this->info("Init Auth");
+        $this->call("vendor:publish",['--tag'=>'laravel-form-database']);
+        $this->copyModel();
         $this->copyConfig();
         $this->copyProvider();
         $this->copyMiddleware();
 
+    }
+
+    private function copyModel(){
+        $pathSave = app_path("Models/User.php");
+        $this->info("Make File: $pathSave");
+        (new Filesystem())->copy(__DIR__ ."/stubs/app/Models/User.php.stub",$pathSave);
+        $pathSave = app_path("Models/Permission.php");
+        $this->info("Make File: $pathSave");
+        (new Filesystem())->copy(__DIR__ ."/stubs/app/Models/Permission.php.stub",$pathSave);
+        $pathSave = app_path("Models/Role.php");
+        $this->info("Make File: $pathSave");
+        (new Filesystem())->copy(__DIR__ ."/stubs/app/Models/Role.php.stub",$pathSave);
     }
 
     private function copyConfig(){
