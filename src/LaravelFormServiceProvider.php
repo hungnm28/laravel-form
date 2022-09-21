@@ -10,6 +10,7 @@ class LaravelFormServiceProvider extends ServiceProvider
     protected $commands = [
         Commands\ModelCommand::class
         ,Commands\InitAuth::class
+        ,Commands\InitCast::class
         ,Commands\InitMix::class
         ,Commands\InitLayout::class
         ,Commands\InitProvider::class
