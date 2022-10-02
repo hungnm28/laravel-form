@@ -41,6 +41,10 @@ class MakeCreate extends Command
                 switch ($field->type){
                     case "json": $default = '[]';
                     break;
+                    default:
+                        if($default){
+                            $default = "'$default'";
+                        }
                 }
                 if ($default) {
                     $listField .= '$' . $f . "= $default, ";

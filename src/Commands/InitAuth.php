@@ -31,6 +31,7 @@ class InitAuth extends Command
     private function copyModel(){
         $pathSave = app_path("Traits/HasPermissionsTrait.php");
         $this->info("Make File: $pathSave");
+        $this->ensureDirectoryExists($pathSave);
         (new Filesystem())->copy(__DIR__ ."/stubs/app/Traits/HasPermissionsTrait.php.stub",$pathSave);
         $pathSave = app_path("Models/User.php");
         $this->info("Make File: $pathSave");
