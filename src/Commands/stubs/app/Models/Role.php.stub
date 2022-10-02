@@ -11,9 +11,9 @@ class Role extends Model
 {
     use HasFactory;
 
-    protected $fillable = ["name", "label", "company_id", "type"];
+    protected $fillable = ["name", "label",  "type"];
 
-    public static $listFields = ["id", "name", "label", "company_id", "type", "created_at", "updated_at"];
+    public static $listFields = ["id", "name", "label", "type", "created_at", "updated_at"];
 
     protected $casts = [
         "name" => StringCast::class,

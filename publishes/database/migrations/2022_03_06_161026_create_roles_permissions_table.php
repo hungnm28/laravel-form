@@ -20,15 +20,18 @@ return new class extends Migration {
 
         Schema::create('roles', function (Blueprint $table) {
             $table->id();
-            $table->string("name")->unique();
-            $table->string("label");
+            $table->string("name")->nullable();
+            $table->string("label")->nullable();
+            $table->string("type")->nullable();
             $table->timestamps();
         });
         Schema::create('permissions', function (Blueprint $table) {
             $table->id();
-            $table->string("name")->unique();
-            $table->string("label");
-            $table->unsignedBigInteger("parent_id")->nullable()->default(0);
+            $table->string("name")->nullable();
+            $table->string("label")->nullable();
+            $table->integer("parent_id")->nullable()->default(0);
+            $table->string("module")->nullable();
+            $table->string("type")->nullable()->default("page");
             $table->timestamps();
         });
 
@@ -37,8 +40,8 @@ return new class extends Migration {
             $table->unsignedBigInteger('permission_id');
 
             //FOREIGN KEY
-            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
-            $table->foreign('permission_id')->references('id')->on('permissions')->onDelete('cascade');
+            //   $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
+            //  $table->foreign('permission_id')->references('id')->on('permissions')->onDelete('cascade');
 
             //PRIMARY KEYS
             $table->primary(['role_id', 'permission_id']);
@@ -49,8 +52,8 @@ return new class extends Migration {
             $table->unsignedBigInteger('permission_id');
 
             //FOREIGN KEY
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('permission_id')->references('id')->on('permissions')->onDelete('cascade');
+            //  $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            //  $table->foreign('permission_id')->references('id')->on('permissions')->onDelete('cascade');
 
             //PRIMARY KEYS
             $table->primary(['user_id', 'permission_id']);
@@ -61,8 +64,8 @@ return new class extends Migration {
             $table->unsignedBigInteger('role_id');
 
             //FOREIGN KEY
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
+            //    $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            //   $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
 
             //PRIMARY KEYS
             $table->primary(['user_id', 'role_id']);
