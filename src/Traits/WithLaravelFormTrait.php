@@ -107,7 +107,7 @@ trait WithLaravelFormTrait
     private function saveNavbar($module,$data){
         $module = Module::findOrFail($module);
 
-        $navString = "<?php \n return [\n\t'navbar' => [ \n ";
+        $navString = "<?php \n return [\n\t'menu' => [ \n ";
         foreach($data as $nav){
             $navString .= "\t\t[ \n";
             $navString .= "\t\t\t'label' => '". $nav['label'] . "',\n";
