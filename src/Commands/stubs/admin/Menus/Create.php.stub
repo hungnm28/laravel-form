@@ -80,6 +80,7 @@ class Create extends Component
         $sorts = [-1 => "Đầu tiên"];
         $routes = ["" => "Chọn Route"];
         $permissions = ["" => "Chọn Permission"];
+        $allNav = [];
 
         if($this->module !=""){
             $module = Module::findOrFail($this->module);
