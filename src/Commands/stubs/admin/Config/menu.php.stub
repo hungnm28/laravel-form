@@ -1,0 +1,54 @@
+<?php
+ return [
+	'menu' => [
+ 		[
+			'label' => 'Menu',
+			'icon' => 'menu',
+			'route' => 'admin.menus',
+			'permission' => 'admin.menus',
+			'children' => [
+				[
+					'label' => 'Thêm mới',
+					'icon' => 'add',
+					'route' => 'admin.menus.create',
+					'permission' => 'admin.menus.create',
+				],
+				[
+					'label' => 'Danh sách',
+					'icon' => 'list',
+					'route' => 'admin.menus',
+					'permission' => 'admin.menus.listing',
+				],
+			],
+		],
+		[
+			'label' => 'Icons',
+			'icon' => 'setting-suggest',
+			'route' => 'admin.icons',
+			'permission' => 'admin.icons',
+			'children' => [
+			],
+		],
+		[
+			'label' => 'Permissions',
+			'icon' => 'security',
+			'route' => 'admin.permissions',
+			'permission' => 'admin.permissions',
+            'children' => [
+                [
+                    'label' => 'Danh sách',
+                    'icon' => 'list',
+                    'route' => 'admin.permissions',
+                    'permission' => 'admin.permissions.listing',
+                ],
+                 [
+                    'label' => 'Thêm mới',
+                    'icon' => 'add',
+                    'route' => 'admin.permissions.create',
+                    'permission' => 'admin.permissions.create',
+                ],
+            ],
+		],
+
+	]
+];

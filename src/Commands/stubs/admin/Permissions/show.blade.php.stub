@@ -1,0 +1,51 @@
+<div class="w-full p-2 md:p-4 max-w-lg">
+    <x-lf.card class="success" title="Show">
+        <table class="table">
+            <tr>
+                <th class="text-right pr-2">ID:</th>
+                <td>{{$data->id}}</td>
+            </tr>
+
+			<tr>
+				<th class="text-right pr-2">name:</th>
+				<td>{{$data->name}}</td>
+			</tr>
+			<tr>
+				<th class="text-right pr-2">label:</th>
+				<td>{{$data->label}}</td>
+			</tr>
+			<tr>
+				<th class="text-right pr-2">parent_id:</th>
+				<td>{{$data->parent_id}}</td>
+			</tr>
+			<tr>
+				<th class="text-right pr-2">module:</th>
+				<td>{{$data->module}}</td>
+			</tr>
+			<tr>
+				<th class="text-right pr-2">type:</th>
+				<td>{{$data->type}}</td>
+			</tr>
+        </table>
+        <x-slot:tools>
+            @can("DumpMyRouteName.permissions.listing")
+                <a class="btn-primary xs" href="{{route("DumpMyRouteName.permissions")}}">{!! lfIcon("list",11) !!}</a>
+            @endcan
+            @can("DumpMyRouteName.permissions.edit")
+                <a class="btn-warning xs" href="{{route("DumpMyRouteName.permissions.edit",$data->id)}}">{!! lfIcon("edit",11) !!}</a>
+            @endcan
+        </x-slot:tools>
+        <x-slot:footer>
+            <div class="card-footer flex justify-between">
+                @can("DumpMyRouteName.permissions.listing")
+                    <a class="btn-primary" href="{{route("DumpMyRouteName.permissions")}}">{!! lfIcon("list") !!} <span>Listing</span></a>
+                @endcan
+                <div>
+                    @can("DumpMyRouteName.permissions.edit")
+                        <a class="btn-warning" href="{{route("DumpMyRouteName.permissions.edit",$data->id)}}">{!! lfIcon("edit") !!} <span>Edit</span></a>
+                    @endcan
+                </div>
+            </div>
+        </x-slot:footer>
+    </x-lf.card>
+</div>

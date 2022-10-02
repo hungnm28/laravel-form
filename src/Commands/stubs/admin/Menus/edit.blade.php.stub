@@ -13,12 +13,12 @@
         <x-lf.form.input name="permission" class="w-full" label="Permission" placeholder="Permission ..." />
         <x-lf.form.done :params="['Listing','Create']" />
         <x-slot name="tools">
-            <a class="btn-primary sm" href="{{route('DumpMyRouteName.settings.menus')}}">{!! lfIcon("list") !!}</a>
+            <a class="btn-primary sm" href="{{route('DumpMyRouteName.menus')}}">{!! lfIcon("list") !!}</a>
         </x-slot>
         <x-slot name="footer">
             <div class="card-footer flex justify-between">
                 <label class="btn-primary flex-none" wire:click="store">Update</label>
-                <a class="btn" href="{{route("DumpMyRouteName.settings.menus")}}">Cancel</a>
+                <a class="btn" href="{{route("DumpMyRouteName.menus")}}">Cancel</a>
             </div>
         </x-slot>
     </x-lf.card>

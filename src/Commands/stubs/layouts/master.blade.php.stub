@@ -16,7 +16,7 @@
 <div id="lf-container">
    <x-DumpMyModuleSlug::header-bar />
     <div id="lf-content">
-        <x-DumpMyModuleSlug::navbar />
+        <x-DumpMyModuleSlug::menu />
         <div id="lf-page">
             <div id="lfp-content">
                 <x-lf.page.header />

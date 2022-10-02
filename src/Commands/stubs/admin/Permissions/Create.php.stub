@@ -1,0 +1,95 @@
+<?php
+
+namespace Modules\DumpMyModuleName\Http\Livewire\Permissions;
+
+use App\Models\Permission;
+use Hungnm28\LaravelForm\Facades\LaravelForm;
+use Hungnm28\LaravelForm\Traits\WithLaravelFormTrait;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
+use Livewire\Component;
+use Nwidart\Modules\Facades\Module;
+
+class   Create extends Component
+{
+    use WithLaravelFormTrait;
+
+    public $name, $label, $parent_id=0, $module, $type= 'page',$method=[['name'=>'','label'=>'']];
+    protected $queryString =['module'];
+    protected $rules = [
+        'name' => 'string|required',
+		'label' => 'string|required',
+		'type' => 'string|required|in:module,page,method',
+        "module"=> "string|required"
+
+    ];
+
+    public function mount()
+    {
+        $this->authorize("DumpMyRouteName.permissions.create");
+        $this->done = 1;
+    }
+
+    public function updated($field)
+    {
+        $this->validateOnly($field);
+    }
+
+    public function store()
+    {
+        $this->authorize("DumpMyRouteName.permissions.create");
+        $this->validate();
+        $data = Permission::create([
+            'name' => $this->name,
+			'label' => $this->label,
+			'parent_id' => $this->parent_id,
+			'module' => $this->module,
+			'type' => $this->type,
+
+        ]);
+        if ($data) {
+            $this->redirectForm("DumpMyRouteName.permissions", $data->id,['module'=>$this->module]);
+        }
+    }
+
+    public function render()
+    {
+        lForm()->setTitle("Permissions");
+        lForm()->pushBreadcrumb(route("DumpMyRouteName"),"DumpMyModuleHeadName");
+		lForm()->pushBreadcrumb(route("DumpMyRouteName.permissions"),"Permissions");
+		lForm()->pushBreadcrumb(route("DumpMyRouteName.permissions.create"),"Create");
+
+        $permissions = [''=>'Chọn Permission'];
+        if($this->module){
+            $module = Module::findOrFail($this->module);
+            $allPermission  = Permission::whereModule($module->getLowerName())->get();
+
+            $prefix = Str::slug(lfHeadLine($module->getName()));
+            foreach(Route::getRoutes()->getRoutes() as $route){
+                $name = data_get($route->getAction(),"as");
+                if(strpos(" ".$name,$prefix)){
+                    $middlewares = data_get($route->getAction(),"middleware",[]);
+                    foreach($middlewares as $mid){
+                        if(strpos(" ".$mid,"can:")){
+                            $mid = Str::after($mid,'can:');
+                            if(!$allPermission->contains("name",$mid)){
+                                $permissions[$mid] = $mid;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        $permissions = Arr::sort($permissions);
+
+        $modules = [''=>'Chọn Module'];
+        foreach(Module::all() as $name =>$item){
+            $modules[$item->getLowerName()] = Str::headline($name);
+        }
+        $parents = Permission::whereModule($this->module)->whereType('page')->get()->pluck("label","id");
+
+        return view("DumpMyModuleView::livewire.permissions.create",compact("modules","permissions","parents"))
+            ->layout('DumpMyModuleView::layouts.master', ['title' => 'Permissions Create']);
+    }
+}

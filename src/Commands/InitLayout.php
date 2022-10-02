@@ -40,11 +40,11 @@ class InitLayout extends Command
 
     private function copyNavbar(){
         $module= Module::findOrFail($this->module);
-        $this->info("Copy Navbar.php");
-        $this->makeFile('layouts/Navbar.php.stub', $this->getModulepath("Views/Components/Navbar.php"));
+        $this->info("Copy Menu.php");
+        $this->makeFile('layouts/Menu.php.stub', $this->getModulepath("Views/Components/Menu.php"));
 
-        $this->info("Copy navbar.blade.php");
-        $this->makeFile('layouts/navbar.blade.php.stub', $this->getModulepath("Resources/views/components/navbar.blade.php"));
+        $this->info("Copy menu.blade.php");
+        $this->makeFile('layouts/menu.blade.php.stub', $this->getModulepath("Resources/views/components/menu.blade.php"));
     }
 
 

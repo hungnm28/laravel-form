@@ -1,5 +1,5 @@
 <?php
-namespace Modules\DumpMyModuleName\Http\Livewire\Settings\Menus;
+namespace Modules\DumpMyModuleName\Http\Livewire\Menus;
 use Hungnm28\LaravelForm\Traits\WithLaravelFormTrait;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Artisan;
@@ -17,25 +17,24 @@ class Listing extends Component
     public function delete($moduleName,$record){
         $this->onlyLocalhost();
         $module = Module::findOrFail($moduleName);
-        $data = config($module->getLowerName() . ".navbar",[]);
+        $data = config($module->getLowerName() . ".menu",[]);
         Arr::forget($data,$record);
         $this->saveNavbar($moduleName,$data);
         session()->flash('message','done');
-        $this->redirect(route("DumpMyRouteName.settings.menus"));
+        $this->redirect(route("DumpMyRouteName.menus"));
     }
 
     public function render(){
         $modules = Module::all();
         $data = [];
         foreach($modules as $module){
-            $data[$module->getName()] = config($module->getLowerName().".navbar",[]);
+            $data[$module->getName()] = config($module->getLowerName().".menu",[]);
         }
         lForm()->setTitle("Menu");
-        lForm()->pushBreadCrumb(route("DumpMyRouteName"),"Admin");
-        lForm()->pushBreadCrumb(route("DumpMyRouteName.settings"),"Setting");
-        lForm()->pushBreadCrumb(route("DumpMyRouteName.settings.menus"),"Menu");
+        lForm()->pushBreadCrumb(route("DumpMyRouteName"),"DumpMyModuleHeadName");
+        lForm()->pushBreadCrumb(route("DumpMyRouteName.menus"),"Menu");
 
-        return view("DumpMyModuleView::livewire.settings.menus.listing",compact("data"))
+        return view("DumpMyModuleView::livewire.menus.listing",compact("data"))
             ->layout('DumpMyModuleView::layouts.master', ['title' => 'Menu']);
     }
 }

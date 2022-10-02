@@ -1,0 +1,31 @@
+<?php
+
+namespace Modules\DumpMyModuleName\Http\Livewire\Permissions;
+
+use App\Models\Permission;
+use Hungnm28\LaravelForm\Traits\WithLaravelFormTrait;
+use Livewire\Component;
+
+
+class Show extends Component
+{
+    use WithLaravelFormTrait;
+
+    public function mount()
+    {
+        $this->authorize("DumpMyRouteName.permissions.show");
+        Permission::findOrFail($this->record_id);
+    }
+
+    public function render()
+    {
+        $data =  Permission::findOrFail($this->record_id);
+        lForm()->setTitle("Permissions");
+        lForm()->pushBreadcrumb(route("DumpMyRouteName"),"DumpMyModuleHeadName");
+		lForm()->pushBreadcrumb(route("DumpMyRouteName.permissions"),"Permissions");
+		lForm()->pushBreadcrumb(route("DumpMyRouteName.permissions.show",$this->record_id),"Show");
+
+        return view("DumpMyModuleView::livewire.permissions.show", compact("data"))
+            ->layout('DumpMyModuleView::layouts.master', ['title' => 'Permissions Show']);
+    }
+}

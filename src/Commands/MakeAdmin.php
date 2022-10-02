@@ -20,14 +20,14 @@ class MakeAdmin extends Command
     {
         $this->info("Make Admin Module");
         $this->initModule();
-        $this->installAdminModule("Settings", "Index");
-        $this->installAdminModule("Settings/Icons", "Listing");
-        $this->installAdminModule("Settings/Menus", "Listing");
-        $this->installAdminModule("Settings/Menus", "Create");
-        $this->installAdminModule("Settings/Menus", "Edit");
-        $this->installAdminModule("Settings/Permissions", "Listing");
-        $this->installAdminModule("Settings/Permissions", "Edit");
-        $this->installAdminModule("Settings/Permissions", "Create");
+        $this->installAdminModule("Icons", "Listing");
+        $this->installAdminModule("Menus", "Listing");
+        $this->installAdminModule("Menus", "Create");
+        $this->installAdminModule("Menus", "Edit");
+        $this->installAdminModule("Permissions", "Listing");
+        $this->installAdminModule("Permissions", "Edit");
+        $this->installAdminModule("Permissions", "Create");
+        $this->installAdminModule("Permissions", "Show");
         $this->addAdminNavbar();
         $this->installRoute();
     }
@@ -41,8 +41,8 @@ class MakeAdmin extends Command
 
     private function addAdminNavbar()
     {
-        $stub = $this->getStub("/admin/Config/navbar.php.stub");
-        $pathSave = $this->module->getPath() . "/Config/navbar.php";
+        $stub = $this->getStub("/admin/Config/menu.php.stub");
+        $pathSave = $this->module->getPath() . "/Config/menu.php";
 
         $template = str_replace([
             "DumpMyLowerName"
@@ -76,10 +76,12 @@ class MakeAdmin extends Command
             'DumpMyModuleName'
             , 'DumpMyModuleView'
             , 'DumpMyRouteName'
+            ,'DumpMyModuleHeadName'
         ], [
             $this->module->getName()
-            , $this->getSnakeString($this->module->getName())
-            , $this->getSnakeString($this->module->getName())
+            , $this->getModuleSug()
+            , $this->getModuleSug()
+            ,$this->getModuleHeadName()
 
         ], $stub);
 

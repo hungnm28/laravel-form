@@ -1,0 +1,52 @@
+<?php
+
+namespace Modules\DumpMyModuleName\Http\Livewire\Permissions;
+
+use App\Models\Permission;
+use Hungnm28\LaravelForm\Traits\WithLaravelFormTrait;
+use Livewire\Component;
+use Nwidart\Modules\Facades\Module;
+
+class Listing extends Component
+{
+    use WithLaravelFormTrait;
+
+    public $confirm = 0;
+    public function mount()
+    {
+        $this->authorize("DumpMyRouteName.permissions.listing");
+    }
+
+    function delete()
+    {
+        $this->authorize("DumpMyRouteName.permissions.delete");
+        if ($this->confirm > 0) {
+            Permission::destroy($this->confirm);
+        }
+        $this->confirm = 0;
+        $this->dispatchBrowserEvent('warning', 'Permissions successfully destroyed.');
+    }
+
+    public function render()
+    {
+        $modules = Module::all();
+        $data = [];
+        foreach($modules as $module){
+            $data[$module->getLowerName()] = [
+                "info"=>[
+                    "name"=>$module->getName()
+                    ,"name_headline" => lfHeadLine($module->getName())
+                    ,'permission'=>Permission::whereType("module")->whereModule($module->getLowerName())->first()
+                ],
+                "permissions" =>Permission::with("children")->whereParentId(0)->whereType("page")->whereModule($module->getLowerName())->get()
+            ];
+        }
+
+        lForm()->setTitle("Permissions");
+        lForm()->pushBreadcrumb(route("DumpMyRouteName"),"DumpMyModuleHeadName");
+		lForm()->pushBreadcrumb(route("DumpMyRouteName.permissions"),"Permissions");
+
+        return view("DumpMyModuleView::livewire.permissions.listing", compact("data"))
+            ->layout('DumpMyModuleView::layouts.master', ['title' => 'Permissions Create']);
+    }
+}

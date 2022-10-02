@@ -132,7 +132,7 @@ trait WithLaravelFormTrait
             $navString.="\t\t],\n";
         }
         $navString .="\n\t]\n];";
-        $configPath = $module->getPath() . "/Config/navbar.php";
+        $configPath = $module->getPath() . "/Config/menu.php";
         file_put_contents($configPath,$navString);
 
     }

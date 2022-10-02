@@ -27,7 +27,6 @@ class InitProvider extends Command
         }
         $this->initModule($name);
         $this->configNavbar($name);
-        $this->configPermission($name);
         $module = Module::findOrFail($name);
         $stub = $this->getStub("ModuleServiceProvider.php.stub");
         $template = str_replace([
@@ -48,10 +47,7 @@ class InitProvider extends Command
     }
 
     private function configNavbar($moduleName){
-        (new Filesystem)->copy(__DIR__ . '/../../publishes/Config/navbar.php', module_path($moduleName,'Config/navbar.php'));
-    }
-    private function configPermission($moduleName){
-        (new Filesystem)->copy(__DIR__ . '/../../publishes/Config/permission.php', module_path($moduleName,'Config/permission.php'));
+        (new Filesystem)->copy(__DIR__ . '/../../publishes/Config/menu.php', module_path($moduleName,'Config/menu.php'));
     }
 
 }

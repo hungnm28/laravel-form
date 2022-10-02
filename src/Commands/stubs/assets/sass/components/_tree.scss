@@ -1,11 +1,17 @@
 .tree{
-    @apply w-full pl-3 ;
-    .item{
-        @apply w-full block;
-        .item-content{
-            @apply w-full flex items-center bg-slate-100 border my-1 hover:bg-slate-200;
-            .tools{
-                @apply flex-none pr-2;
+    @apply w-full block p-2;
+    .tree-header{
+        @apply w-full flex items-center;
+        .label{
+            @apply text-slate-700 font-medium text-2xl uppercase;
+        }
+    }
+    .tree-content{
+        @apply w-full block pl-4;
+        .item{
+            @apply w-full block;
+            .item-content{
+                @apply  w-full flex items-center border p-2 mb-1 hover:bg-slate-100
             }
         }
     }

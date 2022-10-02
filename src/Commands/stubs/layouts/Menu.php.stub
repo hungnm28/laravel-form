@@ -1,0 +1,16 @@
+<?php
+
+namespace Modules\DumpMyModuleName\Views\Components;
+
+use Illuminate\View\Component;
+
+class Menu extends Component
+{
+
+    public function render()
+    {
+        $data = config("DumpMyModuleLowerName.menu",[]);
+
+        return view("DumpMyModuleSlug::components.menu", compact("data"));
+    }
+}

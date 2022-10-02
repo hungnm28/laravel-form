@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\DumpMyModuleName\Http\Livewire\Settings\Menus;
+namespace Modules\DumpMyModuleName\Http\Livewire\Menus;
 
 use Hungnm28\LaravelForm\Traits\WithLaravelFormTrait;
 use Illuminate\Support\Arr;
@@ -18,18 +18,19 @@ class Edit extends Component
     protected $rules = [
         "permission"=>"string|required"
         ,"label"=>"string|required"
+        ,"module"=> "string|required"
     ];
 
     public function mount(){
         $this->onlyLocalhost();
         if(!$this->module || $this->module ==""){
-            return  redirect(route('DumpMyRouteName.settings.menus'));
+            return  redirect(route('DumpMyRouteName.menus'));
         }
         $module = Module::findOrFail($this->module);
-        $navbars = config($module->getLowerName().".navbar",[]);
+        $navbars = config($module->getLowerName().".menu",[]);
         $data = data_get($navbars,$this->item,[]);
         if(empty($data)){
-           return redirect(route('DumpMyRouteName.settings.menus'));
+           return redirect(route('DumpMyRouteName.menus'));
         }
         $this->label = data_get($data,"label");
         $this->route = data_get($data,"route");
@@ -42,7 +43,7 @@ class Edit extends Component
         $this->onlyLocalhost();
         $this->validate();
         $module = Module::findOrFail($this->module);
-        $navbars = config($module->getLowerName().".navbar",[]);
+        $navbars = config($module->getLowerName().".menu",[]);
         $data = data_get($navbars,$this->item,[]);
         $data["route"] = $this->route;
         $data["icon"] = $this->icon;
@@ -51,17 +52,16 @@ class Edit extends Component
         Arr::set($navbars,$this->item,$data);
         $this->saveNavbar($this->module,$navbars);
         session()->flash('message','done');
-        $this->redirectForm("DumpMyRouteName.settings.menus",1);
+        $this->redirectForm("DumpMyRouteName.menus",1);
     }
 
     public function render(){
 
         lForm()->setTitle("Menu Edit");
-        lForm()->pushBreadCrumb(route("DumpMyRouteName"),"Admin");
-        lForm()->pushBreadCrumb(route("DumpMyRouteName.settings"),"Setting");
-        lForm()->pushBreadCrumb(route("DumpMyRouteName.settings.menus"),"Menu");
-        lForm()->pushBreadCrumb(route("DumpMyRouteName.settings.menus.edit"),"Edit");
-        return view("DumpMyModuleView::livewire.settings.menus.edit")
+        lForm()->pushBreadCrumb(route("DumpMyRouteName"),"DumpMyModuleHeadName");
+        lForm()->pushBreadCrumb(route("DumpMyRouteName.menus"),"Menu");
+        lForm()->pushBreadCrumb(route("DumpMyRouteName.menus.edit"),"Edit");
+        return view("DumpMyModuleView::livewire.menus.edit")
             ->layout('DumpMyModuleView::layouts.master', ['title' => 'Menu Edit']);
     }
 

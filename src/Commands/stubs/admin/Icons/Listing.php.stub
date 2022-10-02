@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\DumpMyModuleName\Http\Livewire\Settings\Icons;
+namespace Modules\DumpMyModuleName\Http\Livewire\Icons;
 
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -60,12 +60,16 @@ class Listing extends Component
             '</svg>';
 
         file_put_contents(public_path("assets/images/icons.svg"), $svg);
-        return $this->redirect(route('DumpMyRouteName.settings.icons'));
+        return $this->redirect(route('admin.icons'));
     }
 
     public function render()
     {
-        return view("DumpMyModuleView::livewire.settings.icons.listing")
+        lForm()->setTitle("Icons");
+        lForm()->pushBreadCrumb(route("DumpMyRouteName"),"DumpMyModuleHeadName");
+        lForm()->pushBreadCrumb(route("DumpMyRouteName.icons"),"Icons");
+
+        return view("DumpMyModuleView::livewire.icons.listing")
             ->layout('DumpMyModuleView::layouts.master', ['title' => 'Icons']);
     }
 }
