@@ -10,7 +10,7 @@ Route::prefix("permissions")->name(".permissions")->group(function (){
     Route::get("/", \Modules\DumpMyModuleName\Http\Livewire\Permissions\Listing::class)->can("DumpMyModuleSlug.permissions.listing");
     Route::get("/create", \Modules\DumpMyModuleName\Http\Livewire\Permissions\Create::class)->name(".create")->can("DumpMyModuleSlug.permissions.create");
     Route::get("/edit/{record_id}", \Modules\DumpMyModuleName\Http\Livewire\Permissions\Edit::class)->name(".edit")->can("DumpMyModuleSlug.permissions.edit");
-    Route::get("/show/{record_id}", \Modules\DumpMyModuleName\Http\Livewire\Permissions\Show::class)->name(".show")->can("DumpMyModuleSlug.permissions.edit");
+    Route::get("/show/{record_id}", \Modules\DumpMyModuleName\Http\Livewire\Permissions\Show::class)->name(".show")->can("DumpMyModuleSlug.permissions.show");
     //---END-OF-PERMISSIONS---//
 });
 
