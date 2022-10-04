@@ -52,6 +52,6 @@ class DumpMyClassName extends Component
         lForm()->setTitle("DumpMyPageName");
         DumpMyBreadcrumb
         return view("DumpMyModuleSlug::livewire.DumpMyView.DumpMyFileSlug", compact("data"))
-            ->layout('DumpMyModuleSlug::layouts.master', ['title' => 'DumpMyPageName Create']);
+            ->layout('DumpMyModuleSlug::layouts.master', ['title' => 'DumpMyPageName Listing']);
     }
 }
