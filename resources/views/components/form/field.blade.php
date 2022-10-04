@@ -1,8 +1,8 @@
 @props(['name','label'=>null,'class'=>null])
 
-<div id="lf-form-{{$name}}" class="form-field {{$class}} @error($name) error @enderror">
+<div id="lff-form-{{$name}}" class="form-field {{$class}} @error($name) error @enderror">
     @if($label)
-        <label for="lf-{{$name}}" class="form-label">{{$label}}</label>
+        <label for="lff-{{$name}}" class="form-label">{{$label}}</label>
     @endif
     <div class="form-box">
         {{$slot}}

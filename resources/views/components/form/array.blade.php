@@ -8,7 +8,7 @@
 
         <div class="item-add w-full"
         >
-            <input x-model="val" id="lf-add-{{$name}}" type="{{$type}}" @keyup.enter="addItem"
+            <input x-model="val" id="lff-add-{{$name}}" type="{{$type}}" @keyup.enter="addItem"
                    placeholder="{{$placeholder}}" {{$attributes}} class="form-input input-array"/>
             <label wire:loading.attr="disabled" class="icon" @click="addItem">{!! lfIcon("add",18) !!}</label>
         </div>

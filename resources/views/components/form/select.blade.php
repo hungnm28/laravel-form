@@ -1,7 +1,7 @@
 @props(["name","label"=>null,"class"=>null,"params"=>[],"default"=>[]])
 
 <x-lf.form.field :name="$name" :label="$label" :class="$class">
-    <select class="form-input" wire:model="{{$name}}" id="lf-{{$name}}" {{$attributes}} >
+    <select class="form-input" wire:model="{{$name}}" id="lff-{{$name}}" {{$attributes}} >
         @foreach($default as $k => $val)
             <option value="{{$k}}">{{$val}}</option>
         @endforeach
