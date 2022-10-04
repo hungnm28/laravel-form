@@ -12,7 +12,7 @@ class MakeEdit extends Command
 {
     use WithCommandTrait;
 
-    protected $signature = 'lf:make-edit {name} {module} {--fileName=Listing} {--force} {--model=}';
+    protected $signature = 'lf:make-edit {name} {module} {--fileName=Edit} {--force} {--model=}';
 
     protected $description = 'Make edit Page: ';
 

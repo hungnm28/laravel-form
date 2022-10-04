@@ -12,7 +12,7 @@ class MakeCreate extends Command
 {
     use WithCommandTrait;
 
-    protected $signature = 'lf:make-create {name} {module} {--fileName=Listing} {--force} {--model=}';
+    protected $signature = 'lf:make-create {name} {module} {--fileName=Create} {--force} {--model=}';
 
     protected $description = 'Make create Page ';
 

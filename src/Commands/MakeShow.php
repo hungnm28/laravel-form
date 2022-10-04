@@ -12,7 +12,7 @@ class MakeShow extends Command
 {
     use WithCommandTrait;
 
-    protected $signature = 'lf:make-show {name} {module} {--fileName=Listing} {--force=} {--model=}';
+    protected $signature = 'lf:make-show {name} {module} {--fileName=Show} {--force=} {--model=}';
 
     protected $description = 'Make show Page: ';
 
