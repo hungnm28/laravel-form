@@ -12,7 +12,7 @@ class MakeListing extends Command
 {
     use WithCommandTrait;
 
-    protected $signature = 'lf:make-listing {name} {module} {--force} {--model=}';
+    protected $signature = 'lf:make-listing {name} {module} {--fileName=Listing} {--force} {--model=}';
 
     protected $description = 'Make listing File ';
 
@@ -22,6 +22,7 @@ class MakeListing extends Command
         $this->initPath($this->argument("name"));
         $this->initModule($this->argument("module"));
         $this->initModel($this->argument("name"));
+        $this->initFileName();
         $this->createClass();
         $this->createView();
         return true;
@@ -47,9 +48,10 @@ class MakeListing extends Command
         ], [
              $fields
             , $breadcrumb
+
         ], $stub);
         $template = $this->generateData($template);
-        $pathSave = $this->getClassFile("Listing.php");
+        $pathSave = $this->getClassFile("$this->fileName.php");
         $this->writeFile($pathSave, $template);
     }
 
@@ -87,9 +89,7 @@ class MakeListing extends Command
             ],
             $stub);
         $template = $this->generateData($template);
-        $pathSave = $this->getViewFile("listing.blade.php");
+        $pathSave = $this->getViewFile($this->getSnakeString($this->fileName).".blade.php");
         $this->writeFile($pathSave, $template);
     }
-
-
 }

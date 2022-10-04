@@ -8,7 +8,7 @@ use Hungnm28\LaravelForm\Traits\WithLaravelFormTrait;
 use Livewire\Component;
 
 
-class Edit extends Component
+class DumpMyClassName extends Component
 {
     use WithLaravelFormTrait;
 
@@ -52,7 +52,7 @@ class Edit extends Component
         lForm()->setTitle("DumpMyPageName");
         DumpMyBreadcrumblForm()->pushBreadcrumb(route("DumpMyRoute.edit",$this->record_id),"Edit");
 
-        return view("DumpMyModuleSlug::livewire.DumpMyView.edit")
+        return view("DumpMyModuleSlug::livewire.DumpMyView.DumpMyFileSlug")
             ->layout('DumpMyModuleSlug::layouts.master', ['title' => 'DumpMyPageName Edit']);
     }
 }

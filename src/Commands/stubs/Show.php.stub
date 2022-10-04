@@ -7,7 +7,7 @@ use Hungnm28\LaravelForm\Traits\WithLaravelFormTrait;
 use Livewire\Component;
 
 
-class Show extends Component
+class DumpMyClassName extends Component
 {
     use WithLaravelFormTrait;
 
@@ -23,7 +23,7 @@ class Show extends Component
         lForm()->setTitle("DumpMyPageName");
         DumpMyBreadcrumblForm()->pushBreadcrumb(route("DumpMyRoute.show",$this->record_id),"Show");
 
-        return view("DumpMyModuleSlug::livewire.DumpMyView.show", compact("data"))
+        return view("DumpMyModuleSlug::livewire.DumpMyView.DumpMyFileSlug", compact("data"))
             ->layout('DumpMyModuleSlug::layouts.master', ['title' => 'DumpMyPageName Show']);
     }
 }

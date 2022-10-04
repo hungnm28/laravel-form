@@ -12,7 +12,7 @@ class MakeShow extends Command
 {
     use WithCommandTrait;
 
-    protected $signature = 'lf:make-show {name} {module} {--force=} {--model=}';
+    protected $signature = 'lf:make-show {name} {module} {--fileName=Listing} {--force=} {--model=}';
 
     protected $description = 'Make show Page: ';
 
@@ -24,6 +24,7 @@ class MakeShow extends Command
         $this->initPath($this->argument("name"));
         $this->initModel($this->argument("name"));
         $this->initModule($this->argument("module"));
+        $this->initFileName();
         $this->createClass();
         $this->createView();
         return true;
@@ -43,7 +44,7 @@ class MakeShow extends Command
             $breadcrumb
         ], $stub);
         $template = $this->generateData($template);
-        $pathSave = $this->getClassFile("Show.php");
+        $pathSave = $this->getClassFile("$this->fileName.php");
         $this->writeFile($pathSave, $template);
     }
 
@@ -73,7 +74,7 @@ class MakeShow extends Command
             ],
             $stub);
         $template = $this->generateData($template);
-        $pathSave = $this->getViewFile("show.blade.php");
+        $pathSave = $this->getViewFile($this->getSnakeString($this->fileName).".blade.php");
         $this->writeFile($pathSave, $template);
     }
 

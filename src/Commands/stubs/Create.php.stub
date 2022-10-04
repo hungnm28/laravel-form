@@ -7,7 +7,7 @@ use Hungnm28\LaravelForm\Facades\LaravelForm;
 use Hungnm28\LaravelForm\Traits\WithLaravelFormTrait;
 use Livewire\Component;
 
-class   Create extends Component
+class   DumpMyClassName extends Component
 {
     use WithLaravelFormTrait;
 
@@ -43,7 +43,7 @@ class   Create extends Component
     {
         lForm()->setTitle("DumpMyPageName");
         DumpMyBreadcrumb
-        return view("DumpMyModuleSlug::livewire.DumpMyView.create")
+        return view("DumpMyModuleSlug::livewire.DumpMyView.DumpMyFileSlug")
             ->layout('DumpMyModuleSlug::layouts.master', ['title' => 'DumpMyPageName Create']);
     }
 }

@@ -12,7 +12,7 @@ class MakeEdit extends Command
 {
     use WithCommandTrait;
 
-    protected $signature = 'lf:make-edit {name} {module} {--force} {--model=}';
+    protected $signature = 'lf:make-edit {name} {module} {--fileName=Listing} {--force} {--model=}';
 
     protected $description = 'Make edit Page: ';
 
@@ -25,6 +25,7 @@ class MakeEdit extends Command
         $this->initPath($this->argument("name"));
         $this->initModule($this->argument("module"));
         $this->initModel($this->argument("name"));
+        $this->initFileName();
         $this->createClass();
         $this->createView();
         return true;
@@ -41,7 +42,7 @@ class MakeEdit extends Command
         foreach ($this->getModelFields() as $f => $field) {
             if (!in_array($f, $this->reservedColumn)) {
                 if ($field->default) {
-                    $listField .= '$' . $f . "= $field->default, ";
+                    $listField .= '$' . $f . "= '$field->default', ";
                 } else {
                     $listField .= '$' . $f . ", ";
                 }
@@ -70,7 +71,7 @@ class MakeEdit extends Command
             , $breadcrumb
         ], $stub);
         $template = $this->generateData($template);
-        $pathSave = $this->getClassFile("Edit.php");
+        $pathSave = $this->getClassFile("$this->fileName.php");
         $this->writeFile($pathSave, $template);
     }
 
@@ -99,7 +100,7 @@ class MakeEdit extends Command
             ],
             $stub);
         $template = $this->generateData($template);
-        $pathSave = $this->getViewFile("edit.blade.php");
+        $pathSave = $this->getViewFile($this->getSnakeString($this->fileName).".blade.php");
         $this->writeFile($pathSave, $template);
     }
 

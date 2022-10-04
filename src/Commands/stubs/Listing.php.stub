@@ -6,7 +6,7 @@ use DumpMyModelNamespace;
 use Hungnm28\LaravelForm\Traits\WithLaravelFormTrait;
 use Livewire\Component;
 
-class Listing extends Component
+class DumpMyClassName extends Component
 {
     use WithLaravelFormTrait;
 
@@ -51,7 +51,7 @@ class Listing extends Component
 
         lForm()->setTitle("DumpMyPageName");
         DumpMyBreadcrumb
-        return view("DumpMyModuleSlug::livewire.DumpMyView.listing", compact("data"))
+        return view("DumpMyModuleSlug::livewire.DumpMyView.DumpMyFileSlug", compact("data"))
             ->layout('DumpMyModuleSlug::layouts.master', ['title' => 'DumpMyPageName Create']);
     }
 }

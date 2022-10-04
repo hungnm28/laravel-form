@@ -12,7 +12,7 @@ class MakeCreate extends Command
 {
     use WithCommandTrait;
 
-    protected $signature = 'lf:make-create {name} {module} {--force} {--model=}';
+    protected $signature = 'lf:make-create {name} {module} {--fileName=Listing} {--force} {--model=}';
 
     protected $description = 'Make create Page ';
 
@@ -23,6 +23,7 @@ class MakeCreate extends Command
         $this->initPath($this->argument("name"));
         $this->initModule($this->argument("module"));
         $this->initModel($this->argument("name"));
+        $this->initFileName();
         $this->createClass();
         $this->createView();
         return true;
@@ -73,7 +74,7 @@ class MakeCreate extends Command
             , $breadcrumb
         ], $stub);
         $template = $this->generateData($template);
-        $pathSave = $this->getClassFile("Create.php");
+        $pathSave = $this->getClassFile("$this->fileName.php");
         $this->writeFile($pathSave, $template);
     }
 
@@ -106,7 +107,7 @@ class MakeCreate extends Command
             ],
             $stub);
         $template = $this->generateData($template);
-        $pathSave = $this->getViewFile("create.blade.php");
+        $pathSave = $this->getViewFile($this->getSnakeString($this->fileName).".blade.php");
         $this->writeFile($pathSave, $template);
     }
 

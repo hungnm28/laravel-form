@@ -10,7 +10,7 @@ use Nwidart\Modules\Facades\Module;
 
 trait WithCommandTrait
 {
-    private $module, $model, $path;
+    private $module, $model, $path,$fileName;
 
     private $reservedColumn = [
         'id', 'created_at', 'updated_at', 'deleted_at', 'remember_token', 'two_factor_recovery_codes', 'two_factor_secret'
@@ -30,6 +30,11 @@ trait WithCommandTrait
         $this->path = $pre . $name;
     }
 
+    private function initFileName(){
+        $fileName = $this->option("fileName");
+        $fileName =Str::before($fileName,'.php');
+        $this->fileName = $fileName;
+    }
     private function initModel($path)
     {
         $modelName = null;
@@ -167,6 +172,8 @@ trait WithCommandTrait
 
             "DumpMyPageName"
             ,"DumpMyNamespace"
+            ,'DumpMyClassName'
+            ,'DumpMyFileSlug'
              ,"DumpMyModuleName"
             ,"DumpMyModuleLowerName"
             ,"DumpMyModuleHeadName"
@@ -180,6 +187,8 @@ trait WithCommandTrait
         ],[
             $this->getPageName()
             ,$this->getNamespace()
+            ,$this->fileName
+            ,$this->getSnakeString($this->fileName)
             ,$this->getModuleName()
             ,$this->getModuleLowerName()
             ,$this->getModuleHeadName()
