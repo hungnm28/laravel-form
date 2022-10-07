@@ -57,6 +57,8 @@ class LaravelFormServiceProvider extends ServiceProvider
         $this->registerComponent('form.radio');
         $this->registerComponent('form.icon');
         $this->registerComponent('form.sort');
+        $this->registerComponent('form.json');
+        $this->registerComponent('form.tag');
         $this->registerComponent('form.toggle');
         $this->registerComponent('form.done');
         $this->registerComponent('table.label');

@@ -1,10 +1,10 @@
 .form-input{
-    @apply w-full border-gray-300 py-1.5 px-2 rounded-sm  ring-emerald-300 focus:border-emerald-300;
+    @apply w-full border-gray-300 py-1.5 px-2 rounded-sm  ring-0 focus:ring-0  focus:border-gray-500;
 }
 .form-field{
     @apply w-full block p-2;
     .form-label{
-            @apply block text-xs font-semibold mb-1;
+        @apply block text-xs font-semibold mb-1;
     }
     .form-box{
         @apply w-full block;
@@ -28,7 +28,13 @@
 
     &.sm{
         .form-input{
-            @apply px-1 py-0.5;
+            @apply px-1 py-0.5 text-sm;
+        }
+        .form-tags{
+            .tag-add{
+                @apply h-8;
+            }
+
         }
     }
     &.lg{
@@ -38,25 +44,25 @@
 
     }
     &.form-array{
-       .form-box{
-           @apply w-full block p-2 bg-gray-100 rounded;
-           .item{
-               @apply w-full flex mb-1;
-               .form-input{
-                   @apply flex-auto p-1 ring-0 rounded-r-none;
-               }
-               .icon{
-                   @apply rounded-r-sm bg-white flex-none flex items-center justify-center px-2 border-gray-300 border-t border-r border-b cursor-pointer hover:border-yellow-400 hover:bg-yellow-400;
-               }
-           }
-       }
+        .form-box{
+            @apply w-full block p-2 bg-gray-100 rounded;
+            .item{
+                @apply w-full flex mb-1;
+                .form-input{
+                    @apply flex-auto p-1 ring-0 rounded-r-none;
+                }
+                .icon{
+                    @apply rounded-r-sm bg-white flex-none flex items-center justify-center px-2 border-gray-300 border-t border-r border-b cursor-pointer hover:border-yellow-400 hover:bg-yellow-400;
+                }
+            }
+        }
         .item-add{
             @apply w-full flex;
             .form-input{
                 @apply flex-auto border-cyan-600 rounded-r-none ring-0;
             }
             .icon{
-                @apply rounded-r-sm bg-white flex-none flex items-center justify-center px-4 border-cyan-600 border bg-cyan-600 cursor-pointer text-white hover:bg-cyan-500 hover:border-cyan-500 ;
+                @apply rounded-r-sm bg-white flex-none flex items-center justify-center px-1 border-cyan-600 border bg-cyan-600 cursor-pointer text-white hover:bg-cyan-500 hover:border-cyan-500 ;
             }
         }
 
@@ -72,7 +78,7 @@
                 .form-radio,.form-checkbox{
                     @apply border-blue-600;
                     &:checked {
-                      &+.text{
+                        &+.text{
                             @apply text-blue-600;
                         }
                     }
@@ -113,7 +119,7 @@
             }
         }
         input{
-           @apply bg-slate-200 cursor-pointer;
+            @apply bg-slate-200 cursor-pointer;
         }
     }
 
@@ -166,6 +172,31 @@
             &+ .title{
                 @apply text-blue-700;
             }
+        }
+    }
+}
+
+.form-tags{
+    @apply flex flex-wrap;
+    .tags{
+        @apply flex-none flex flex-wrap;
+        .tag{
+            @apply flex-none inline-flex items-center mr-1 mt-1 border rounded-sm bg-sky-100 mb-1;
+            .text{
+                @apply px-2;
+            }
+            .icon{
+                @apply flex-none flex items-center border-l px-2 cursor-pointer hover:bg-gray-200 h-full;
+            }
+        }
+    }
+    .tag-add{
+        @apply flex-auto flex h-10 min-w-[30%];
+        .form-input {
+            @apply rounded-r-none border-r-0 ring-0;
+        }
+        .icon{
+            @apply flex-auto h-full bg-green-500 rounded-r cursor-pointer text-white flex items-center px-2 hover:bg-green-600;
         }
     }
 }
