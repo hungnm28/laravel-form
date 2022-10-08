@@ -8,15 +8,13 @@
 
         <div class="item-add w-full"
         >
-            <input x-model="val" id="lff-add-{{$name}}" type="{{$type}}" @keyup.enter="addItem"
-                   placeholder="{{$placeholder}}" {{$attributes}} class="form-input input-array"/>
+            <input x-model="val" id="lff-add-{{$name}}" type="{{$type}}" @keyup.enter="addItem" placeholder="{{$placeholder}}" {{$attributes}} class="form-input input-array" />
             <label wire:loading.attr="disabled" class="icon" @click="addItem">{!! lfIcon("add",15) !!}</label>
         </div>
         <div class="w-full flex-none">
             @foreach($params as $k=> $param)
                 <div class="item">
-                    <input type="{{$type}}" wire:model="{{$name}}.{{$k}}" placeholder="{{$placeholder}}"
-                           class="form-input input-array"/>
+                    <input type="{{$type}}" wire:model="{{$name}}.{{$k}}" placeholder="{{$placeholder}}" class="form-input input-array" />
                     <label class="icon" wire:click="removeItem('{{$name}}',{{$k}})">{!! lfIcon("close",12) !!}</label>
                 </div>
             @endforeach

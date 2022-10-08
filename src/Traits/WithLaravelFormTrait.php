@@ -12,6 +12,16 @@ trait WithLaravelFormTrait
     public $record_id;
     public $done = 0;
 
+    public function addJson($name, $key,$value)
+    {
+        $key = trim($key);
+        $value = trim($value);
+        if ($value == ''||$key =='' ) return false;
+        if (isset($this->$name)) {
+            $this->$name[$key] = $value;
+        }
+    }
+
     public function addItem($name, $param)
     {
         $param = trim($param);

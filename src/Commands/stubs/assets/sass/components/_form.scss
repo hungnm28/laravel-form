@@ -179,11 +179,11 @@
 .form-tags{
     @apply flex flex-wrap;
     .tags{
-        @apply flex-none flex flex-wrap;
+        @apply flex-none flex flex-wrap max-w-full;
         .tag{
-            @apply flex-none inline-flex items-center mr-1 mt-1 border rounded-sm bg-sky-100 mb-1;
+            @apply flex-none inline-flex items-center mr-1 my-1 border rounded-sm bg-sky-100;
             .text{
-                @apply px-2;
+                @apply px-2 py-1;
             }
             .icon{
                 @apply flex-none flex items-center border-l px-2 cursor-pointer hover:bg-gray-200 h-full;
@@ -191,12 +191,12 @@
         }
     }
     .tag-add{
-        @apply flex-auto flex h-10 min-w-[30%];
+        @apply flex-auto flex h-10 min-w-[30%] my-1;
         .form-input {
-            @apply rounded-r-none border-r-0 ring-0;
+            @apply border-cyan-600 rounded-r-none border-r-0 ring-0;
         }
         .icon{
-            @apply flex-auto h-full bg-cyan-500 rounded-r cursor-pointer text-white flex items-center px-2 hover:bg-cyan-600;
+            @apply flex-auto h-full bg-cyan-600 rounded-r cursor-pointer text-white flex items-center px-2 hover:bg-cyan-500;
         }
     }
 }
