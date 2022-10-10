@@ -1,6 +1,8 @@
-@props(["name","label"=>null,"class"=>null ])
+@props(["name","label"=>null,"class"=>null,"params"=>[] ])
 <x-lf.form.field :name="$name" :label="$label" :class="$class">
     <div class="lf-flex">
-        <label class="item"><input class="form-checkbox" type="checkbox" wire:model="{{$name}}" value="1" /> <span class="text">Form checkbox 1</span></label>
+        @foreach($params as $k=>$title)
+            <label class="item"><input class="form-checkbox" type="checkbox" wire:model="{{$name}}" value="{{$k}}" /> <span class="text">{{$title}}</span></label>
+        @endforeach
     </div>
 </x-lf.form.field>
