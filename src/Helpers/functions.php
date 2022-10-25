@@ -8,7 +8,7 @@ if (!function_exists('lfIcon')) {
         if ($height == 0) $height = $width;
         return '
             <svg width="' . $width . 'px" height="' . $height . 'px"  viewBox="' . $viewBox . '" class="mcon" ' . $attribute . ' fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                <use xlink:href="' . env('ASSET_ICON', 'assets') . '/images/icons.svg#' . $name . '"/>
+                <use xlink:href="' . env('ASSET_ICON', '/assets') . '/images/icons.svg#' . $name . '"/>
             </svg>
         ';
     }
