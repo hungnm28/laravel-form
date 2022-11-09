@@ -7,7 +7,7 @@ Route::prefix("menus")->name(".menus")->group(function (){
     Route::get("/edit", \Modules\DumpMyModuleName\Http\Livewire\Menus\Edit::class)->name(".edit")->can("DumpMyModuleSlug.menus.edit");
 });
 Route::prefix("permissions")->name(".permissions")->group(function (){
-    Route::get("/", \Modules\DumpMyModuleName\Http\Livewire\Permissions\Index::class)->can("DumpMyModuleSlug.permissions.listing");
+    Route::get("/", \Modules\DumpMyModuleName\Http\Livewire\Permissions\Index::class)->can("DumpMyModuleSlug.permissions");
     Route::get("/listing", \Modules\DumpMyModuleName\Http\Livewire\Permissions\Listing::class)->name(".listing")->can("DumpMyModuleSlug.permissions.listing");
     Route::get("/create", \Modules\DumpMyModuleName\Http\Livewire\Permissions\Create::class)->name(".create")->can("DumpMyModuleSlug.permissions.create");
     Route::get("/edit/{record_id}", \Modules\DumpMyModuleName\Http\Livewire\Permissions\Edit::class)->name(".edit")->can("DumpMyModuleSlug.permissions.edit");
