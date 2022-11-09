@@ -1,0 +1,19 @@
+<?php
+
+namespace Modules\DumpMyModuleName\Http\Livewire\Permissions;
+
+use Livewire\Component;
+
+class Index extends Component
+{
+
+    public function render()
+    {
+        lForm()->setTitle("Permissions");
+        lForm()->pushBreadcrumb(route("DumpMyRouteName"),"Admin");
+        lForm()->pushBreadcrumb(route("DumpMyRouteName.permissions"),"Permissions");
+
+        return view("DumpMyModuleView::livewire.permissions.index")
+            ->layout('DumpMyModuleView::layouts.master', ['title' => 'Permissions ']);
+    }
+}

@@ -3,7 +3,6 @@
 namespace Modules\DumpMyModuleName\Http\Livewire\Permissions;
 
 use App\Models\Permission;
-use Hungnm28\LaravelForm\Facades\LaravelForm;
 use Hungnm28\LaravelForm\Traits\WithLaravelFormTrait;
 use Livewire\Component;
 
@@ -19,8 +18,7 @@ class Edit extends Component
         return [
             'name' => 'string|required',
             'label' => 'string|required',
-            'type' => 'string|required|in:module,page,method',
-            "module"=> "string|required"
+            'type' => 'string|required|in:module,page,method'
         ];
     }
 
@@ -31,7 +29,6 @@ class Edit extends Component
         $this->name = $data->name;
 		$this->label = $data->label;
 		$this->parent_id = $data->parent_id;
-		$this->module = $data->module;
 		$this->type = $data->type;
 
     }
@@ -50,7 +47,6 @@ class Edit extends Component
             'name' => $this->name,
 			'label' => $this->label,
 			'parent_id' => $this->parent_id,
-			'module' => $this->module,
 			'type' => $this->type,
 
         ]);
@@ -64,11 +60,9 @@ class Edit extends Component
     {
         lForm()->setTitle("Permissions");
         lForm()->pushBreadcrumb(route("DumpMyRouteName"),"Admin");
-		lForm()->pushBreadcrumb(route("DumpMyRouteName.permissions"),"DumpMyModuleHeadName");
+		lForm()->pushBreadcrumb(route("DumpMyRouteName.permissions"),"Admin");
 		lForm()->pushBreadcrumb(route("DumpMyRouteName.permissions.edit",$this->record_id),"Edit");
-
-        $parents = Permission::whereModule($this->module)->whereType('page')->get()->pluck("label","id");
-
+        $parents = Permission::whereType('page')->get()->pluck("label","id");
         return view("DumpMyModuleView::livewire.permissions.edit",compact("parents"))
             ->layout('DumpMyModuleView::layouts.master', ['title' => 'Permissions Edit']);
     }

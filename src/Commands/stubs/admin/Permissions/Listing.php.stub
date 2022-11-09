@@ -5,7 +5,6 @@ namespace Modules\DumpMyModuleName\Http\Livewire\Permissions;
 use App\Models\Permission;
 use Hungnm28\LaravelForm\Traits\WithLaravelFormTrait;
 use Livewire\Component;
-use Nwidart\Modules\Facades\Module;
 
 class Listing extends Component
 {
@@ -29,24 +28,13 @@ class Listing extends Component
 
     public function render()
     {
-        $modules = Module::all();
-        $data = [];
-        foreach($modules as $module){
-            $data[$module->getLowerName()] = [
-                "info"=>[
-                    "name"=>$module->getName()
-                    ,"name_headline" => lfHeadLine($module->getName())
-                    ,'permission'=>Permission::whereType("module")->whereModule($module->getLowerName())->first()
-                ],
-                "permissions" =>Permission::with("children")->whereParentId(0)->whereType("page")->whereModule($module->getLowerName())->get()
-            ];
-        }
-
+        $data = Permission::with("children")->whereParentId(0)->whereType("page")->get();
         lForm()->setTitle("Permissions");
-        lForm()->pushBreadcrumb(route("DumpMyRouteName"),"DumpMyModuleHeadName");
+        lForm()->pushBreadcrumb(route("DumpMyRouteName"),"Admin");
 		lForm()->pushBreadcrumb(route("DumpMyRouteName.permissions"),"Permissions");
+		lForm()->pushBreadcrumb(route("DumpMyRouteName.permissions.listing"),"Listing");
 
         return view("DumpMyModuleView::livewire.permissions.listing", compact("data"))
-            ->layout('DumpMyModuleView::layouts.master', ['title' => 'Permissions Create']);
+            ->layout('DumpMyModuleView::layouts.master', ['title' => 'Permissions Listing']);
     }
 }

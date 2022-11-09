@@ -2,14 +2,13 @@
     <x-lf.card title="Edit" class="warning">
         <x-lf.form.input name="name" type="string" label="Name" placeholder="Name ..."/>
 		<x-lf.form.input name="label" type="string" label="Label" placeholder="Label ..."/>
-		<x-lf.form.input name="module" type="string" label="Module" placeholder="Module ..."/>
         <x-lf.form.select name="type" label="Type" :params="['Chọn Kiểu','module'=>'Module','page'=>'Page','method'=>'Method']"/>
         @if($type=='method')
             <x-lf.form.select name="parent_id" label="Page" :default="['Select Page']" :params="$parents"/>
         @endif
         <x-lf.form.done :params="['Listing','Create','Show']"/>
         <x-slot name="tools" >
-            @can('DumpMyRouteName.permissions.show')
+            @can('admin.permissions.show')
             <a class="btn-success sm" href="{{route('DumpMyRouteName.permissions.show',$record_id)}}">{!! lfIcon("launch",11) !!}</a>
             @endcan
             <a class="btn-primary sm" href="{{route('DumpMyRouteName.permissions')}}">{!! lfIcon("list",11) !!}</a>

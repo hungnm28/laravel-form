@@ -19,9 +19,9 @@ class Show extends Component
 
     public function render()
     {
-        $data =  Permission::findOrFail($this->record_id);
+        $data =  Permission::with("parent")->findOrFail($this->record_id);
         lForm()->setTitle("Permissions");
-        lForm()->pushBreadcrumb(route("DumpMyRouteName"),"DumpMyModuleHeadName");
+        lForm()->pushBreadcrumb(route("DumpMyRouteName"),"Admin");
 		lForm()->pushBreadcrumb(route("DumpMyRouteName.permissions"),"Permissions");
 		lForm()->pushBreadcrumb(route("DumpMyRouteName.permissions.show",$this->record_id),"Show");
 
