@@ -1,0 +1,18 @@
+<?php
+
+namespace DumpMyNamespace;
+
+use Livewire\Component;
+
+class Index extends Component
+{
+
+    public function render()
+    {
+       lForm()->setTitle("DumpMyPageName");
+       DumpMyBreadcrumb
+
+        return view("DumpMyModuleSlug::livewire.DumpMyView.index")
+            ->layout('DumpMyModuleSlug::layouts.master', ['title' => 'DumpMyPageName']);
+    }
+}

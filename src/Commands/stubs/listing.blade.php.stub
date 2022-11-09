@@ -25,12 +25,12 @@
             </tr>
         @endforeach
     </table>
-    <x-slot name="filters">
+    <x-slot:filters>
         <x-lf.filter.input name="fId" type="number" placeholder="Id ..." />
-    </x-slot>
-    <x-slot name="tools">
+    </x-slot:filters>
+    <x-slot:tools>
         @can("DumpMyPermission.create")
            <div> <a class="btn-primary sm" href="{{route("DumpMyRoute.create")}}">{!! lfIcon("add") !!}</a></div>
         @endcan
-    </x-slot>
+    </x-slot:tools>
 </x-lf.page.listing>

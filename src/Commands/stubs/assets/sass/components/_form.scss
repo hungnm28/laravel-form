@@ -1,5 +1,8 @@
 .form-input{
     @apply w-full border-gray-300 py-1.5 px-2 rounded-sm  ring-0 focus:ring-0  focus:border-gray-500;
+    &:disabled{
+        @apply bg-gray-100 cursor-not-allowed;
+    }
 }
 .form-field{
     @apply w-full block p-2;

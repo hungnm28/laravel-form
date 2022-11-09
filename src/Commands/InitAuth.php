@@ -22,7 +22,6 @@ class InitAuth extends Command
         $this->info("Init Auth");
         $this->call("vendor:publish",['--tag'=>'laravel-form-database']);
         $this->copyModel();
-        $this->copyConfig();
         $this->copyProvider();
         $this->copyMiddleware();
 

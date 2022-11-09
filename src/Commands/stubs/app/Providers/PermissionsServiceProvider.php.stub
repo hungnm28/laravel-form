@@ -30,10 +30,9 @@ class PermissionsServiceProvider extends ServiceProvider
         try {
 
             Gate::before(function ($user) {
-                $listSuper = config("admin.super_admins", []);
-                if (in_array($user->id, $listSuper)) {
+               if($user->is_admin && $user->is_super_admin){
                     return true;
-                }
+               }
             });
 
             Permission::get()->map(function ($permission) {

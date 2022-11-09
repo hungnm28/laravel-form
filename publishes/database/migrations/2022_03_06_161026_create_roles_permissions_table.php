@@ -14,7 +14,12 @@ return new class extends Migration {
     {
         if (!Schema::hasColumn('users', 'is_admin')) {
             Schema::table('users', function (Blueprint $table) {
-                $table->tinyInteger("is_admin")->nullable()->default(0);
+                $table->boolean("is_admin")->nullable()->default(false);
+            });
+        }
+        if (!Schema::hasColumn('users', 'is_super_admin')) {
+            Schema::table('users', function (Blueprint $table) {
+                $table->boolean("is_super_admin")->nullable()->default(false);
             });
         }
 
@@ -22,7 +27,6 @@ return new class extends Migration {
             $table->id();
             $table->string("name")->nullable();
             $table->string("label")->nullable();
-            $table->string("type")->nullable();
             $table->timestamps();
         });
         Schema::create('permissions', function (Blueprint $table) {
@@ -30,7 +34,6 @@ return new class extends Migration {
             $table->string("name")->nullable();
             $table->string("label")->nullable();
             $table->integer("parent_id")->nullable()->default(0);
-            $table->string("module")->nullable();
             $table->string("type")->nullable()->default("page");
             $table->timestamps();
         });

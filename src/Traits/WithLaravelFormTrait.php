@@ -79,7 +79,7 @@ trait WithLaravelFormTrait
     {
         switch ($this->done) {
             case 0:
-                $this->redirect(route("$route", $params));
+                $this->redirect(route("$route.listing", $params));
                 break;
             case 1:
                 $this->redirect(route("$route.create", $params));

@@ -21,6 +21,12 @@ class MakePage extends Command
     {
         $this->initPath($this->argument("name"));
 
+        $this->call('lf:make-index', [
+            'name' => $this->argument("name")
+            ,'module' => $this->argument("module")
+            ,'--force' => $this->option("force")
+            ,'--model' => $this->option("model")
+        ]);
         $this->call('lf:make-listing', [
                                         'name' => $this->argument("name")
                                         ,'module' => $this->argument("module")

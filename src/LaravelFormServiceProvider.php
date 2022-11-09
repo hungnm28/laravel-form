@@ -18,6 +18,7 @@ class LaravelFormServiceProvider extends ServiceProvider
         ,Commands\InitRoute::class
         ,Commands\InitGitignore::class
         ,Commands\InitModule::class
+        ,Commands\MakeIndex::class
         ,Commands\MakeCreate::class
         ,Commands\MakeEdit::class
         ,Commands\MakeShow::class
@@ -25,6 +26,7 @@ class LaravelFormServiceProvider extends ServiceProvider
         ,Commands\MakePage::class
         ,Commands\MakeAdmin::class
         ,Commands\MakeRoute::class
+        ,Commands\CreateUser::class
     ];
 
     public function register()
@@ -76,6 +78,8 @@ class LaravelFormServiceProvider extends ServiceProvider
 
         $this->registerComponent('filter.label');
         $this->registerComponent('filter.input');
+
+        $this->registerComponent('modal');
     }
 
     protected function registerComponent(string $component)
