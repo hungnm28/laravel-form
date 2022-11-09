@@ -24,6 +24,7 @@ class MakeAdmin extends Command
         $this->installAdminModule("Menus", "Listing");
         $this->installAdminModule("Menus", "Create");
         $this->installAdminModule("Menus", "Edit");
+        $this->installAdminModule("Permissions", "Index");
         $this->installAdminModule("Permissions", "Listing");
         $this->installAdminModule("Permissions", "Edit");
         $this->installAdminModule("Permissions", "Create");
