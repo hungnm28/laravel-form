@@ -58,11 +58,11 @@ class MakeShow extends Command
                 case "array":
                 case "object":
                 case "json":
-                    $fields .= $this->showNewLine(5).'<tr>'.$this->showNewLine(6).'<th class="text-right pr-2">' . $f . ':</th>'.$this->showNewLine(6).'<td><x-lf.item.tags :params="$data->' . $f . '" /></td>'.$this->showNewLine(5).'</tr>';
+                    $fields .= $this->showNewLine(5).'<tr>'.$this->showNewLine(6).'<th class="text-right pr-2">' . $this->getHeadline($f) . ':</th>'.$this->showNewLine(6).'<td><x-lf.item.tags :params="$data->' . $f . '" /></td>'.$this->showNewLine(5).'</tr>';
                     break;
 
                 default:
-                    $fields .= $this->showNewLine(5).'<tr>'.$this->showNewLine(6).'<th class="text-right pr-2">' . $f . ':</th>'.$this->showNewLine(6).'<td>{{$data->' . $f . '}}</td>'.$this->showNewLine(5).'</tr>';
+                    $fields .= $this->showNewLine(5).'<tr>'.$this->showNewLine(6).'<th class="text-right pr-2">' .$this->getHeadline($f) . ':</th>'.$this->showNewLine(6).'<td>{{$data->' . $f . '}}</td>'.$this->showNewLine(5).'</tr>';
             }
 
         }

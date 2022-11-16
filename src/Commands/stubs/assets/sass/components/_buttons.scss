@@ -92,4 +92,7 @@
             @apply bg-green-700 right-0;
         }
     }
+    .toggle:disabled + .bar{
+        @apply opacity-50 cursor-not-allowed;
+    }
 }

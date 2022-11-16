@@ -2,65 +2,83 @@
  return [
 	'menu' => [
  		[
-			'label' => 'Roles',
-			'icon' => 'verified',
-			'route' => 'DumpMyRoute.roles',
-			'permission' => 'DumpMyRoute.roles',
+			'label' => 'Admins User',
+			'icon' => 'account-manager',
+			'route' => 'DumpMyRouteName.admins',
+			'permission' => 'DumpMyRouteName.admins',
 			'children' => [
+				[
+					'label' => 'Listing',
+					'icon' => 'list',
+					'route' => 'DumpMyRouteName.admins.listing',
+					'permission' => 'DumpMyRouteName.admins.lsiting',
+				],
 				[
 					'label' => 'Create',
 					'icon' => 'add',
-					'route' => 'DumpMyRoute.roles.create',
-					'permission' => 'DumpMyRoute.roles.create',
+					'route' => 'DumpMyRouteName.admins.create',
+					'permission' => 'DumpMyRouteName.admins.create',
+				],
+			],
+		],
+		[
+			'label' => 'Users',
+			'icon' => 'people',
+			'route' => 'DumpMyRouteName.users',
+			'permission' => 'DumpMyRouteName.users',
+			'children' => [
+				[
+					'label' => 'Listing',
+					'icon' => 'list',
+					'route' => 'DumpMyRouteName.users.listing',
+					'permission' => 'DumpMyRouteName.users.listing',
+				],
+				[
+					'label' => 'Create',
+					'icon' => 'add',
+					'route' => 'DumpMyRouteName.users.create',
+					'permission' => 'DumpMyRouteName.users.create',
+				],
+			],
+		],
+		[
+			'label' => 'Roles',
+			'icon' => 'verified',
+			'route' => 'DumpMyRouteName.roles',
+			'permission' => 'DumpMyRouteName.roles',
+			'children' => [
+				[
+					'label' => 'Listing',
+					'icon' => 'list',
+					'route' => 'DumpMyRouteName.roles.listing',
+					'permission' => 'DumpMyRouteName.roles.listing',
+				],
+				[
+					'label' => 'Create',
+					'icon' => 'add',
+					'route' => 'DumpMyRouteName.roles.create',
+					'permission' => 'DumpMyRouteName.roles.create',
 				],
 			],
 		],
 		[
 			'label' => 'Permissions',
 			'icon' => 'security',
-			'route' => 'DumpMyRoute.permissions',
-			'permission' => 'DumpMyRoute.permissions',
+			'route' => 'DumpMyRouteName.permissions',
+			'permission' => 'DumpMyRouteName.permissions',
 			'children' => [
 				[
-					'label' => 'Danh sách',
+					'label' => 'Listing',
 					'icon' => 'list',
-					'route' => 'DumpMyRoute.permissions.listing',
-					'permission' => 'DumpMyRoute.permissions.listing',
+					'route' => 'DumpMyRouteName.permissions.listing',
+					'permission' => 'DumpMyRouteName.permissions.listing',
 				],
 				[
-					'label' => 'Thêm mới',
+					'label' => 'Create',
 					'icon' => 'add',
-					'route' => 'DumpMyRoute.permissions.create',
-					'permission' => 'DumpMyRoute.permissions.create',
+					'route' => 'DumpMyRouteName.permissions.create',
+					'permission' => 'DumpMyRouteName.permissions.create',
 				],
-			],
-		],
-		[
-			'label' => 'Menu',
-			'icon' => 'menu',
-			'route' => 'DumpMyRoute.menus',
-			'permission' => 'DumpMyRoute.menus',
-			'children' => [
-				[
-					'label' => 'Thêm mới',
-					'icon' => 'add',
-					'route' => 'DumpMyRoute.menus.create',
-					'permission' => 'DumpMyRoute.menus.create',
-				],
-				[
-					'label' => 'Danh sách',
-					'icon' => 'list',
-					'route' => 'DumpMyRoute.menus.listing',
-					'permission' => 'DumpMyRoute.menus.listing',
-				],
-			],
-		],
-		[
-			'label' => 'Icons',
-			'icon' => 'setting-suggest',
-			'route' => 'DumpMyRoute.icons',
-			'permission' => 'DumpMyRoute.icons',
-			'children' => [
 			],
 		],
 

@@ -1,0 +1,38 @@
+<div class="w-full p-1 md:p-4 max-w-md">
+    <x-lf.card title="Create" class="info">
+        <x-lf.form.input name="user_id" type="integer" label="User id" placeholder="User id ..." />
+        <x-lf.form.input name="email" type="string" label="Email" placeholder="Email ..." />
+        @if($data)
+            <x-lf.form.field name="id" label="User info">
+                <div class="w-full p-2 border bg-green-100">
+                    <div class="w-full border-b p-2"><b>ID: </b><span>{{$data->id}}</span></div>
+                    <div class="w-full border-b p-2"><b>Name: </b><span>{{$data->name}}</span></div>
+                    <div class="w-full border-b p-2"><b>Email: </b><span>{{$data->email}}</span></div>
+                </div>
+            </x-lf.form.field>
+
+            <x-lf.form.toggle name="is_admin" label="Is admin" />
+            @if(auth()->user()->is_super_admin)
+                <x-lf.form.toggle name="is_super_admin" label="Is super admin" />
+            @endif
+            @if($is_admin && !$is_super_admin)
+                <x-lf.form.checkbox name="roles" label="Roles" :params="$allRoles" />
+            @endif
+        @endif
+
+
+        <x-lf.form.done />
+        <x-slot:tools>
+            <a class="btn-primary sm" href="{{route('DumpMyRouteName.admins')}}">{!! lfIcon("list") !!}</a>
+        </x-slot:tools>
+        <x-slot:footer>
+            <div class="card-footer flex justify-between">
+                <label class="btn-primary flex-none" wire:click="store">Create</label>
+                <a class="btn" href="{{route("DumpMyRouteName.admins")}}">Cancel</a>
+            </div>
+        </x-slot:footer>
+    </x-lf.card>
+</div>
+
+
+

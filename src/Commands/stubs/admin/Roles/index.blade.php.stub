@@ -1,0 +1,14 @@
+<div class="w-full flex flex-wrap p-2">
+    @can("DumpMyRouteName.roles.listing")
+        <a href="{{route("DumpMyRouteName.roles.listing")}}" title="Roles Listing" class="btn-primary xl m-2">
+            {!! lfIcon("list",32) !!}
+            <span class="text">Listing</span>
+        </a>
+    @endcan
+    @can("DumpMyRouteName.roles.create")
+        <a href="{{route("DumpMyRouteName.roles.create")}}" title="Roles Listing" class="btn-success xl m-2">
+            {!! lfIcon("add",32) !!}
+            <span class="text">Create</span>
+        </a>
+    @endcan
+</div>

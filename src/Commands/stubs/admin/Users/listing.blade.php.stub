@@ -1,0 +1,56 @@
+<x-lf.page.listing :fields="$fields" :footer="$data->onEachSide(3)->links()">
+    <table class="table">
+        <thead>
+        <tr>
+            <th><x-lf.form.sort name="sId" :value="$sId">#</x-lf.form.sort></th>
+            <x-lf.table.label name="name" :fields="$fields">Name</x-lf.table.label>
+			<x-lf.table.label name="email" :fields="$fields">Email</x-lf.table.label>
+			<x-lf.table.label name="email_verified_at" :fields="$fields">Email Verified At</x-lf.table.label>
+			<x-lf.table.label name="two_factor_secret" :fields="$fields">Two Factor Secret</x-lf.table.label>
+			<x-lf.table.label name="two_factor_recovery_codes" :fields="$fields">Two Factor Recovery Codes</x-lf.table.label>
+			<x-lf.table.label name="two_factor_confirmed_at" :fields="$fields">Two Factor Confirmed At</x-lf.table.label>
+			<x-lf.table.label name="remember_token" :fields="$fields">Remember Token</x-lf.table.label>
+			<x-lf.table.label name="current_team_id" :fields="$fields">Current Team Id</x-lf.table.label>
+			<x-lf.table.label name="profile_photo_path" :fields="$fields">Profile Photo Path</x-lf.table.label>
+			<x-lf.table.label name="created_at" :fields="$fields">Created At</x-lf.table.label>
+			<x-lf.table.label name="updated_at" :fields="$fields">Updated At</x-lf.table.label>
+            <th></th>
+        </tr>
+        </thead>
+        @foreach($data as $item)
+            <tr>
+                <th class="stt">{{$item->id}}</th>
+                <x-lf.table.item name="name" :fields="$fields">{{$item->name}}</x-lf.table.item>
+				<x-lf.table.item name="email" :fields="$fields">{{$item->email}}</x-lf.table.item>
+				<x-lf.table.item name="email_verified_at" :fields="$fields">{{$item->email_verified_at}}</x-lf.table.item>
+				<x-lf.table.item name="two_factor_secret" :fields="$fields">{{$item->two_factor_secret}}</x-lf.table.item>
+				<x-lf.table.item name="two_factor_recovery_codes" :fields="$fields">{{$item->two_factor_recovery_codes}}</x-lf.table.item>
+				<x-lf.table.item name="two_factor_confirmed_at" :fields="$fields">{{$item->two_factor_confirmed_at}}</x-lf.table.item>
+				<x-lf.table.item name="remember_token" :fields="$fields">{{$item->remember_token}}</x-lf.table.item>
+				<x-lf.table.item name="current_team_id" :fields="$fields">{{$item->current_team_id}}</x-lf.table.item>
+				<x-lf.table.item name="profile_photo_path" :fields="$fields">{{$item->profile_photo_path}}</x-lf.table.item>
+				<x-lf.table.item name="created_at" :fields="$fields">{{$item->created_at}}</x-lf.table.item>
+				<x-lf.table.item name="updated_at" :fields="$fields">{{$item->updated_at}}</x-lf.table.item>
+                <td class="action">
+                    @can('DumpMyRouteName.users.show')
+                    <a class="btn-success xs" href="{{route("DumpMyRouteName.users.show",$item->id)}}">{!! lfIcon("launch",10) !!}</a>
+                    @endcan
+                    @can('DumpMyRouteName.users.edit')
+                    <a class="btn-info xs" href="{{route("DumpMyRouteName.users.edit",$item->id)}}">{!! lfIcon("edit",10) !!}</a>
+                    @endcan
+                    @can('DumpMyRouteName.users.delete')
+                    <x-lf.btn.delete :record="$item->id" :confirm="$confirm"/>
+                    @endcan
+                </td>
+            </tr>
+        @endforeach
+    </table>
+    <x-slot:filters>
+        <x-lf.filter.input name="fId" type="number" placeholder="Id ..." />
+    </x-slot:filters>
+    <x-slot:tools>
+        @can("DumpMyRouteName.users.create")
+           <div> <a class="btn-primary sm" href="{{route("DumpMyRouteName.users.create")}}">{!! lfIcon("add") !!}</a></div>
+        @endcan
+    </x-slot:tools>
+</x-lf.page.listing>

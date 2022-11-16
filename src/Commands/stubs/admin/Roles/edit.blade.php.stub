@@ -1,0 +1,32 @@
+<div class="w-full p-1 md:p-4">
+    <x-lf.card title="Edit" class="warning">
+        <x-lf.form.input name="label" type="string" label="Label" placeholder="Label ..." />
+        <x-lf.form.input name="name" disabled type="string" label="Name" placeholder="Name ..." />
+        <x-lf.form.field name="permissions" label="Permissions">
+            <div class="w-full flex p-1 bg-gray-50">
+                @foreach($permissionsParams as $item)
+                    <div class="flex-auto m-2 border p-2 bg-green-100">
+                        <label class="w-full block font-bold cursor-pointer"><input class="mr-2" type="checkbox" wire:model="permissions" value="{{$item->id}}" /> <span>{{$item->label}}</span></label>
+                        @foreach($item->children as $child)
+                            <label class="w-full block pl-3 py-1 cursor-pointer"><input class="mr-2" wire:model="permissions" type="checkbox" value="{{$child->id}}" /> <span>{{$child->label}}</span></label>
+                        @endforeach
+                    </div>
+                @endforeach
+            </div>
+        </x-lf.form.field>
+        <x-lf.form.done :params="['Listing','Create','Show']"/>
+        <x-slot:tools >
+            @can('DumpMyRouteName.roles.show')
+            <a class="btn-success sm" href="{{route('DumpMyRouteName.roles.show',$record_id)}}">{!! lfIcon("launch",11) !!}</a>
+            @endcan
+            <a class="btn-primary sm" href="{{route('DumpMyRouteName.roles')}}">{!! lfIcon("list",11) !!}</a>
+        </x-slot:tools>
+        <x-slot:footer>
+            <div class="card-footer flex justify-between">
+                <label class="btn-primary flex-none" wire:click="store">Update</label>
+                <a class="btn" href="{{route("DumpMyRouteName.roles")}}">Cancel</a>
+            </div>
+        </x-slot:footer>
+    </x-lf.card>
+</div>
+

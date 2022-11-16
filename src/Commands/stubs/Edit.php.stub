@@ -3,7 +3,6 @@
 namespace DumpMyNamespace;
 
 use DumpMyModelNamespace;
-use Hungnm28\LaravelForm\Facades\LaravelForm;
 use Hungnm28\LaravelForm\Traits\WithLaravelFormTrait;
 use Livewire\Component;
 
@@ -49,10 +48,10 @@ class DumpMyClassName extends Component
 
     public function render()
     {
-        lForm()->setTitle("DumpMyPageName");
+        lForm()->setTitle("DumpMyPageName Edit");
         DumpMyBreadcrumblForm()->pushBreadcrumb(route("DumpMyRoute.edit",$this->record_id),"Edit");
 
         return view("DumpMyModuleSlug::livewire.DumpMyView.DumpMyFileSlug")
-            ->layout('DumpMyModuleSlug::layouts.master', ['title' => 'DumpMyPageName Edit']);
+            ->layout('DumpMyModuleSlug::layouts.master');
     }
 }

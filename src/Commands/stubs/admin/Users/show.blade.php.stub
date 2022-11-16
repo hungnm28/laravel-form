@@ -1,0 +1,47 @@
+<div class="w-full p-2 md:p-4 max-w-lg">
+    <x-lf.card class="success" title="Show">
+        <table class="table">
+            <tr>
+                <th class="text-right pr-2">ID:</th>
+                <td>{{$data->id}}</td>
+            </tr>
+
+			<tr>
+				<th class="text-right pr-2">Name:</th>
+				<td>{{$data->name}}</td>
+			</tr>
+			<tr>
+				<th class="text-right pr-2">Email:</th>
+				<td>{{$data->email}}</td>
+			</tr>
+			<tr>
+				<th class="text-right pr-2">Email Verified At:</th>
+				<td>{{$data->email_verified_at}}</td>
+			</tr>
+			<tr>
+				<th class="text-right pr-2">Two Factor Confirmed At:</th>
+				<td>{{$data->two_factor_confirmed_at}}</td>
+			</tr>
+        </table>
+        <x-slot:tools>
+            @can("DumpMyRouteName.users.listing")
+                <a class="btn-primary xs" href="{{route("DumpMyRouteName.users")}}">{!! lfIcon("list",11) !!}</a>
+            @endcan
+            @can("DumpMyRouteName.users.edit")
+                <a class="btn-warning xs" href="{{route("DumpMyRouteName.users.edit",$data->id)}}">{!! lfIcon("edit",11) !!}</a>
+            @endcan
+        </x-slot:tools>
+        <x-slot:footer>
+            <div class="card-footer flex justify-between">
+                @can("DumpMyRouteName.users.listing")
+                    <a class="btn-primary" href="{{route("DumpMyRouteName.users")}}">{!! lfIcon("list") !!} <span>Listing</span></a>
+                @endcan
+                <div>
+                    @can("DumpMyRouteName.users.edit")
+                        <a class="btn-warning" href="{{route("DumpMyRouteName.users.edit",$data->id)}}">{!! lfIcon("edit") !!} <span>Edit</span></a>
+                    @endcan
+                </div>
+            </div>
+        </x-slot:footer>
+    </x-lf.card>
+</div>

@@ -1,0 +1,29 @@
+<div class="w-full p-1 md:p-4">
+    <x-lf.card title="Edit" class="warning">
+        <x-lf.form.input name="name" type="string" label="Name" placeholder="Name ..."/>
+		<x-lf.form.input name="email" type="string" label="Email" placeholder="Email ..."/>
+		<x-lf.form.input name="password" type="string" label="Password" placeholder="Password ..."/>
+        <x-lf.form.toggle name="is_admin" label="Is admin" />
+        @if(auth()->user()->is_super_admin)
+            <x-lf.form.toggle name="is_super_admin" label="Is super admin" />
+        @endif
+        @if($is_admin && !$is_super_admin)
+            <x-lf.form.checkbox name="roles" label="Roles" :params="$allRoles" />
+        @endif
+
+        <x-lf.form.done :params="['Listing','Create','Show']"/>
+        <x-slot:tools >
+            @can('DumpMyRouteName.admins.show')
+            <a class="btn-success sm" href="{{route('DumpMyRouteName.admins.show',$record_id)}}">{!! lfIcon("launch",11) !!}</a>
+            @endcan
+            <a class="btn-primary sm" href="{{route('DumpMyRouteName.admins')}}">{!! lfIcon("list",11) !!}</a>
+        </x-slot:tools>
+        <x-slot:footer>
+            <div class="card-footer flex justify-between">
+                <label class="btn-primary flex-none" wire:click="store">Update</label>
+                <a class="btn" href="{{route("DumpMyRouteName.admins")}}">Cancel</a>
+            </div>
+        </x-slot:footer>
+    </x-lf.card>
+</div>
+

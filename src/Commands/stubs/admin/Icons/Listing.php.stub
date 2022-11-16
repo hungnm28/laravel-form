@@ -70,6 +70,6 @@ class Listing extends Component
         lForm()->pushBreadCrumb(route("DumpMyRouteName.icons"),"Icons");
 
         return view("DumpMyModuleView::livewire.icons.listing")
-            ->layout('DumpMyModuleView::layouts.master', ['title' => 'Icons']);
+            ->layout('DumpMyModuleView::layouts.master');
     }
 }

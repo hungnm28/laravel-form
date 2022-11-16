@@ -49,9 +49,9 @@ class DumpMyClassName extends Component
         }
         $data = $data->paginate(30);
 
-        lForm()->setTitle("DumpMyPageName");
+        lForm()->setTitle("DumpMyPageName Listing");
         DumpMyBreadcrumblForm()->pushBreadcrumb(route("DumpMyRoute.listing"),"Listing");
         return view("DumpMyModuleSlug::livewire.DumpMyView.DumpMyFileSlug", compact("data"))
-            ->layout('DumpMyModuleSlug::layouts.master', ['title' => 'DumpMyPageName Listing']);
+            ->layout('DumpMyModuleSlug::layouts.master');
     }
 }

@@ -52,5 +52,10 @@
                 @endforeach
             </div>
         </div>
+        <x-slot:tools>
+                    @can("DumpMyRouteName.permissions.create")
+                        <div> <a class="btn-primary sm" href="{{route("DumpMyRouteName.permissions.create")}}">{!! lfIcon("add") !!}</a></div>
+                    @endcan
+                </x-slot:tools>
     </x-lf.card>
 </div>

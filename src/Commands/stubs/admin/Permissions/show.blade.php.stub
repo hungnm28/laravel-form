@@ -7,11 +7,11 @@
             </tr>
 
 			<tr>
-				<th class="text-right pr-2">name:</th>
+				<th class="text-right pr-2">Name:</th>
 				<td>{{$data->name}}</td>
 			</tr>
 			<tr>
-				<th class="text-right pr-2">label:</th>
+				<th class="text-right pr-2">Label:</th>
 				<td>{{$data->label}}</td>
 			</tr>
 			<tr>

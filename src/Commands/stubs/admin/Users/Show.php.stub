@@ -1,0 +1,31 @@
+<?php
+
+namespace Modules\DumpMyModuleName\Http\Livewire\Users;
+
+use App\Models\User;
+use Hungnm28\LaravelForm\Traits\WithLaravelFormTrait;
+use Livewire\Component;
+
+
+class Show extends Component
+{
+    use WithLaravelFormTrait;
+
+    public function mount()
+    {
+        $this->authorize("DumpMyRouteName.users.show");
+        User::findOrFail($this->record_id);
+    }
+
+    public function render()
+    {
+        $data =  User::findOrFail($this->record_id);
+        lForm()->setTitle("Users");
+        lForm()->pushBreadcrumb(route("DumpMyRouteName"),"Admin");
+		lForm()->pushBreadcrumb(route("DumpMyRouteName.users"),"Users");
+		lForm()->pushBreadcrumb(route("DumpMyRouteName.users.show",$this->record_id),"Show");
+
+        return view("DumpMyModuleView::livewire.users.show", compact("data"))
+            ->layout('DumpMyModuleView::layouts.master', ['title' => 'Users Show']);
+    }
+}

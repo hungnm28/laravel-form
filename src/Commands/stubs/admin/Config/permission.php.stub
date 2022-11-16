@@ -1,0 +1,29 @@
+<?php
+ return [
+	'permission' => [
+ 		'DumpMyModuleSlug.admins',
+		'DumpMyModuleSlug.admins.create',
+		'DumpMyModuleSlug.admins.delete',
+		'DumpMyModuleSlug.admins.edit',
+		'DumpMyModuleSlug.admins.listing',
+		'DumpMyModuleSlug.admins.show',
+		'DumpMyModuleSlug.permissions',
+		'DumpMyModuleSlug.permissions.create',
+		'DumpMyModuleSlug.permissions.delete',
+		'DumpMyModuleSlug.permissions.edit',
+		'DumpMyModuleSlug.permissions.listing',
+		'DumpMyModuleSlug.permissions.show',
+		'DumpMyModuleSlug.roles',
+		'DumpMyModuleSlug.roles.create',
+		'DumpMyModuleSlug.roles.delete',
+		'DumpMyModuleSlug.roles.edit',
+		'DumpMyModuleSlug.roles.listing',
+		'DumpMyModuleSlug.roles.show',
+		'DumpMyModuleSlug.users',
+		'DumpMyModuleSlug.users.create',
+		'DumpMyModuleSlug.users.delete',
+		'DumpMyModuleSlug.users.edit',
+		'DumpMyModuleSlug.users.listing',
+		'DumpMyModuleSlug.users.show'
+	]
+];

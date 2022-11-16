@@ -4,30 +4,23 @@ namespace Modules\DumpMyModuleName\Http\Livewire\Menus;
 
 use Hungnm28\LaravelForm\Traits\WithLaravelFormTrait;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Artisan;
 use Livewire\Component;
-use Nwidart\Modules\Facades\Module;
 
 class Edit extends Component
 {
     use WithLaravelFormTrait;
     public $module,$item;
     public $label,$icon,$route,$permission,$sort;
-    protected $queryString =["module","item"];
+    protected $queryString =["item"];
 
     protected $rules = [
         "permission"=>"string|required"
         ,"label"=>"string|required"
-        ,"module"=> "string|required"
     ];
 
     public function mount(){
         $this->onlyLocalhost();
-        if(!$this->module || $this->module ==""){
-            return  redirect(route('DumpMyRouteName.menus'));
-        }
-        $module = Module::findOrFail($this->module);
-        $navbars = config($module->getLowerName().".menu",[]);
+        $navbars = config("DumpMyModuleLowerName.menu",[]);
         $data = data_get($navbars,$this->item,[]);
         if(empty($data)){
            return redirect(route('DumpMyRouteName.menus'));
@@ -42,25 +35,23 @@ class Edit extends Component
     public function store(){
         $this->onlyLocalhost();
         $this->validate();
-        $module = Module::findOrFail($this->module);
-        $navbars = config($module->getLowerName().".menu",[]);
+        $navbars = config("DumpMyModuleLowerName.menu",[]);
         $data = data_get($navbars,$this->item,[]);
         $data["route"] = $this->route;
         $data["icon"] = $this->icon;
         $data["permission"] = $this->permission;
         $data["label"] = $this->label;
         Arr::set($navbars,$this->item,$data);
-        $this->saveNavbar($this->module,$navbars);
+        $this->saveNavbar('DumpMyModuleLowerName',$navbars);
         session()->flash('message','done');
-        $this->redirectForm("DumpMyRouteName.menus",1);
+       return $this->redirect(route("DumpMyRouteName.menus"));
     }
 
     public function render(){
 
         lForm()->setTitle("Menu Edit");
-        lForm()->pushBreadCrumb(route("DumpMyRouteName"),"DumpMyModuleHeadName");
-        lForm()->pushBreadCrumb(route("DumpMyRouteName.menus"),"Menu");
-        lForm()->pushBreadCrumb(route("DumpMyRouteName.menus.edit"),"Edit");
+        lForm()->pushBreadCrumb(route("admin"),"Admin");
+        lForm()->pushBreadCrumb(route("DumpMyRouteName.menus"), "Menu");
         return view("DumpMyModuleView::livewire.menus.edit")
             ->layout('DumpMyModuleView::layouts.master', ['title' => 'Menu Edit']);
     }

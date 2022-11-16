@@ -14,31 +14,32 @@ class Create extends Component
 {
     use WithLaravelFormTrait;
 
-    public $module, $route, $label, $icon, $permission, $parent_id = -1, $sort = -1;
-    public $queryString = ["module"];
-
+    public $module, $route, $label, $icon, $permission, $parent_id = -1, $sort = -1, $children = ["listing","create"];
     protected $rules = [
         "permission" => "string|required"
+        , "route" => "string|required"
         , "label" => "string|required"
-        ,"module"=> "string|required"
     ];
 
     public function mount()
     {
-        $this->done = 1;
         $this->onlyLocalhost();
+    }
+
+    public function updated($field)
+    {
+        $this->validateOnly($field);
+    }
+
+    public function updatedRoute(){
+       $this->permission = $this->route;
+        $this->validateOnly("permission");
     }
 
     public function store()
     {
         $this->onlyLocalhost();
-        $module = Module::findOrFail($this->module);
-        $navbars = config($module->getLowerName() . '.menu', []);
-        if ($this->parent_id == -1) {
-            $siblings = $navbars;
-        } else {
-            $siblings = data_get($navbars, $this->parent_id . ".children", []);
-        }
+        $navbars = config( 'DumpMyModuleLowerName.menu', []);
         $data = [
             "label" => $this->label
             , "icon" => $this->icon
@@ -46,6 +47,34 @@ class Create extends Component
             , "permission" => $this->permission
             , "children" => []
         ];
+        if ($this->parent_id == -1) {
+            $siblings = $navbars;
+            foreach($this->children as $child){
+                switch ($child){
+                    case "listing":
+                        $data["children"][] = [
+                            "label" =>"Listing"
+                            , "icon" => "list"
+                            , "route" => $this->route.".listing"
+                            , "permission" => $this->permission . ".lsiting"
+                            , "children" => []
+                        ];
+                        break;
+                    case "create":
+                        $data["children"][] = [
+                            "label" =>"Create"
+                            , "icon" => "add"
+                            , "route" => $this->route.".create"
+                            , "permission" => $this->permission . ".create"
+                            , "children" => []
+                        ];
+                        break;
+                }
+            }
+        } else {
+            $siblings = data_get($navbars, $this->parent_id . ".children", []);
+        }
+
         if ($this->sort == -1) {
             $siblings = Arr::prepend($siblings, $data);
         } else {
@@ -64,69 +93,66 @@ class Create extends Component
         } else {
             $navbars[$this->parent_id]["children"] = $siblings;
         }
-        $this->saveNavbar($this->module, $navbars);
+        $this->saveNavbar('DumpMyModuleLowerName', $navbars);
         session()->flash('message', 'done');
-        $this->redirectForm("DumpMyRouteName.menus", 1, ["module" => $this->module]);
+        return $this->redirect(route("DumpMyRouteName.menus"));
     }
 
     public function render()
     {
 
-        $modules = ["Select Module"];
-        foreach (Module::all() as $m => $md) {
-            $modules[$m] = lfHeadLine($m);
-        }
         $parents = [-1 => "ROOT"];
-        $sorts = [-1 => "Đầu tiên"];
-        $routes = ["" => "Chọn Route"];
-        $permissions = ["" => "Chọn Permission"];
+        $sorts = [-1 => "First"];
+        $routes = ["" => "Select Route"];
+        $permissions = ["" => "Select Permission"];
         $allNav = [];
 
-        if($this->module !=""){
-            $module = Module::findOrFail($this->module);
-            $navbars = config($module->getLowerName() . '.menu', []);
-            foreach ($navbars as $k => $item) {
-                $parents[$k] = $item["label"];
-                $allNav[$item["route"]] = $item["route"];
+        $navbars = config( 'DumpMyModuleLowerName.menu', []);
+        foreach ($navbars as $k => $item) {
+            $parents[$k] = $item["label"];
+            $allNav[$item["route"]] = $item["route"];
 
-                foreach ($item["children"] as $child) {
-                    $allNav[$child["route"]] = $child["route"];
-                }
+            foreach ($item["children"] as $child) {
+                $allNav[$child["route"]] = $child["route"];
             }
-            if ($this->parent_id == -1) {
-                $siblings = $navbars;
-            } else {
-                $siblings = data_get($navbars, $this->parent_id . ".children", []);
-            }
-            foreach ($siblings as $k => $sibling) {
-                $sorts[$k] = "Sau " . $sibling["label"];
-            }
+        }
+        if ($this->parent_id == -1) {
+            $siblings = $navbars;
+        } else {
+            $siblings = data_get($navbars, $this->parent_id . ".children", []);
+        }
+        foreach ($siblings as $k => $sibling) {
+            $sorts[$k] = "After  " . $sibling["label"];
+        }
 
-            $prefix = Str::slug(lfHeadLine($module->getName()));
-            foreach (Route::getRoutes() as $route) {
-                if (Str::is($prefix . '.*', $route->getName())) {
-                    $name = $route->getName();
-                    if (!in_array($name, $allNav) && !Str::contains($route->uri,"{")) {
-                        foreach ($route->middleware() as $mid) {
-                            if (Str::is("can:" . $prefix . ".*", $mid)) {
-                                $permission = Str::after($mid, "can:");
-                                $permissions[$permission] = $permission;
-                            }
+        $prefix = 'DumpMyModuleLowerName';
+        foreach (Route::getRoutes() as $route) {
+            if (Str::is($prefix . '.*', $route->getName())) {
+                $name = $route->getName();
+                if (!in_array($name, $allNav)
+                    && !Str::contains($route->uri,"{")
+                    && $name != "DumpMyRouteName.menus"
+                    && $name != "DumpMyRouteName.icons"
+                    && $name != "DumpMyRouteName.permission-configs"
+                ) {
+                    foreach ($route->middleware() as $mid) {
+                        if (Str::is("can:" . $prefix . ".*", $mid)) {
+                            $permission = Str::after($mid, "can:");
+                            $permissions[$permission] = $permission;
                         }
-                        $routes[$name] = $name;
+                    }
+                    $routes[$name] = $name;
 
-                    }//if(!in_array($name,$allNav))
+                }//if(!in_array($name,$allNav))
 
-                }//foreach (Route::getRoutes() as $route)
-            }
-        }// if($this->module !=""){
+            }//foreach (Route::getRoutes() as $route)
+        }
 
 
         lForm()->setTitle("Menu Create");
-        lForm()->pushBreadCrumb(route("DumpMyRouteName"), "DumpMyModuleHeadName");
+        lForm()->pushBreadCrumb(route("DumpMyRouteName"), "Admin");
         lForm()->pushBreadCrumb(route("DumpMyRouteName.menus"), "Menu");
-        lForm()->pushBreadCrumb(route("DumpMyRouteName.menus.create"), "Create");
-        return view("DumpMyModuleView::livewire.menus.create", compact("modules", "parents", "sorts", "routes", "permissions"))
+        return view("DumpMyModuleView::livewire.menus.create", compact( "parents", "sorts", "routes", "permissions"))
             ->layout('DumpMyModuleView::layouts.master', ['title' => 'Menu Create']);
     }
 

@@ -10,28 +10,27 @@ class Listing extends Component
 {
     use WithLaravelFormTrait;
 
+    public $create ;
+    public $edit;
+    protected $queryString = ["create","edit"];
     public function mount(){
 
     }
 
-    public function delete($moduleName,$record){
+    public function delete($record){
         $this->onlyLocalhost();
-        $module = Module::findOrFail($moduleName);
-        $data = config($module->getLowerName() . ".menu",[]);
+        $data = config("DumpMyModuleLowerName.menu",[]);
         Arr::forget($data,$record);
-        $this->saveNavbar($moduleName,$data);
+        $this->saveNavbar('admin',$data);
         session()->flash('message','done');
         $this->redirect(route("DumpMyRouteName.menus"));
     }
 
     public function render(){
-        $modules = Module::all();
-        $data = [];
-        foreach($modules as $module){
-            $data[$module->getName()] = config($module->getLowerName().".menu",[]);
-        }
+        $data = config("DumpMyModuleLowerName.menu",[]);
+
         lForm()->setTitle("Menu");
-        lForm()->pushBreadCrumb(route("DumpMyRouteName"),"DumpMyModuleHeadName");
+        lForm()->pushBreadCrumb(route("DumpMyRouteName"),"Admin");
         lForm()->pushBreadCrumb(route("DumpMyRouteName.menus"),"Menu");
 
         return view("DumpMyModuleView::livewire.menus.listing",compact("data"))

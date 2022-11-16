@@ -59,6 +59,9 @@ class DumMyModuleNameServiceProvider extends ServiceProvider
          $this->mergeConfigFrom(
             module_path($this->moduleName, 'Config/menu.php'), $this->moduleNameLower
         );
+        $this->mergeConfigFrom(
+            module_path($this->moduleName, 'Config/permission.php'), $this->moduleNameLower
+        );
     }
 
     /**

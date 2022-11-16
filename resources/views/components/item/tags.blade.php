@@ -1,6 +1,6 @@
 @props(['params'=>[]])
 <div class="tags">
-    @if(is_array($params))
+    @if($params)
         @foreach($params as $key =>$value)
             <span class="item">{{$value}}</span>
         @endforeach

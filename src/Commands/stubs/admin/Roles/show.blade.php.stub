@@ -1,0 +1,71 @@
+<div class="w-full p-2 md:p-4 max-w-lg">
+    <x-lf.card class="success" title="Show">
+        <table class="table">
+            <tr>
+                <th class="text-right pr-2">ID:</th>
+                <td>{{$data->id}}</td>
+            </tr>
+
+			<tr>
+				<th class="text-right pr-2">Name:</th>
+				<td>{{$data->name}}</td>
+			</tr>
+			<tr>
+				<th class="text-right pr-2">Label:</th>
+				<td>{{$data->label}}</td>
+			</tr>
+            <tr>
+                <th class="text-right pr-2">Permissions:</th>
+                <td>
+                    <div class="w-full flex flex-wrap">
+                        @php
+                            $permissions = $data->permissions->reduce(function ($rt,$item){
+                               if($item->parent_id ==0){
+                                   $rt[$item->id]["info"] = $item;
+                               }else{
+                                   $rt[$item->parent_id]["info"]=$item->parent;
+                                   $rt[$item->parent_id]["children"][] = $item;
+                               }
+                               return $rt;
+
+                            },[]);
+                        @endphp
+
+                        @foreach($permissions as $permission)
+                            <span class="flex-none bg-gray-100 border px-1 m-1">
+                                <b>{{$permission["info"]->label}} : </b>
+                                @if(isset($permission['children']))
+                                    @foreach($permission['children'] as $child)
+                                        {{$child->label}},
+                                    @endforeach
+                                @endif
+                            </span>
+                        @endforeach
+                    </div>
+
+                </td>
+
+            </tr>
+        </table>
+        <x-slot:tools>
+            @can("DumpMyRouteName.roles.listing")
+                <a class="btn-primary xs" href="{{route("DumpMyRouteName.roles")}}">{!! lfIcon("list",11) !!}</a>
+            @endcan
+            @can("DumpMyRouteName.roles.edit")
+                <a class="btn-warning xs" href="{{route("DumpMyRouteName.roles.edit",$data->id)}}">{!! lfIcon("edit",11) !!}</a>
+            @endcan
+        </x-slot:tools>
+        <x-slot:footer>
+            <div class="card-footer flex justify-between">
+                @can("DumpMyRouteName.roles.listing")
+                    <a class="btn-primary" href="{{route("DumpMyRouteName.roles")}}">{!! lfIcon("list") !!} <span>Listing</span></a>
+                @endcan
+                <div>
+                    @can("DumpMyRouteName.roles.edit")
+                        <a class="btn-warning" href="{{route("DumpMyRouteName.roles.edit",$data->id)}}">{!! lfIcon("edit") !!} <span>Edit</span></a>
+                    @endcan
+                </div>
+            </div>
+        </x-slot:footer>
+    </x-lf.card>
+</div>

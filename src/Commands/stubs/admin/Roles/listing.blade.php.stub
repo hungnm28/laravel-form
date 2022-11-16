@@ -1,0 +1,74 @@
+<x-lf.page.listing :fields="$fields" :footer="$data->onEachSide(3)->links()">
+    <table class="table">
+        <thead>
+        <tr>
+            <th><x-lf.form.sort name="sId" :value="$sId">#</x-lf.form.sort></th>
+            <x-lf.table.label name="name" :fields="$fields">Name</x-lf.table.label>
+			<x-lf.table.label name="label" :fields="$fields">Label</x-lf.table.label>
+			<x-lf.table.label name="permissions" :fields="$fields">Permissions</x-lf.table.label>
+			<x-lf.table.label name="created_at" :fields="$fields">Created At</x-lf.table.label>
+			<x-lf.table.label name="updated_at" :fields="$fields">Updated At</x-lf.table.label>
+
+            <th></th>
+        </tr>
+        </thead>
+        @foreach($data as $item)
+            <tr>
+                <th class="stt">{{$item->id}}</th>
+                <x-lf.table.item name="name" :fields="$fields">{{$item->name}}</x-lf.table.item>
+				<x-lf.table.item name="label" :fields="$fields">{{$item->label}}</x-lf.table.item>
+				<x-lf.table.item name="permissions" :fields="$fields">
+                    <div class="w-full flex flex-wrap">
+                        @php
+                            $permissions = $item->permissions->reduce(function ($rt,$item){
+                               if($item->parent_id ==0){
+                                   $rt[$item->id]["info"] = $item;
+                               }else{
+                                   $rt[$item->parent_id]["info"]=$item->parent;
+                                   $rt[$item->parent_id]["children"][] = $item;
+                               }
+                               return $rt;
+
+                            },[]);
+                        @endphp
+
+                        @foreach($permissions as $permission)
+                            <span class="flex-none bg-gray-100 border px-1 m-1">
+                                <b>{{$permission["info"]->label}}</b>
+                                @if(isset($permission['children']))
+                                    :
+                                    @foreach($permission['children'] as $child)
+                                        {{$child->label}},
+                                    @endforeach
+                                 @endif
+                            </span>
+                         @endforeach
+                    </div>
+                </x-lf.table.item>
+
+				<x-lf.table.item name="created_at" :fields="$fields">{{$item->created_at}}</x-lf.table.item>
+				<x-lf.table.item name="updated_at" :fields="$fields">{{$item->updated_at}}</x-lf.table.item>
+
+                <td class="action">
+                    @can('DumpMyRouteName.roles.show')
+                    <a class="btn-success xs" href="{{route("DumpMyRouteName.roles.show",$item->id)}}">{!! lfIcon("launch",10) !!}</a>
+                    @endcan
+                    @can('DumpMyRouteName.roles.edit')
+                    <a class="btn-info xs" href="{{route("DumpMyRouteName.roles.edit",$item->id)}}">{!! lfIcon("edit",10) !!}</a>
+                    @endcan
+                    @can('DumpMyRouteName.roles.delete')
+                    <x-lf.btn.delete :record="$item->id" :confirm="$confirm"/>
+                    @endcan
+                </td>
+            </tr>
+        @endforeach
+    </table>
+    <x-slot:filters>
+        <x-lf.filter.input name="fId" type="number" placeholder="Id ..." />
+    </x-slot:filters>
+    <x-slot:tools>
+        @can("DumpMyRouteName.roles.create")
+           <div> <a class="btn-primary sm" href="{{route("DumpMyRouteName.roles.create")}}">{!! lfIcon("add") !!}</a></div>
+        @endcan
+    </x-slot:tools>
+</x-lf.page.listing>

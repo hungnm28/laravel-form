@@ -1,0 +1,46 @@
+<div id="lf-menu">
+    <ul id="navbar">
+        <li class="item {{ request()->routeIs('DumpMyRouteName')? 'active' : '' }} ">
+            <a href="{{route('DumpMyRouteName')}}" class="link"><span class="icon">{!! lfIcon("home") !!}</span><span class="link-title">DumpMyModuleHeadName</span></a>
+        </li>
+        @foreach($data as $item)
+            @if(Route::has($item['route']))
+                @can($item['permission'])
+                    <li class="item {{ (request()->routeIs($item['route'])|| request()->routeIs($item['route'].'*') )? 'active' : '' }} ">
+                        <a href="{{route($item['route'])}}" class="link"><span class="icon">{!! lfIcon($item['icon']) !!}</span><span class="link-title">{{$item['label']}}</span></a>
+                        @if(!empty($item["children"]))
+                            <ul class="children">
+                                @foreach($item['children'] as $child)
+                                    @if(Route::has($child['route']))
+                                        @can($child['permission'])
+                                            <li class="child {{ request()->routeIs($child['route'].'*') ? 'active' : '' }} ">
+                                                <a class="link" href="{{route($child['route'])}}">
+                                                    <span class="icon">{!! lfIcon($child['icon']) !!}</span><span class="link-title">{{$child['label']}}</span>
+                                                </a>
+                                            </li>
+                                        @endcan
+                                    @endif
+                                @endforeach
+                            </ul>
+                        @endif
+                    </li>
+                @endcan
+            @endif
+        @endforeach
+        @if(Route::has('DumpMyRouteName.permission-configs'))
+            <li class="item {{ request()->routeIs('DumpMyRouteName.permission-configs')? 'active' : '' }} ">
+                <a href="{{route('DumpMyRouteName.permission-configs')}}" class="link"><span class="icon">{!! lfIcon("security-add") !!}</span><span class="link-title">Permission Configs</span></a>
+            </li>
+        @endif
+         @if(Route::has('DumpMyRouteName.menus'))
+             <li class="item {{ request()->routeIs('DumpMyRouteName.menus')? 'active' : '' }} ">
+                <a href="{{route('DumpMyRouteName.menus')}}" class="link"><span class="icon">{!! lfIcon("menu") !!}</span><span class="link-title">Admin Menus</span></a>
+            </li>
+        @endif
+         @if(Route::has('DumpMyRouteName.icons'))
+             <li class="item {{ request()->routeIs('DumpMyRouteName.icons')? 'active' : '' }} ">
+                <a href="{{route('DumpMyRouteName.icons')}}" class="link"><span class="icon">{!! lfIcon("interests") !!}</span><span class="link-title">Icons</span></a>
+            </li>
+        @endif
+    </ul>
+</div>

@@ -70,6 +70,7 @@ class LaravelFormServiceProvider extends ServiceProvider
         $this->registerComponent('btn.delete');
         $this->registerComponent('btn.dropdown');
         $this->registerComponent('btn.toggle');
+        $this->registerComponent('btn.modal');
         $this->registerComponent('item.tags');
         $this->registerComponent('item.tree-nav');
 

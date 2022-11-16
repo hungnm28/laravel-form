@@ -1,0 +1,75 @@
+<?php
+
+namespace Modules\DumpMyModuleName\Http\Livewire\Roles;
+
+use App\Models\Permission;
+use App\Models\Role;
+use Hungnm28\LaravelForm\Traits\WithLaravelFormTrait;
+use Illuminate\Support\Str;
+use Livewire\Component;
+
+class   Create extends Component
+{
+    use WithLaravelFormTrait;
+
+    public $name, $label,$permissions=[];
+    protected $rules = [
+        'name' => 'string|required|unique:roles,name',
+		'label' => 'string|required',
+
+    ];
+
+    public function mount()
+    {
+        $this->authorize("DumpMyRouteName.roles.create");
+        $this->done = 1;
+    }
+
+    public function updated($field)
+    {
+        $this->validateOnly($field);
+    }
+
+    public function updatedLabel(){
+        if($this->name=""){
+            $this->name=null;
+        }
+        $this->name = "DumpMyRouteName.".Str::slug($this->label);
+        $this->validateOnly("name");
+
+    }
+
+    public function store()
+    {
+        $this->authorize("DumpMyRouteName.roles.create");
+        $this->validate();
+        $data = Role::create([
+            'name' => $this->name,
+			'label' => $this->label,
+        ]);
+        if ($data) {
+            $pers = Permission::whereIn("id",$this->permissions)->get()->reduce(function ($rt,$item){
+                if($item->parent_id >0){
+                    $rt[$item->parent_id] = $item->parent_id;
+                }
+                $rt[$item->id] =$item->id;
+                return $rt;
+            },[]);
+            $data->permissions()->attach($pers);
+            $this->redirectForm("DumpMyRouteName.roles", $data->id);
+        }
+    }
+
+    public function render()
+    {
+        lForm()->setTitle("Roles Create");
+        lForm()->pushBreadcrumb(route("DumpMyRouteName"),"Admin");
+		lForm()->pushBreadcrumb(route("DumpMyRouteName.roles"),"Roles");
+		lForm()->pushBreadcrumb(route("DumpMyRouteName.roles.create"),"Create");
+
+        $permissionsParams = Permission::whereParentId(0)->with("children")->get();
+
+        return view("DumpMyModuleView::livewire.roles.create",compact("permissionsParams"))
+            ->layout('DumpMyModuleView::layouts.master');
+    }
+}

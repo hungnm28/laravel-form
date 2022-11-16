@@ -14,16 +14,15 @@ class DumpMyClassName extends Component
     public function mount()
     {
         $this->authorize("DumpMyPermission.show");
-        DumpMyModelClassName::findOrFail($this->record_id);
     }
 
     public function render()
     {
         $data =  DumpMyModelClassName::findOrFail($this->record_id);
-        lForm()->setTitle("DumpMyPageName");
+        lForm()->setTitle("DumpMyPageName Show");
         DumpMyBreadcrumblForm()->pushBreadcrumb(route("DumpMyRoute.show",$this->record_id),"Show");
 
         return view("DumpMyModuleSlug::livewire.DumpMyView.DumpMyFileSlug", compact("data"))
-            ->layout('DumpMyModuleSlug::layouts.master', ['title' => 'DumpMyPageName Show']);
+            ->layout('DumpMyModuleSlug::layouts.master');
     }
 }

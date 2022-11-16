@@ -1,0 +1,68 @@
+<?php
+
+namespace Modules\DumpMyModuleName\Http\Livewire\Users;
+
+use App\Models\User;
+use Hungnm28\LaravelForm\Traits\WithLaravelFormTrait;
+use Livewire\Component;
+
+class Listing extends Component
+{
+    use WithLaravelFormTrait;
+
+    public $confirm = 0;
+    // Filter
+    public $fId;
+    // Sort
+    public $sId = 0;
+    public $fields = [
+        "id" => ["status" => true, "label" => "Id"],
+		"name" => ["status" => true, "label" => "Name"],
+		"email" => ["status" => true, "label" => "Email"],
+		"email_verified_at" => ["status" => true, "label" => "Email Verified At"],
+		"two_factor_secret" => ["status" => false, "label" => "Two Factor Secret"],
+		"two_factor_recovery_codes" => ["status" => false, "label" => "Two Factor Recovery Codes"],
+		"two_factor_confirmed_at" => ["status" => false, "label" => "Two Factor Confirmed At"],
+		"remember_token" => ["status" => false, "label" => "Remember Token"],
+		"created_at" => ["status" => true, "label" => "Created At"],
+		"updated_at" => ["status" => true, "label" => "Updated At"],
+    ];
+
+    public function mount()
+    {
+        $this->authorize("DumpMyRouteName.users.listing");
+    }
+
+    function delete()
+    {
+        $this->authorize("DumpMyRouteName.users.delete");
+        if ($this->confirm > 0) {
+            User::destroy($this->confirm);
+        }
+        $this->confirm = 0;
+        $this->dispatchBrowserEvent('warning', 'Users successfully destroyed.');
+    }
+
+    public function render()
+    {
+        $data = new User();
+
+        if ($this->fId > 0) {
+            $data = $data->whereId($this->fId);
+        }
+        if ($this->sId == 1) {
+            $data = $data->orderBy("id");
+        }
+        if ($this->sId == 2) {
+            $data = $data->orderByDesc("id");
+        }
+        $data = $data->whereIsAdmin(0)->whereIsSuperAdmin(0)->paginate(30);
+
+        lForm()->setTitle("Users");
+        lForm()->pushBreadcrumb(route("DumpMyRouteName"),"Admin");
+		lForm()->pushBreadcrumb(route("DumpMyRouteName.users"),"Users");
+		lForm()->pushBreadcrumb(route("DumpMyRouteName.users.listing"),"Listing");
+        return view("DumpMyModuleView::livewire.users.listing", compact("data"))
+            ->layout('DumpMyModuleView::layouts.master', ['title' => 'Users Listing']);
+    }
+}

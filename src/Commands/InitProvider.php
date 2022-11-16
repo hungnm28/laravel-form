@@ -27,6 +27,38 @@ class InitProvider extends Command
         }
         $this->initModule($name);
         $this->configNavbar($name);
+        $this->configPermission($name);
+        $this->initServicesProvider($name);
+        $this->initModulePermission($name);
+        $this->initModuleJson($name);
+        return true;
+    }
+
+    private function configNavbar($moduleName){
+        (new Filesystem)->copy(__DIR__ . '/../../publishes/Config/menu.php', module_path($moduleName,'Config/menu.php'));
+    }
+    private function configPermission($moduleName){
+        (new Filesystem)->copy(__DIR__ . '/../../publishes/Config/permission.php', module_path($moduleName,'Config/permission.php'));
+    }
+
+    private function initModulePermission($name){
+        $module = Module::findOrFail($name);
+        $stub = $this->getStub("ModulePermissionServiceProvider.php.stub");
+        $template = str_replace([
+            "DumpMyNamespace"
+            ,"DumMyModuleName"
+            ,"DumMyModuleLower"
+            ,"DumMyComponent"
+        ],[
+            $name,
+            $name,
+            $module->getLowerName(),
+            $this->getModuleSug(),
+        ],$stub);
+        $this->writeFile(module_path($name,"Providers/PermissionServiceProvider.php"),$template);
+    }
+
+    private function initServicesProvider($name){
         $module = Module::findOrFail($name);
         $stub = $this->getStub("ModuleServiceProvider.php.stub");
         $template = str_replace([
@@ -41,13 +73,23 @@ class InitProvider extends Command
             $this->getModuleSug(),
         ],$stub);
         $this->writeFile(module_path($name,"Providers/" . $name . "ServiceProvider.php"),$template);
-
-
-        return true;
     }
 
-    private function configNavbar($moduleName){
-        (new Filesystem)->copy(__DIR__ . '/../../publishes/Config/menu.php', module_path($moduleName,'Config/menu.php'));
+    private function initModuleJson($name){
+        $module = Module::findOrFail($name);
+        $stub = $this->getStub("module.json.stub");
+        $template = str_replace([
+            "DumpMyNamespace"
+            ,"DumpMyModuleName"
+            ,"DumpMyModuleLower"
+            ,"DumpMyComponent"
+        ],[
+            $name,
+            $name,
+            $module->getLowerName(),
+            $this->getModuleSug(),
+        ],$stub);
+        $this->writeFile(module_path($name,"module.json"),$template);
     }
 
 }

@@ -1,0 +1,20 @@
+<?php
+
+namespace Modules\DumpMyModuleName\Http\Livewire\Users;
+
+use Livewire\Component;
+
+class Index extends Component
+{
+
+    public function render()
+    {
+       lForm()->setTitle("Users");
+       lForm()->pushBreadcrumb(route("DumpMyRouteName"),"Admin");
+		lForm()->pushBreadcrumb(route("DumpMyRouteName.users"),"Users");
+
+
+        return view("DumpMyModuleView::livewire.users.index")
+            ->layout('DumpMyModuleView::layouts.master', ['title' => 'Users']);
+    }
+}

@@ -1,0 +1,98 @@
+<?php
+
+namespace Modules\DumpMyModuleName\Http\Livewire\Admins;
+
+use App\Models\Role;
+use App\Models\User;
+use Hungnm28\LaravelForm\Traits\WithLaravelFormTrait;
+use Illuminate\Support\Facades\Hash;
+use Livewire\Component;
+
+
+class Edit extends Component
+{
+    use WithLaravelFormTrait;
+
+    public $name, $email,  $password,  $is_admin, $is_super_admin, $roles = [];
+
+    protected function rules()
+    {
+        $data = [
+            'name' => 'string',
+			'email' => 'email|required|unique:users,email,'.$this->record_id,
+        ];
+        if($this->password){
+            $data["password"] = 'required|min:8';
+        }
+        return $data;
+    }
+
+    public function mount()
+    {
+        $this->authorize("DumpMyRouteName.admins.edit");
+        $data = User::with("roles")->where("is_super_admin","<=",auth()->user()->is_super_admin)->findOrFail($this->record_id);
+        $this->name = $data->name;
+		$this->email = $data->email;
+		$this->is_admin = $data->is_admin;
+		$this->is_super_admin = $data->is_super_admin;
+        $this->roles = $data->roles->pluck("id");
+
+    }
+
+    public function updated($field)
+    {
+        $this->validateOnly($field);
+    }
+    public function updatedIsAdmin(){
+        if(!$this->is_admin){
+            $this->is_super_admin = false;
+            $this->roles = [];
+        }
+    }
+
+    public function updatedIsSuperAdmin(){
+        if($this->is_super_admin){
+            $this->is_admin = true;
+            $this->roles = [];
+        }
+    }
+
+    public function store()
+    {
+        $this->authorize("DumpMyRouteName.admins.edit");
+        $this->validate();
+        $data = User::findOrFail($this->record_id);
+        $data->fill([
+            'name' => $this->name,
+			'email' => $this->email,
+			'is_admin' => $this->is_admin,
+			'is_super_admin' => $this->is_super_admin,
+        ]);
+        if($this->password){
+            $data->fill([
+                "password"=>Hash::make($this->password)
+                ]);
+        }
+        if (!$data->clean) {
+            $data->update();
+        }
+        $data->roles()->detach();
+        if($this->is_admin && !$this->is_super_admin){
+            $data->roles()->attach($this->roles);
+        }
+
+        $this->redirectForm("DumpMyRouteName.admins", $data->id);
+    }
+
+
+    public function render()
+    {
+        lForm()->setTitle("Admins Edit");
+        lForm()->pushBreadcrumb(route("DumpMyRouteName"),"Admin");
+		lForm()->pushBreadcrumb(route("DumpMyRouteName.admins"),"Admins");
+		lForm()->pushBreadcrumb(route("DumpMyRouteName.admins.edit",$this->record_id),"Edit");
+        $allRoles = Role::all()->pluck("label","id");
+        return view("DumpMyModuleView::livewire.admins.edit",compact("allRoles"))
+            ->layout('DumpMyModuleView::layouts.master');
+    }
+}

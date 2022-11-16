@@ -1,11 +1,36 @@
 <?php
-Route::get('/', [\Modules\DumpMyModuleName\Http\Controllers\HomeController::class, "index"])->can('DumpMyModuleSlug');
-Route::get("/icons", \Modules\DumpMyModuleName\Http\Livewire\Icons\Listing::class)->name('.icons')->can("DumpMyModuleSlug.icons");
-Route::prefix("menus")->name(".menus")->group(function (){
-    Route::get("/", \Modules\DumpMyModuleName\Http\Livewire\Menus\Listing::class)->can("DumpMyModuleSlug.menus.listing");
-    Route::get("/create", \Modules\DumpMyModuleName\Http\Livewire\Menus\Create::class)->name(".create")->can("DumpMyModuleSlug.menus.create");
-    Route::get("/edit", \Modules\DumpMyModuleName\Http\Livewire\Menus\Edit::class)->name(".edit")->can("DumpMyModuleSlug.menus.edit");
+Route::get('/', [\Modules\DumpMyModuleName\Http\Controllers\HomeController::class, "index"]);
+Route::get("/icons", \Modules\DumpMyModuleName\Http\Livewire\Icons\Listing::class)->name('.icons');
+Route::get("/menus", \Modules\DumpMyModuleName\Http\Livewire\Menus\Listing::class)->name('.menus');
+Route::get("/permission-configs", \Modules\DumpMyModuleName\Http\Livewire\PermissionConfigs\Listing::class)->name('.permission-configs');
+
+Route::prefix("admins")->name(".admins")->group(function (){
+    Route::get("/", \Modules\DumpMyModuleName\Http\Livewire\Admins\Index::class)->can("DumpMyModuleSlug.admins");
+    Route::get("/listing", \Modules\DumpMyModuleName\Http\Livewire\Admins\Listing::class)->name(".listing")->can("DumpMyModuleSlug.admins.listing");
+    Route::get("/create", \Modules\DumpMyModuleName\Http\Livewire\Admins\Create::class)->name(".create")->can("DumpMyModuleSlug.admins.create");
+    Route::get("/edit/{record_id}", \Modules\DumpMyModuleName\Http\Livewire\Admins\Edit::class)->name(".edit")->can("DumpMyModuleSlug.admins.edit");
+    Route::get("/show/{record_id}", \Modules\DumpMyModuleName\Http\Livewire\Admins\Show::class)->name(".show")->can("DumpMyModuleSlug.admins.show");
+    //---END-OF-ROLES---//
 });
+
+Route::prefix("users")->name(".users")->group(function (){
+    Route::get("/", \Modules\DumpMyModuleName\Http\Livewire\Users\Index::class)->can("DumpMyModuleSlug.users");
+    Route::get("/listing", \Modules\DumpMyModuleName\Http\Livewire\Users\Listing::class)->name(".listing")->can("DumpMyModuleSlug.users.listing");
+    Route::get("/create", \Modules\DumpMyModuleName\Http\Livewire\Users\Create::class)->name(".create")->can("DumpMyModuleSlug.users.create");
+    Route::get("/edit/{record_id}", \Modules\DumpMyModuleName\Http\Livewire\Users\Edit::class)->name(".edit")->can("DumpMyModuleSlug.users.edit");
+    Route::get("/show/{record_id}", \Modules\DumpMyModuleName\Http\Livewire\Users\Show::class)->name(".show")->can("DumpMyModuleSlug.users.show");
+    //---END-OF-ROLES---//
+});
+
+Route::prefix("roles")->name(".roles")->group(function (){
+    Route::get("/", \Modules\DumpMyModuleName\Http\Livewire\Roles\Index::class)->can("DumpMyModuleSlug.roles");
+    Route::get("/listing", \Modules\DumpMyModuleName\Http\Livewire\Roles\Listing::class)->name(".listing")->can("DumpMyModuleSlug.roles.listing");
+    Route::get("/create", \Modules\DumpMyModuleName\Http\Livewire\Roles\Create::class)->name(".create")->can("DumpMyModuleSlug.roles.create");
+    Route::get("/edit/{record_id}", \Modules\DumpMyModuleName\Http\Livewire\Roles\Edit::class)->name(".edit")->can("DumpMyModuleSlug.roles.edit");
+    Route::get("/show/{record_id}", \Modules\DumpMyModuleName\Http\Livewire\Roles\Show::class)->name(".show")->can("DumpMyModuleSlug.roles.show");
+    //---END-OF-ROLES---//
+});
+
 Route::prefix("permissions")->name(".permissions")->group(function (){
     Route::get("/", \Modules\DumpMyModuleName\Http\Livewire\Permissions\Index::class)->can("DumpMyModuleSlug.permissions");
     Route::get("/listing", \Modules\DumpMyModuleName\Http\Livewire\Permissions\Listing::class)->name(".listing")->can("DumpMyModuleSlug.permissions.listing");

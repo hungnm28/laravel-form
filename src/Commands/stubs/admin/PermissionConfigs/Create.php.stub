@@ -1,0 +1,114 @@
+<?php
+
+namespace Modules\DumpMyModuleName\Http\Livewire\PermissionConfigs;
+
+use Hungnm28\LaravelForm\Traits\WithLaravelFormTrait;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
+use Livewire\Component;
+
+
+class Create extends Component
+{
+    use WithLaravelFormTrait;
+
+    public $name, $methods=[];
+
+    protected $rules = [
+        'name' => 'string|required'
+
+    ];
+
+    public function mount(){
+        $this->onlyLocalhost();
+    }
+
+    public function updated($field)
+    {
+        $this->validateOnly($field);
+    }
+
+    public function updatedName(){
+        $this->name = trim($this->name);
+        if($this->name !="" && Str::substrCount($this->name,".") < 2){
+            $this->methods = [
+                "$this->name.listing"
+                ,"$this->name.edit"
+                ,"$this->name.create"
+                ,"$this->name.show"
+                ,"$this->name.delete"
+            ];
+        }else{
+            $this->methods = [];
+        }
+
+    }
+
+    public function store(){
+        $this->onlyLocalhost();
+        $this->name = trim($this->name);
+        $this->validate();
+        $data = config("DumpMyModuleLowerName.permission",[]);
+        if(!in_array($this->name,$data)){
+            $data[] = $this->name;
+        }
+
+        if($this->methods){
+            foreach($this->methods as $method){
+                if(!in_array($method,$data)){
+                    $data[] = $method;
+                }
+            }
+        }
+        $data = Arr::sort($data);
+        $this->savePermission($data);
+        return $this->redirect(route("DumpMyRouteName.permission-configs"));
+
+    }
+
+    private function savePermission($data){
+        $str = "<?php \n return [\n\t'permission' => [ \n ";
+        $str .=  "\t\t'" . implode("',\n\t\t'",$data) . "'";
+        $str .= "\n\t]";
+        $str .= "\n];";
+
+        $configPath =module_path("DumpMyModuleLowerName","Config/permission.php");
+        file_put_contents($configPath,$str);
+    }
+
+    public function render()
+    {
+        $permissions = [''=>'Select Permission'];
+        $allPermissions  = config("DumpMyModuleLowerName.permission",[]);
+        $prefix = "DumpMyModuleSlug";
+        foreach(Route::getRoutes()->getRoutes() as $route){
+            $name = data_get($route->getAction(),"as");
+            if(strpos(" ".$name,$prefix)){
+                $middlewares = data_get($route->getAction(),"middleware",[]);
+                foreach($middlewares as $mid){
+                    if(strpos(" ".$mid,"can:")){
+                        $mid = Str::after($mid,'can:');
+                        if(!in_array($mid,$allPermissions)){
+                            $permissions[$mid] = $mid;
+                        }
+                    }
+                }
+            }
+        }
+        $permissions = Arr::sort($permissions);
+        $allMethods = [
+                "$this->name.listing"=>"$this->name.listing"
+                ,"$this->name.edit"=>"$this->name.edit"
+                ,"$this->name.create"=>"$this->name.create"
+                ,"$this->name.show"=>"$this->name.show"
+                ,"$this->name.delete"=>"$this->name.delete"
+        ];
+        lForm()->setTitle("Permission configs Create");
+        lForm()->pushBreadCrumb(route("DumpMyRouteName"), "DumpMyModuleName");
+        lForm()->pushBreadCrumb(route("DumpMyRouteName.permission-configs"), "Permission Configs");
+        return view("DumpMyModuleView::livewire.permission-configs.create",compact("permissions","allMethods"))
+            ->layout('DumpMyModuleView::layouts.master');
+    }
+
+}

@@ -33,6 +33,22 @@ class   Create extends Component
         $this->validateOnly($field);
     }
 
+    public function updatedName(){
+        if($this->type =="page"){
+            $this->methods = ["listing","create","edit","show","delete"];
+        }else{
+            $this->methods=[];
+        }
+    }
+
+    public function updatedType(){
+        if($this->type =="page"){
+            $this->methods = ["listing","create","edit","show","delete"];
+        }else{
+            $this->methods=[];
+        }
+    }
+
     public function store()
     {
         $this->authorize("DumpMyRouteName.permissions.create");
@@ -86,6 +102,6 @@ class   Create extends Component
         $parents = Permission::whereType('page')->get()->pluck("label","id");
 
         return view("DumpMyModuleView::livewire.permissions.create",compact("permissions","parents"))
-            ->layout('DumpMyModuleView::layouts.master', ['title' => 'Permissions Create']);
+            ->layout('DumpMyModuleView::layouts.master');
     }
 }

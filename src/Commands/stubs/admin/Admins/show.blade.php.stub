@@ -1,0 +1,66 @@
+<div class="w-full p-2 md:p-4 max-w-lg">
+    <x-lf.card class="success" title="Show">
+        <table class="table">
+            <tr>
+                <th class="text-right pr-2">ID:</th>
+                <td>{{$data->id}}</td>
+            </tr>
+			<tr>
+				<th class="text-right pr-2">Name:</th>
+				<td>{{$data->name}}</td>
+			</tr>
+			<tr>
+				<th class="text-right pr-2">Email:</th>
+				<td>{{$data->email}}</td>
+			</tr>
+            <tr>
+                <th class="text-right pr-2">Roles:</th>
+                <td>
+                    @if($data->is_super_admin)
+                        <x-lf.item.tags :params="['All Roles']" />
+                    @else
+                    <x-lf.item.tags :params="$data->roles->pluck('label')" />
+                    @endif
+                </td>
+            </tr>
+			<tr>
+				<th class="text-right pr-2">Email Verified At:</th>
+				<td>{{$data->email_verified_at}}</td>
+			</tr>
+			<tr>
+				<th class="text-right pr-2">Two Factor Confirmed At:</th>
+				<td>{{$data->two_factor_confirmed_at}}</td>
+			</tr>
+			<tr>
+				<th class="text-right pr-2">Admin:</th>
+				<td>{{$data->is_admin}}</td>
+			</tr>
+            @if(auth()->user()->is_super_admin)
+			<tr>
+				<th class="text-right pr-2">Super Admin:</th>
+				<td>{{$data->is_super_admin}}</td>
+			</tr>
+            @endif
+        </table>
+        <x-slot:tools>
+            @can("DumpMyRouteName.admins.listing")
+                <a class="btn-primary xs" href="{{route("DumpMyRouteName.admins")}}">{!! lfIcon("list",11) !!}</a>
+            @endcan
+            @can("DumpMyRouteName.admins.edit")
+                <a class="btn-warning xs" href="{{route("DumpMyRouteName.admins.edit",$data->id)}}">{!! lfIcon("edit",11) !!}</a>
+            @endcan
+        </x-slot:tools>
+        <x-slot:footer>
+            <div class="card-footer flex justify-between">
+                @can("DumpMyRouteName.admins.listing")
+                    <a class="btn-primary" href="{{route("DumpMyRouteName.admins")}}">{!! lfIcon("list") !!} <span>Listing</span></a>
+                @endcan
+                <div>
+                    @can("DumpMyRouteName.admins.edit")
+                        <a class="btn-warning" href="{{route("DumpMyRouteName.admins.edit",$data->id)}}">{!! lfIcon("edit") !!} <span>Edit</span></a>
+                    @endcan
+                </div>
+            </div>
+        </x-slot:footer>
+    </x-lf.card>
+</div>

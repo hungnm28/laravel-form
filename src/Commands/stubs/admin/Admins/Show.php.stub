@@ -1,0 +1,30 @@
+<?php
+
+namespace Modules\DumpMyModuleName\Http\Livewire\Admins;
+
+use App\Models\User;
+use Hungnm28\LaravelForm\Traits\WithLaravelFormTrait;
+use Livewire\Component;
+
+
+class Show extends Component
+{
+    use WithLaravelFormTrait;
+
+    public function mount()
+    {
+        $this->authorize("DumpMyRouteName.admins.show");
+    }
+
+    public function render()
+    {
+        $data =  User::whereIsAdmin(true)->where("is_super_admin","<=",auth()->user()->is_super_admin)->with("roles")->findOrFail($this->record_id);
+        lForm()->setTitle("Admins Show");
+        lForm()->pushBreadcrumb(route("DumpMyRouteName"),"Admin");
+		lForm()->pushBreadcrumb(route("DumpMyRouteName.admins"),"Admins");
+		lForm()->pushBreadcrumb(route("DumpMyRouteName.admins.show",$this->record_id),"Show");
+
+        return view("DumpMyModuleView::livewire.admins.show", compact("data"))
+            ->layout('DumpMyModuleView::layouts.master');
+    }
+}

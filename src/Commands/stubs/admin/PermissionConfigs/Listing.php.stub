@@ -1,0 +1,46 @@
+<?php
+namespace Modules\DumpMyModuleName\Http\Livewire\PermissionConfigs;
+
+use Hungnm28\LaravelForm\Traits\WithLaravelFormTrait;
+use Illuminate\Support\Arr;
+use Livewire\Component;
+
+class Listing extends Component
+{
+    use WithLaravelFormTrait;
+
+    public $create ;
+    protected $queryString = ["create"];
+    public function mount(){
+
+    }
+
+    public function delete($record){
+        $this->onlyLocalhost();
+        $data = config("DumpMyModuleLowerName.permission",[]);
+        Arr::forget($data,$record);
+        $this->savePermission($data);
+        session()->flash('message','done');
+        $this->redirect(route("DumpMyRouteName.permission-configs"));
+    }
+
+    private function savePermission($data){
+        $str = "<?php \n return [\n\t'permission' => [ \n ";
+        $str .=  "\t\t'" . implode("',\n\t\t'",$data) . "'";
+        $str .= "\n\t]";
+        $str .= "\n];";
+
+        $configPath =module_path("DumpMyModuleLowerName","Config/permission.php");
+        file_put_contents($configPath,$str);
+    }
+
+    public function render(){
+        $data = config("DumpMyModuleLowerName.permission",[]);
+        lForm()->setTitle("Permission Configs");
+        lForm()->pushBreadCrumb(route("DumpMyRouteName"),"DumpMyModuleName");
+        lForm()->pushBreadCrumb(route("DumpMyRouteName.permission-configs"),"Permission Configs");
+
+        return view("DumpMyModuleView::livewire.permission-configs.listing",compact("data"))
+            ->layout('DumpMyModuleView::layouts.master');
+    }
+}

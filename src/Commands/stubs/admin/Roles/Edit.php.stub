@@ -1,0 +1,86 @@
+<?php
+
+namespace Modules\DumpMyModuleName\Http\Livewire\Roles;
+
+use App\Models\Permission;
+use App\Models\Role;
+use Hungnm28\LaravelForm\Traits\WithLaravelFormTrait;
+use Illuminate\Support\Str;
+use Livewire\Component;
+
+
+class Edit extends Component
+{
+    use WithLaravelFormTrait;
+
+    public $name, $label,$permissions=[];
+
+    protected function rules()
+    {
+        return [
+            'name' => 'string|required|unique:roles,name,' . $this->record_id,
+            'label' => 'string|required',
+
+        ];
+    }
+
+    public function mount()
+    {
+        $this->authorize("DumpMyRouteName.roles.edit");
+        $data = Role::with("permissions")->findOrFail($this->record_id);
+        $this->name = $data->name;
+		$this->label = $data->label;
+        $this->permissions = $data->permissions->pluck("id");
+
+    }
+
+    public function updated($field)
+    {
+        $this->validateOnly($field);
+    }
+    public function updatedLabel(){
+        if($this->name=""){
+            $this->name=null;
+        }
+        $this->name = "DumpMyRouteName.".Str::slug($this->label);
+        $this->validateOnly("name");
+
+    }
+
+    public function store()
+    {
+        $this->authorize("DumpMyRouteName.roles.edit");
+        $this->validate();
+        $data = Role::findOrFail($this->record_id);
+        $data->fill([
+            'name' => $this->name,
+			'label' => $this->label,
+
+        ]);
+        $data->permissions()->detach();
+        $pers = Permission::whereIn("id",$this->permissions)->get()->reduce(function ($rt,$item){
+           if($item->parent_id >0){
+               $rt[$item->parent_id] = $item->parent_id;
+           }
+            $rt[$item->id] =$item->id;
+           return $rt;
+        },[]);
+        $data->permissions()->attach($pers);
+        if (!$data->clean) {
+            $data->update();
+        }
+        $this->redirectForm("DumpMyRouteName.roles", $data->id);
+    }
+
+    public function render()
+    {
+        lForm()->setTitle("Roles Edit");
+        lForm()->pushBreadcrumb(route("DumpMyRouteName"),"Admin");
+		lForm()->pushBreadcrumb(route("DumpMyRouteName.roles"),"Roles");
+		lForm()->pushBreadcrumb(route("DumpMyRouteName.roles.edit",$this->record_id),"Edit");
+
+        $permissionsParams = Permission::whereParentId(0)->with("children")->get();
+        return view("DumpMyModuleView::livewire.roles.edit",compact("permissionsParams"))
+            ->layout('DumpMyModuleView::layouts.master');
+    }
+}

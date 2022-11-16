@@ -1,6 +1,6 @@
 @props(["class"=>"primary","fields"=>[],"filters"=>null,"footer"=>null,"tools"=>null])
-<div class="w-full p-0" x-data="{ filter: false}">
-    <x-lf.card title="Listing" class="{{$class}} min-h-screen">
+<div class="w-full p-2" x-data="{ filter: false}">
+    <x-lf.card title="Listing" class="{{$class}} min-h-96">
         @if($filters)
             <div class="form-filter" x-show="filter" style="display: none">
                 <x-lf.filter.label>Filter:</x-lf.filter.label>

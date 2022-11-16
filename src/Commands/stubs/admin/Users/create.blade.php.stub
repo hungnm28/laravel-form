@@ -1,0 +1,20 @@
+<div class="w-full p-1 md:p-4 max-w-screen-md">
+    <x-lf.card title="Create" class="info">
+        <x-lf.form.input name="name" type="string" label="Name" placeholder="Name ..."/>
+		<x-lf.form.input name="email" type="string" label="Email" placeholder="Email ..."/>
+		<x-lf.form.input name="password" type="string" label="Password" placeholder="Password ..."/>
+        <x-lf.form.done />
+        <x-slot:tools>
+            <a class="btn-primary sm" href="{{route('DumpMyRouteName.users')}}">{!! lfIcon("list") !!}</a>
+        </x-slot:tools>
+        <x-slot:footer>
+            <div class="card-footer flex justify-between">
+                <label class="btn-primary flex-none" wire:click="store">Create</label>
+                <a class="btn" href="{{route("DumpMyRouteName.users")}}">Cancel</a>
+            </div>
+        </x-slot:footer>
+    </x-lf.card>
+</div>
+
+
+

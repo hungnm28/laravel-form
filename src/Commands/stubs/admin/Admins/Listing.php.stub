@@ -1,0 +1,115 @@
+<?php
+
+namespace Modules\DumpMyModuleName\Http\Livewire\Admins;
+
+use App\Models\User;
+use Hungnm28\LaravelForm\Traits\WithLaravelFormTrait;
+use Livewire\Component;
+
+class Listing extends Component
+{
+    use WithLaravelFormTrait;
+
+    public $confirm = 0;
+    // Filter
+    public $fId;
+    // Sort
+    public $sId = 0;
+    public $fields = [
+        "id" => ["status" => true, "label" => "Id"],
+        "name" => ["status" => true, "label" => "Name"],
+        "email" => ["status" => true, "label" => "Email"],
+        "roles" => ["status" => true, "label" => "Roles"],
+        "is_admin" => ["status" => true, "label" => "Is Admin"],
+        "email_verified_at" => ["status" => false, "label" => "Email Verified At"],
+        "two_factor_secret" => ["status" => false, "label" => "Two Factor Secret"],
+        "two_factor_recovery_codes" => ["status" => false, "label" => "Two Factor Recovery Codes"],
+        "two_factor_confirmed_at" => ["status" => false, "label" => "Two Factor Confirmed At"],
+        "remember_token" => ["status" => false, "label" => "Remember Token"],
+        "profile_photo_path" => ["status" => false, "label" => "Profile Photo Path"],
+        "created_at" => ["status" => true, "label" => "Created At"],
+        "updated_at" => ["status" => true, "label" => "Updated At"],
+
+    ];
+
+    public function mount()
+    {
+        $this->authorize("DumpMyRouteName.admins.listing");
+        if(auth()->user()->is_super_admin){
+            $this->fields[ "is_super_admin"] = ["status" => true, "label" => "Is Super Admin"];
+        }
+    }
+
+    public function changeAdmin($iUser)
+    {
+        $this->authorize("DumpMyRouteName.admins.edit");
+        if (auth()->user()->id == $iUser) {
+            abort(403);
+        }
+        $data = User::findOrFail($iUser);
+        if ($data->is_super_admin) {
+            $data->update([
+                "is_admin" => false
+                , "is_super_admin" => false
+            ]);
+        } else {
+            $data->update([
+                "is_admin" => !$data->is_admin
+            ]);
+        }
+    }
+
+    public function changeSuperAdmin($iUser)
+    {
+        $this->authorize("DumpMyRouteName.admins.edit");
+        if (auth()->user()->id == $iUser || !auth()->user()->is_super_admin) {
+            abort(403);
+        }
+        $data = User::findOrFail($iUser);
+        if ($data->is_super_admin) {
+            $data->update([
+                "is_super_admin" => false
+            ]);
+        } else {
+            $data->update([
+                "is_admin" => true
+                , "is_super_admin" => true
+
+            ]);
+        }
+    }
+
+
+    function delete()
+    {
+        $this->authorize("DumpMyRouteName.admins.delete");
+        if ($this->confirm > 0) {
+            User::destroy($this->confirm);
+        }
+        $this->confirm = 0;
+        $this->dispatchBrowserEvent('warning', 'Admins successfully destroyed.');
+    }
+
+    public function render()
+    {
+        $data = new User();
+
+        if ($this->fId > 0) {
+            $data = $data->whereId($this->fId);
+        }
+        if ($this->sId == 1) {
+            $data = $data->orderBy("id");
+        }
+        if ($this->sId == 2) {
+            $data = $data->orderByDesc("id");
+        }
+        $data = $data->whereIsAdmin(true)->where("is_super_admin","<=",auth()->user()->is_super_admin)->with("roles")->paginate(30);
+
+        lForm()->setTitle("Admins Listing");
+        lForm()->pushBreadcrumb(route("DumpMyRouteName"), "Admin");
+        lForm()->pushBreadcrumb(route("DumpMyRouteName.admins"), "Admins");
+        lForm()->pushBreadcrumb(route("DumpMyRouteName.admins.listing"), "Listing");
+        return view("DumpMyModuleView::livewire.admins.listing", compact("data"))
+            ->layout('DumpMyModuleView::layouts.master');
+    }
+}

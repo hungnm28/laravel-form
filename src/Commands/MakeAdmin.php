@@ -21,16 +21,41 @@ class MakeAdmin extends Command
         $this->info("Make Admin Module");
         $this->initModule();
         $this->installAdminModule("Icons", "Listing");
+
+        $this->installAdminModule("PermissionConfigs", "Listing");
+        $this->installAdminModule("PermissionConfigs", "Create");
+
         $this->installAdminModule("Menus", "Listing");
         $this->installAdminModule("Menus", "Create");
         $this->installAdminModule("Menus", "Edit");
+
         $this->installAdminModule("Permissions", "Index");
         $this->installAdminModule("Permissions", "Listing");
         $this->installAdminModule("Permissions", "Edit");
         $this->installAdminModule("Permissions", "Create");
         $this->installAdminModule("Permissions", "Show");
+
+        $this->installAdminModule("Admins", "Index");
+        $this->installAdminModule("Admins", "Listing");
+        $this->installAdminModule("Admins", "Edit");
+        $this->installAdminModule("Admins", "Create");
+        $this->installAdminModule("Admins", "Show");
+
+        $this->installAdminModule("Roles", "Index");
+        $this->installAdminModule("Roles", "Listing");
+        $this->installAdminModule("Roles", "Edit");
+        $this->installAdminModule("Roles", "Create");
+        $this->installAdminModule("Roles", "Show");
+
+        $this->installAdminModule("Users", "Index");
+        $this->installAdminModule("Users", "Listing");
+        $this->installAdminModule("Users", "Edit");
+        $this->installAdminModule("Users", "Create");
+        $this->installAdminModule("Users", "Show");
         $this->addAdminNavbar();
         $this->installRoute();
+        $this->addPermission();
+        $this->installMenu();
     }
 
     private function initModule()
@@ -47,12 +72,28 @@ class MakeAdmin extends Command
 
         $template = str_replace([
             "DumpMyLowerName"
-            , "DumpMyRoute"
+            , "DumpMyRouteName"
             , "DumpMyPermission"
         ], [
             $this->module->getLowerName()
             , $this->getRouteName()
             , $this->getPermissionName()
+        ], $stub);
+        $this->writeFile($pathSave, $template);
+    }
+    private function addPermission()
+    {
+        $stub = $this->getStub("/admin/Config/permission.php.stub");
+        $pathSave = $this->module->getPath() . "/Config/permission.php";
+
+        $template = str_replace([
+            "DumpMyLowerName"
+            , "DumpMyRouteName"
+            , "DumpMyModuleSlug"
+        ], [
+            $this->module->getLowerName()
+            , $this->getRouteName()
+            , $this->getModuleSug()
         ], $stub);
         $this->writeFile($pathSave, $template);
     }
@@ -78,11 +119,16 @@ class MakeAdmin extends Command
             , 'DumpMyModuleView'
             , 'DumpMyRouteName'
             ,'DumpMyModuleHeadName'
+            ,'DumpMyModuleLowerName'
+            ,'DumpMyModuleSlug'
         ], [
             $this->module->getName()
             , $this->getModuleSug()
             , $this->getModuleSug()
             ,$this->getModuleHeadName()
+            ,$this->getModuleLowerName()
+            , $this->getModuleSug()
+
 
         ], $stub);
 
@@ -102,28 +148,55 @@ class MakeAdmin extends Command
         $pathSave = $pathSave . "/$file.blade.php";
         $template = str_replace([
             'DumpMyRouteName'
+            ,'DumpMyModuleLowerName'
+            ,'DumpMyModuleSlug'
         ], [
             $this->getSnakeString($this->module->getName())
+            ,$this->getModuleLowerName()
+            , $this->getModuleSug()
 
         ], $stub);
         $this->writeFile($pathSave, $template);
 
     }
 
+    private function installMenu(){
+        $stub = $this->getStub("admin/layouts/menu.blade.php.stub");
+        $pathSave = $this->module->getPath() . "/Resources/views/components/menu.blade.php";
+        $template = str_replace([
+            'DumpMyModuleName'
+            , 'DumpMyModuleView'
+            , 'DumpMyRouteName'
+            , 'DumpMyModuleSlug'
+            ,'DumpMyModuleLowerName'
+        ], [
+            $this->module->getName()
+            , $this->module->getLowerName()
+            , $this->getRouteName()
+            , $this->getModuleSug()
+            ,$this->getModuleLowerName()
+
+        ], $stub);
+
+        $this->writeFile($pathSave, $template);
+    }
+
     private function installRoute()
     {
-        $stub = $this->getStub("Admin/Routes/web.php.stub");
+        $stub = $this->getStub("admin/Routes/web.php.stub");
         $pathSave = $this->module->getPath() . "/Routes/web.php";
         $template = str_replace([
             'DumpMyModuleName'
             , 'DumpMyModuleView'
             , 'DumpMyRouteName'
             , 'DumpMyModuleSlug'
+            ,'DumpMyModuleLowerName'
         ], [
             $this->module->getName()
             , $this->module->getLowerName()
             , $this->getRouteName()
             , $this->getModuleSug()
+            ,$this->getModuleLowerName()
 
         ], $stub);
 
