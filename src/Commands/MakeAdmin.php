@@ -74,10 +74,12 @@ class MakeAdmin extends Command
             "DumpMyLowerName"
             , "DumpMyRouteName"
             , "DumpMyPermission"
+            ,"DumpMyModuleHeadName"
         ], [
             $this->module->getLowerName()
             , $this->getRouteName()
             , $this->getPermissionName()
+            , $this->getModuleHeadName()
         ], $stub);
         $this->writeFile($pathSave, $template);
     }
