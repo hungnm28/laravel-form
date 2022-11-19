@@ -4,11 +4,13 @@ namespace DumpMyNamespace;
 
 use DumpMyModelNamespace;
 use Hungnm28\LaravelForm\Traits\WithLaravelFormTrait;
+use Livewire\WithPagination;
 use Livewire\Component;
 
 class DumpMyClassName extends Component
 {
     use WithLaravelFormTrait;
+     use  WithPagination;
 
     public $confirm = 0;
     // Filter
@@ -24,7 +26,7 @@ class DumpMyClassName extends Component
         $this->authorize("DumpMyPermission.listing");
     }
 
-    function delete()
+    public function delete()
     {
         $this->authorize("DumpMyPermission.delete");
         if ($this->confirm > 0) {
