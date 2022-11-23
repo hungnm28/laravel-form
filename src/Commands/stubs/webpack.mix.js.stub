@@ -4,7 +4,7 @@ const mix = require('laravel-mix');
 require('laravel-mix-merge-manifest');
 const tailwindcss = require('tailwindcss');
 const assetPath = process.env.NODE_ENV === 'production' ?'assets': 'dev';
-mix.setPublicPath('../../public').mergeManifest();
+mix.setPublicPath('../../public');
 mix.sass(__dirname + '/Resources/assets/sass/app.scss', `${assetPath}/css/DumpMyFile.css`)
     .options({
         processCssUrls: false,
@@ -13,8 +13,10 @@ mix.sass(__dirname + '/Resources/assets/sass/app.scss', `${assetPath}/css/DumpMy
 
 mix.js(__dirname + '/Resources/assets/js/app.js', `${assetPath}/js/DumpMyFile.js`);
 if (mix.inProduction()) {
-    mix.version();
-}
+    mix.version().mergeManifest();
+}else{
+     mix.options({ manifest: false });
+ }
 mix.browserSync(
     {
         files:[
