@@ -50,6 +50,7 @@ class LaravelFormServiceProvider extends ServiceProvider
         $this->registerComponent('card');
 
         $this->registerComponent('form.field');
+        $this->registerComponent('form.row');
         $this->registerComponent('form.array');
         $this->registerComponent('form.input');
         $this->registerComponent('form.group');
