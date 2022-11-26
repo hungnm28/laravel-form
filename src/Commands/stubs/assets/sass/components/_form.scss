@@ -1,11 +1,15 @@
 .form-input{
-    @apply w-full border-gray-300 py-1.5 px-2 rounded-sm  ring-0 focus:ring-0  focus:border-gray-500;
+    @apply w-full border-gray-300 h-[36px] px-3 rounded  ring-0 focus:ring-0  focus:border-gray-500;
     &:disabled{
         @apply bg-gray-100 cursor-not-allowed;
     }
 }
+
 .form-field{
     @apply w-full block p-2;
+    textarea{
+        @apply h-auto;
+    }
     .form-label{
         @apply block text-xs font-semibold mb-1;
     }
@@ -31,7 +35,7 @@
 
     &.sm{
         .form-input{
-            @apply px-1 py-0.5 text-sm;
+            @apply px-1 h-6 text-sm;
         }
         .form-tags{
             .tag-add{
@@ -42,7 +46,7 @@
     }
     &.lg{
         .form-input{
-            @apply py-2 px-3;
+            @apply h-12 px-3;
         }
 
     }
@@ -200,6 +204,37 @@
         }
         .icon{
             @apply flex-auto h-full bg-cyan-600 rounded-r cursor-pointer text-white flex items-center px-2 hover:bg-cyan-500;
+        }
+    }
+}
+
+.form-group{
+    @apply w-full flex;
+    .form-field{
+        @apply p-0;
+        &:first-child{
+            .form-input{
+                @apply rounded-l-full;
+            }
+        }
+        &:last-child{
+            .form-input{
+                @apply rounded-r-full  border-r;
+            }
+        }
+    }
+    .form-input{
+        @apply border-r-0 rounded-none;
+    }
+    .btn,[class^="btn-"],
+    [class*=" btn-"] {
+        @apply m-0 rounded-none border-gray-300 border-r-0 flex-none;
+
+        &:last-child{
+            @apply rounded-r-full border-r;
+        }
+        &:first-child{
+            @apply rounded-l-full;
         }
     }
 }

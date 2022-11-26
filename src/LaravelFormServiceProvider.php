@@ -52,6 +52,7 @@ class LaravelFormServiceProvider extends ServiceProvider
         $this->registerComponent('form.field');
         $this->registerComponent('form.array');
         $this->registerComponent('form.input');
+        $this->registerComponent('form.group');
         $this->registerComponent('form.mce');
         $this->registerComponent('form.textarea');
         $this->registerComponent('form.select');
