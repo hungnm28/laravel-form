@@ -1,5 +1,5 @@
 @props(["name","label"=>null,'placeholder'=>null,'rows'=>5,'upload_url'=>'','plugins'=>'code table lists image fullscreen','toolbar'=>'blocks | bold italic | alignleft aligncenter alignright | image | indent outdent | bullist numlist | code | table | fullscreen'])
-<div wire:ignore>
+<div wire:ignore class="w-full relative">
     <x-lf.form.field :name="$name" :label="$label">
     <textarea wire:model.debounce.9999999ms="{{$name}}"
               id="{{$name}}"
