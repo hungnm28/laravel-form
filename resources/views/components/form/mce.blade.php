@@ -1,4 +1,4 @@
-@props(["name","label"=>null,'placeholder'=>null,'rows'=>5,'upload_url'=>'','plugins'=>'code table lists image fullscreen','toolbar'=>'blocks | bold italic | alignleft aligncenter alignright | image | indent outdent | bullist numlist | code | table | fullscreen'])
+@props(["name","label"=>null,'placeholder'=>null,'rows'=>5,'upload_url'=>'','blocks'=>'Paragraph=p;Heading 4=h4;Heading 5=h5;Heading 6=h6;Address=address;Pre=pre','plugins'=>'code table lists image fullscreen','toolbar'=>'blocks | bold italic | alignleft aligncenter alignright | image | indent outdent | bullist numlist | code | table | fullscreen'])
 <div wire:ignore class="w-full relative">
     <x-lf.form.field :name="$name" :label="$label">
     <textarea wire:model.debounce.9999999ms="{{$name}}"
@@ -13,6 +13,7 @@
                          selector: '#{{$name}}',
                          plugins: '{{$plugins}}',
                          toolbar: '{{$toolbar}}',
+                         block_formats: '{{$blocks}}',
                          image_title: true,
                          {{$upload_url?"images_upload_url:'".$upload_url."',":''}}
                           setup: function (editor) {
