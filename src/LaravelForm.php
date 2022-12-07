@@ -7,7 +7,7 @@ use Hungnm28\LaravelForm\Traits\SingletonTrait;
 class LaravelForm
 {
     use SingletonTrait;
-    const VERSION = "1.0.0";
+    const VERSION = "1.0.10";
 
     private $breadcrumb = [];
     private $title ="";

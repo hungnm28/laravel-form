@@ -1,4 +1,4 @@
-@props(["name","label"=>null,"class"=>null,"placeholder"=>null,"type"=>"text","params"=>[]])
+@props(["name","label"=>null,"class"=>null,"placeholder"=>null,"type"=>"text","params"=>[], "datalist"=>[]])
 
 <x-lf.form.field :name="$name" :label="$label" :class="$class . ' form-array'">
     <div x-data="{ key: '', val: '', addJson() {
@@ -18,9 +18,16 @@
                 <input type="text" x-model="key" placeholder="Key ..." class="form-input" @keyup.enter="addJson"  />
             </div>
             <div class="w-full md:w-1/2 flex" >
-                <input type="text" x-model="val" placeholder="Value ..." class="form-input" @keyup.enter="addJson"  />
+                <input type="text" x-model="val" placeholder="Value ..." class="form-input" @keyup.enter="addJson" @if($datalist) list="lff-list-{{$name}}" @endif />
                 <label wire:loading.attr="disabled" class="icon" @click="addJson">{!! lfIcon("add",15) !!}</label>
             </div>
         </div>
+        @if($datalist)
+            <datalist id="lff-list-{{$name}}">
+                @foreach($datalist as $dt)
+                    <option  value="{{$dt}}">
+                @endforeach
+            </datalist>
+        @endif
     </div>
 </x-lf.form.field>
