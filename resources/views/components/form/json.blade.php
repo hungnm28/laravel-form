@@ -10,7 +10,7 @@
         } }" class="form-tags">
         <div class="tags">
             @foreach($params as $k=>$val)
-                <span class="tag"><span class="text">{{$k}} : {{$val}}</span><label class="icon" wire:click="removeItem('{{$name}}',{{$k}})">{!! lfIcon("close",11) !!}</label></span>
+                <span class="tag"><span class="text">{{$k}} : {{$val}}</span><label class="icon" wire:click="removeItem('{{$name}}','{{$k}}')">{!! lfIcon("close",11) !!}</label></span>
             @endforeach
         </div>
         <div class="item-add w-full flex">
