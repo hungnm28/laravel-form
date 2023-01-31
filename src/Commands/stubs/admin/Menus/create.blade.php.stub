@@ -7,6 +7,7 @@
                 <div>- This not run on <b>server</b>.</div>
             </div>
         </div>
+        <x-lf.form.select name="module" :params="$modules" label="Select Module" />
         <x-lf.form.select name="route" class="w-full md:w-1/2" label="Select Route" :params="$routes" />
         <x-lf.form.input name="route" class="w-full md:w-1/2" label="Or Insert" placeholder="Route ..." />
         <x-lf.form.icon name="icon" label="Icon" :val="$icon" class="w-full md:w-1/2"/>

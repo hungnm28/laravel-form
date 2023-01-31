@@ -1,5 +1,8 @@
 <div class="w-full p-2 md:p-4">
     <x-lf.card title="Listing">
+        <div class="w-full">
+            <x-lf.form.select name="module" :params="$modules" label="Select Module" />
+        </div>
         <div class="tree">
             <div class="tree-content">
                 @foreach($data as $k => $item)

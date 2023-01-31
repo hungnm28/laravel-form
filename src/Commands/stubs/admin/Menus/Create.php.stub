@@ -15,6 +15,7 @@ class Create extends Component
     use WithLaravelFormTrait;
 
     public $module, $route, $label, $icon, $permission, $parent_id = -1, $sort = -1, $children = ["listing","create"];
+    protected $queryString = ["module"];
     protected $rules = [
         "permission" => "string|required"
         , "route" => "string|required"
@@ -24,6 +25,9 @@ class Create extends Component
     public function mount()
     {
         $this->onlyLocalhost();
+        if(!$this->module){
+            $this->module = "DumpMyModuleLowerName";
+        }
     }
 
     public function updated($field)
@@ -39,7 +43,8 @@ class Create extends Component
     public function store()
     {
         $this->onlyLocalhost();
-        $navbars = config( 'DumpMyModuleLowerName.menu', []);
+        $module = Module::findOrFail($this->module);
+        $navbars = config($module->getLowerName().".menu",[]);
         $data = [
             "label" => $this->label
             , "icon" => $this->icon
@@ -93,9 +98,9 @@ class Create extends Component
         } else {
             $navbars[$this->parent_id]["children"] = $siblings;
         }
-        $this->saveNavbar('DumpMyModuleLowerName', $navbars);
+        $this->saveNavbar($module->getLowerName(), $navbars);
         session()->flash('message', 'done');
-        return $this->redirect(route("DumpMyRouteName.menus"));
+        return $this->redirect(route("admin.menus",['module'=>$this->module]));
     }
 
     public function render()
@@ -107,7 +112,8 @@ class Create extends Component
         $permissions = ["" => "Select Permission"];
         $allNav = [];
 
-        $navbars = config( 'DumpMyModuleLowerName.menu', []);
+        $module = Module::findOrFail($this->module);
+        $navbars = config($module->getLowerName().".menu",[]);
         foreach ($navbars as $k => $item) {
             $parents[$k] = $item["label"];
             $allNav[$item["route"]] = $item["route"];
@@ -125,7 +131,7 @@ class Create extends Component
             $sorts[$k] = "After  " . $sibling["label"];
         }
 
-        $prefix = 'DumpMyModuleLowerName';
+        $prefix = $module->getLowerName();
         foreach (Route::getRoutes() as $route) {
             if (Str::is($prefix . '.*', $route->getName())) {
                 $name = $route->getName();
@@ -152,7 +158,11 @@ class Create extends Component
         lForm()->setTitle("Menu Create");
         lForm()->pushBreadCrumb(route("DumpMyRouteName"), "Admin");
         lForm()->pushBreadCrumb(route("DumpMyRouteName.menus"), "Menu");
-        return view("DumpMyModuleView::livewire.menus.create", compact( "parents", "sorts", "routes", "permissions"))
+        $modules = [];
+        foreach(Module::allEnabled() as $item){
+            $modules[$item->getLowerName()] = $item->getStudlyName();
+        }
+        return view("DumpMyModuleView::livewire.menus.create", compact( "parents", "sorts", "routes", "permissions","modules"))
             ->layout('DumpMyModuleView::layouts.master', ['title' => 'Menu Create']);
     }
 

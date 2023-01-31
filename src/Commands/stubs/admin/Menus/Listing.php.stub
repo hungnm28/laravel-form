@@ -10,30 +10,38 @@ class Listing extends Component
 {
     use WithLaravelFormTrait;
 
-    public $create ;
+    public $create, $module ;
     public $edit;
-    protected $queryString = ["create","edit"];
+    protected $queryString = ["create","edit","module"];
     public function mount(){
-
+        if(!$this->module){
+            $this->module = "DumpMyModuleLowerName";
+        }
     }
 
     public function delete($record){
         $this->onlyLocalhost();
-        $data = config("DumpMyModuleLowerName.menu",[]);
+        $module = Module::findOrFail($this->module);
+        $data = config($module->getLowerName().".menu",[]);
         Arr::forget($data,$record);
-        $this->saveNavbar('admin',$data);
+        $this->saveNavbar($module->getLowerName(),$data);
         session()->flash('message','done');
-        $this->redirect(route("DumpMyRouteName.menus"));
+        $this->redirect(route("DumpMyRouteName.menus",["module"=>$this->module]));
     }
 
     public function render(){
-        $data = config("DumpMyModuleLowerName.menu",[]);
+        $module = Module::findOrFail($this->module);
+        $data = config($module->getLowerName().".menu",[]);
 
         lForm()->setTitle("Menu");
         lForm()->pushBreadCrumb(route("DumpMyRouteName"),"Admin");
         lForm()->pushBreadCrumb(route("DumpMyRouteName.menus"),"Menu");
 
-        return view("DumpMyModuleView::livewire.menus.listing",compact("data"))
+        $modules = [];
+        foreach(Module::allEnabled() as $item){
+            $modules[$item->getLowerName()] = $item->getStudlyName();
+        }
+        return view("DumpMyModuleView::livewire.menus.listing",compact("data", "modules"))
             ->layout('DumpMyModuleView::layouts.master', ['title' => 'Menu']);
     }
 }

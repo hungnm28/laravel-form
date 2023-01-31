@@ -5,13 +5,14 @@ namespace Modules\DumpMyModuleName\Http\Livewire\Menus;
 use Hungnm28\LaravelForm\Traits\WithLaravelFormTrait;
 use Illuminate\Support\Arr;
 use Livewire\Component;
+use Nwidart\Modules\Facades\Module;
 
 class Edit extends Component
 {
     use WithLaravelFormTrait;
     public $module,$item;
     public $label,$icon,$route,$permission,$sort;
-    protected $queryString =["item"];
+    protected $queryString =["item","module"];
 
     protected $rules = [
         "permission"=>"string|required"
@@ -20,10 +21,11 @@ class Edit extends Component
 
     public function mount(){
         $this->onlyLocalhost();
-        $navbars = config("DumpMyModuleLowerName.menu",[]);
+        $module = Module::findOrFail($this->module);
+        $navbars = config($module->getLowerName().".menu",[]);
         $data = data_get($navbars,$this->item,[]);
         if(empty($data)){
-           return redirect(route('DumpMyRouteName.menus'));
+            return redirect(route('admin.menus',['module'=>$this->module]));
         }
         $this->label = data_get($data,"label");
         $this->route = data_get($data,"route");
@@ -35,16 +37,17 @@ class Edit extends Component
     public function store(){
         $this->onlyLocalhost();
         $this->validate();
-        $navbars = config("DumpMyModuleLowerName.menu",[]);
+        $module = Module::findOrFail($this->module);
+        $navbars = config($module->getLowerName().".menu",[]);
         $data = data_get($navbars,$this->item,[]);
         $data["route"] = $this->route;
         $data["icon"] = $this->icon;
         $data["permission"] = $this->permission;
         $data["label"] = $this->label;
         Arr::set($navbars,$this->item,$data);
-        $this->saveNavbar('DumpMyModuleLowerName',$navbars);
+        $this->saveNavbar($module->getLowerName(),$navbars);
         session()->flash('message','done');
-       return $this->redirect(route("DumpMyRouteName.menus"));
+        return $this->redirect(route("admin.menus",['module'=>$this->module]));
     }
 
     public function render(){
