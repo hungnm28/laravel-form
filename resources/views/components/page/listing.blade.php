@@ -7,6 +7,9 @@
                 {!! $filters !!}
             </div>
         @endif
+        <div class="w-full p-2">
+            {!! $footer !!}
+        </div>
         {{$slot}}
         <x-slot name="tools">
             @if($filters)
