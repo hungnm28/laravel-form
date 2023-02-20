@@ -171,12 +171,14 @@ class MakeAdmin extends Command
             , 'DumpMyRouteName'
             , 'DumpMyModuleSlug'
             ,'DumpMyModuleLowerName'
+            ,'DumpMyModuleHeadName'
         ], [
             $this->module->getName()
             , $this->module->getLowerName()
             , $this->getRouteName()
             , $this->getModuleSug()
             ,$this->getModuleLowerName()
+            ,$this->getModuleHeadName()
 
         ], $stub);
 

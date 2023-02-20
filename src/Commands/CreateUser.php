@@ -12,17 +12,18 @@ class CreateUser extends Command
 {
 
 
-    protected $signature = 'lf:create-admin-user {email} {password} {name} {--super_admin=1}';
+    protected $signature = 'lf:create-admin-user ';
 
-    protected $description = 'Create Admin User: email password name  {--super_admin=1}';
+    protected $description = 'Create Admin User';
 
     public function handle()
     {
-        $data = [
-            "email" => $this->argument("email")
-            , "password" => $this->argument("password")
-            , "name" => $this->argument("name")
-        ];
+        $data = [];
+        $data["email"]=$this->ask("What is Admin email?");
+        $data["password"]=$this->secret("What is Password?");
+        $data["name"]=$this->ask("What is Admin Name?");
+        $data["is_super_admin"]=$this->confirm("Is Super Admin?",true);
+        $data["is_admin"]=1;
         $validate = Validator::make($data, [
             "email" => "email|required"
             , "password" => "string|required"
@@ -34,20 +35,20 @@ class CreateUser extends Command
         }
 
         // CHeck user
-        $user = User::whereEmail($this->argument("email"))->first();
+        $user = User::whereEmail($data["email"])->first();
         if ($user) {
             $user->update([
-                "password" => Hash::make($this->argument("password"))
+                "password" => Hash::make($data["password"])
                 , "is_admin" => 1
-                ,"is_super_admin"=>$this->option("super_admin")
+                ,"is_super_admin"=>$data["is_super_admin"]
             ]);
         } else {
              User::create([
-                "email" => $this->argument("email")
-                , "name" => $this->argument("name")
-                , "password" => Hash::make($this->argument("password"))
+                "email" => $data["email"]
+                , "name" => $data["name"]
+                , "password" => Hash::make($data["password"])
                 , "is_admin" => 1
-                ,"is_super_admin"=>$this->option("super_admin")
+                ,"is_super_admin"=>$data["is_super_admin"]
             ]);
         }
         return Command::SUCCESS;
