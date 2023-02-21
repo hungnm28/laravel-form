@@ -26,13 +26,10 @@ class UpdateComposerModule extends Command
                 $arrayComposer["autoload"]["psr-4"]['Modules\\'] = 'Modules/';
             }
             if(!isset($arrayComposer["autoload"]["files"])){
-                if (!file_exists(base_path() . "/helpers")) {
-                    mkdir(base_path() . "/helpers", 0777, true);
-                }
+                $this->call("vendor:publish",["--tag"=>"laravel-form-helper"]);
                 $arrayComposer["autoload"]["files"] = [
                     "helpers/includes.php"
                 ];
-                file_put_contents(base_path() . "/helpers/includes.php",'<?php');
             }
             file_put_contents(base_path() . "/composer.json",json_encode($arrayComposer,JSON_PRETTY_PRINT));
         }
