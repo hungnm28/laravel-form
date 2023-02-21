@@ -17,7 +17,7 @@ Create module admin by [Laravel Module](https://nwidart.com/laravel-modules/v6/b
 
 Add this to .env file
 ```sh
-ASSET_ICON=/assets
+ASSET_URL=/dev
 
 ```
 Add to end of file .env
