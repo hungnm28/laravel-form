@@ -26,6 +26,7 @@ class NewAdmin extends Command
         }
         $this->call("lf:init-module",["name"=>$moduleName,"--all"=>"1"]);
         $this->call("lf:init-cast");
+        $this->call("lf:init-icon");
         $this->call("lf:init-auth");
         $this->call("lf:make-admin",["name"=>$moduleName]);
 
