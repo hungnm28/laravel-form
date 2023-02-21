@@ -85,3 +85,22 @@ You can autoload your modules using psr-4 on composer.json file. For example :
 ```shell
    composer dump-autoload
 ```
+
+## 6. Install laravel-form
+```sh
+composer require hungnm28/laravel-form
+```
+
+Add this to .env file
+```sh
+ASSET_URL=/dev
+
+```
+Add to end of file .env
+
+
+```sh
+MIX_PUSHER_APP_KEY="${PUSHER_APP_KEY}"
+MIX_PUSHER_APP_CLUSTER="${PUSHER_APP_CLUSTER}"
+
+```
