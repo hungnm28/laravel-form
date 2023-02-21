@@ -18,7 +18,17 @@ Create module admin by [Laravel Module](https://nwidart.com/laravel-modules/v6/b
 Add this to .env file
 ```sh
 ASSET_ICON=/assets
+
 ```
+Add to end of file .env
+
+
+```sh
+MIX_PUSHER_APP_KEY="${PUSHER_APP_KEY}"
+MIX_PUSHER_APP_CLUSTER="${PUSHER_APP_CLUSTER}"
+
+```
+
 
 ## Create new Module
 ```sh
