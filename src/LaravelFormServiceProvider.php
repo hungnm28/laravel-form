@@ -111,6 +111,9 @@ class LaravelFormServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../publishes/database' => database_path()
         ], 'laravel-form-database');
+        $this->publishes([
+            __DIR__ . '/../publishes/helpers' => base_path()
+        ], 'laravel-form-helper');
     }
 
 }
