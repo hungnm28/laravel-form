@@ -2,12 +2,16 @@
 ### The package used for create laravel admin.
 
 
+
+ Requires:
+    [- Laravel](https://laravel.com/docs/10.x).
+    [- Laravel Jetstream with livewire](https://jetstream.laravel.com/3.x/installation.html).
+    [- Laravel Module](https://docs.laravelmodules.com/v9/installation-and-setup).
+    [- Laravel Module Livewire](https://github.com/mhmiton/laravel-modules-livewire).
+
+
+ See [- How to create new project](https://github.com/hungnm28/laravel-form/blob/master/new-project.md).
 ## Installation
-
-Requires [Laravel Module](https://nwidart.com/laravel-modules/v6/introduction) 6.0+ to run.
-
-Install:
-
 ```sh
 composer require hungnm28/laravel-form
 ```
