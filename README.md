@@ -17,20 +17,34 @@ Create module admin by [Laravel Module](https://nwidart.com/laravel-modules/v6/b
 
 Add this to .env file
 ```sh
-ASSET_URL=/dev
 ASSET_ICON=/assets
-APP_SUPER_ADMIN=<list super admin id eg: 1,2,3>
 ```
 
-Run command
+## Create new Module
 ```sh
-php artisan lf:init-module <Module Name> --all
+php artisan lf:new-module <Module Name>
 
 cd Modules/<Module name>
 npm install
 npm run dev
 
 ```
+## Create new Admin
+```sh
+php artisan lf:new-admin <Module Name>
+
+cd Modules/<Module name>
+npm install
+npm run dev
+
+```
+## Create new Admin User
+```sh
+php artisan lf:new-admin-admin
+
+```
+
+
 ## Init Icon
 ```sh
     php artisan lf:init-icon

@@ -28,6 +28,7 @@ class LaravelFormServiceProvider extends ServiceProvider
         ,Commands\MakeRoute::class
         ,Commands\CreateUser::class
         ,Commands\NewAdmin::class
+        ,Commands\NewModule::class
     ];
 
     public function register()
