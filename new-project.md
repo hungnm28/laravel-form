@@ -17,6 +17,7 @@ Jetstram document: [Jetstram document](https://jetstream.laravel.com/3.x/introdu
 Laravel-module document: [Laravel-module document](https://docs.laravelmodules.com/v9/installation-and-setup).
 ```sh
     composer create-project laravel/laravel example-app
+    cd example-app
 ```
 ### Add Autoloading 
 By default the module classes are not loaded automatically. 
