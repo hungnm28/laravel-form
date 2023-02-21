@@ -27,6 +27,7 @@ class UpdateComposerModule extends Command
             }
             if(!isset($arrayComposer["autoload"]["files"])){
                 $this->call("vendor:publish",["--tag"=>"laravel-form-helper"]);
+
                 $arrayComposer["autoload"]["files"] = [
                     "helpers/includes.php"
                 ];
