@@ -19,6 +19,9 @@ Laravel-module document: [Laravel-module document](https://docs.laravelmodules.c
 ```sh
     composer require nwidart/laravel-modules
 ```
+```sh
+    php artisan vendor:publish --provider="Nwidart\Modules\LaravelModulesServiceProvider"
+```
 ### Add Autoloading 
 By default the module classes are not loaded automatically. 
 You can autoload your modules using psr-4 on composer.json file. For example :
