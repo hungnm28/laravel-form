@@ -4,11 +4,12 @@
 Laravel document: [Laravel document](https://laravel.com/docs/10.x).
 ```sh
     composer create-project laravel/laravel example-app
+    cd example-app
 ```
 ## 2. Install jetstream  use livewire
 Jetstram document: [Jetstram document](https://jetstream.laravel.com/3.x/introduction.html).
 ```sh
-    composer composer require laravel/jetstream
+     composer require laravel/jetstream
 ```
 ```sh
     php artisan jetstream:install livewire
@@ -16,8 +17,7 @@ Jetstram document: [Jetstram document](https://jetstream.laravel.com/3.x/introdu
 ## 3. Install nwidart/laravel-modules
 Laravel-module document: [Laravel-module document](https://docs.laravelmodules.com/v9/installation-and-setup).
 ```sh
-    composer create-project laravel/laravel example-app
-    cd example-app
+    composer require nwidart/laravel-modules
 ```
 ### Add Autoloading 
 By default the module classes are not loaded automatically. 
