@@ -47,3 +47,37 @@ You can autoload your modules using psr-4 on composer.json file. For example :
 ```sh 
     php artisan vendor:publish --tag=modules-livewire-config
 ```
+
+## 5. User simple html dom
+document: [simple_html_dom](https://simplehtmldom.sourceforge.io/docs/1.9/index.html).
+
+1. create floder /helpers
+2. [download simple_html_dom](https://sourceforge.net/projects/simplehtmldom/).
+3. add file  simple_html_dom.php to folder helpers
+4. create file /helpers/includes.php
+```php
+    <?php 
+       require_once __DIR__ . "/simple_html_dom.php";
+```
+5. Add Autoloading
+By default the module classes are not loaded automatically.
+You can autoload your modules using psr-4 on composer.json file. For example :
+```json
+    {
+  "autoload": {
+    "psr-4": {
+      "App\\": "app/",
+      "Modules\\": "Modules/",
+      "Database\\Factories\\": "database/factories/",
+      "Database\\Seeders\\": "database/seeders/"
+    },
+      "files": [
+          "helpers/includes.php"
+      ]
+  }
+}
+```
+# dumpautoload
+```shell
+   composer dump-autoload
+```

@@ -8,7 +8,7 @@
     [- Laravel Jetstream with livewire](https://jetstream.laravel.com/3.x/installation.html).
     [- Laravel Module](https://docs.laravelmodules.com/v9/installation-and-setup).
     [- Laravel Module Livewire](https://github.com/mhmiton/laravel-modules-livewire).
-
+    [- Simple html dom](https://simplehtmldom.sourceforge.io/docs/1.9/index.html).
 
  See [- How to create new project](https://github.com/hungnm28/laravel-form/blob/master/new-project.md).
 ## Installation
