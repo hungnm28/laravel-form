@@ -24,8 +24,7 @@ class InitIcon extends Command
         $pathSave = public_path("assets/images/icons.svg");
         if(file_exists($pathSave)){
             $this->info("File icons exits $pathSave");
-            $comfirm = $this->ask('Please enter Y to replace file, any key to quit');
-            if (strtolower($comfirm) != "y") {
+            if(!$this->confirm("Do you want replace file",true)){
                 return false;
             }
         }

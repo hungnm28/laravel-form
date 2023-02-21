@@ -29,7 +29,7 @@ class NewAdmin extends Command
         $this->call("lf:init-icon");
         $this->call("lf:init-auth");
         $this->call("lf:make-admin",["name"=>$moduleName]);
-        if($this->confirm("Do you run migrate?",[true])){
+        if($this->confirm("Do you run migrate?",true)){
             $this->call("migrate");
         }
 
