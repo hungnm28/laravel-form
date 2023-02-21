@@ -30,6 +30,7 @@ class LaravelFormServiceProvider extends ServiceProvider
         ,Commands\NewAdmin::class
         ,Commands\NewModule::class
         ,Commands\UpdateComposerModule::class
+        ,Commands\SetupDatabase::class
     ];
 
     public function register()
