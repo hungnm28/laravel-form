@@ -54,11 +54,12 @@ class SetupDatabase extends Command
             $this->warn("DB_PASSWORD=" . $db_password);
         }
 
-        $this->arrSaveEnv["ASSET_URL"] = "/dev";
-        $this->arrSaveEnv["MIX_PUSHER_APP_KEY"] = '"${PUSHER_APP_KEY}"';
-        $this->arrSaveEnv["MIX_PUSHER_APP_CLUSTER"] = '"${PUSHER_APP_CLUSTER}"';
-
-        $envs = explode("\n",file_get_contents(base_path() . "/.env"));
+        $arrAddEnv = [];
+        $arrAddEnv["ASSET_URL"] = "/dev";
+        $arrAddEnv["MIX_PUSHER_APP_KEY"] = '"${PUSHER_APP_KEY}"';
+        $arrAddEnv["MIX_PUSHER_APP_CLUSTER"] = '"${PUSHER_APP_CLUSTER}"';
+        $env = file_get_contents(base_path() . "/.env");
+        $envs = explode("\n",$env);
         foreach ($envs as $key => $value){
             foreach ($this->arrSaveEnv as $env_name => $env_value){
                 if(strpos($value,$env_name.'=') === 0){
@@ -69,6 +70,13 @@ class SetupDatabase extends Command
                 }
             }
         }
+
+        foreach ($arrAddEnv as $k => $v){
+            if(strpos($env,$k) === false){
+                $envs[] = $k . '=' . $v;
+            }
+        }
+
         file_put_contents(base_path() . "/.env",implode("\n",$envs));
 
     }
