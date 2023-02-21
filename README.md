@@ -50,7 +50,7 @@ npm run dev
 ```
 ## Create new Admin User
 ```sh
-php artisan lf:new-admin-admin
+php artisan lf:create-admin-user
 
 ```
 
