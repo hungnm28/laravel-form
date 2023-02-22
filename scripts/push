@@ -7,7 +7,7 @@ select opt in "dev" "master" "main" "Quit"; do
             break
             ;;
         *)
-            git checkout "$opt" && git pull origin "$opt" && git add . && git commit -m "update" && git push origin "$opt" break
+            git checkout "$opt" && git pull origin "$opt" && git add . && git commit -m "update" && git push origin "$opt" && break
             ;;
     esac
 done
