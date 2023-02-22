@@ -1,0 +1,13 @@
+#!/bin/bash
+
+echo "Select branch git:"
+select opt in "dev" "master" "main" "Quit"; do
+    case $opt in
+        "Quit")
+            break
+            ;;
+        *)
+            git checkout "$opt" && git pull origin "$opt" && git add . && git commit -m "update" && git push origin "$opt" break
+            ;;
+    esac
+done
