@@ -1,0 +1,15 @@
+#!/bin/bash
+
+echo "Chọn module build npm:"
+options=(Modules/*/)
+select opt in "${options[@]}" "Quit"; do
+    case $opt in
+        "Quit")
+            break
+            ;;
+        *)
+            cd "$opt" && npm install && npm run dev && break
+            ;;
+    esac
+done
+
