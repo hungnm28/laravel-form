@@ -16,7 +16,7 @@ class UseWebpack extends Command
     public function handle()
     {
         $this->call("vendor:publish", ["--tag" => "laravel-use-webpack"]);
-        $process = Process::fromShellCommandline('npm install laravel-mix sass sass-loader browser-sync browser-sync-webpack-plugin --D');
+        $process = Process::fromShellCommandline('npm install laravel-mix sass sass-loader browser-sync browser-sync-webpack-plugin laravel-mix-merge-manifest --D');
 
         $process->run();
         $this->info($process->getOutput());
