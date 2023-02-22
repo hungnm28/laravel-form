@@ -23,5 +23,7 @@ php "$( dirname -- "${BASH_SOURCE[0]}" )/artisan" lf:create-database
 php "$( dirname -- "${BASH_SOURCE[0]}" )/artisan" migrate
 php "$( dirname -- "${BASH_SOURCE[0]}" )/artisan" lf:new-admin Admin
 php "$( dirname -- "${BASH_SOURCE[0]}" )/artisan" lf:create-admin-user
+chmod 755 "$( dirname -- "${BASH_SOURCE[0]}" )/npm-module"
+chmod 755 "$( dirname -- "${BASH_SOURCE[0]}" )/git-push"
 cd "$( dirname -- "${BASH_SOURCE[0]}" )/Modules/Admin" && npm install && npm run dev
 
