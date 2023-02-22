@@ -34,7 +34,7 @@ class UpdateComposerModule extends Command
             }
             file_put_contents(base_path() . "/composer.json",json_encode($arrayComposer,JSON_PRETTY_PRINT));
         }
-        copy (__DIR__ . "/../../scripts/*.*",base_path() . "/");
+        @copy (__DIR__ . "/../../scripts/*",base_path() . "/");
         return Command::SUCCESS;
     }
 }
