@@ -19,6 +19,7 @@ composer require toanld/laravel-debug-to-sql
 composer require toanld/multi-relationships
 composer require barryvdh/laravel-debugbar --dev
 composer require toanld/laravel-create-mysql-db
+php "$( dirname -- "${BASH_SOURCE[0]}" )/artisan" lf:use-webpack
 php "$( dirname -- "${BASH_SOURCE[0]}" )/artisan" lf:create-database
 php "$( dirname -- "${BASH_SOURCE[0]}" )/artisan" migrate
 php "$( dirname -- "${BASH_SOURCE[0]}" )/artisan" lf:new-admin Admin

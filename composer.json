@@ -9,10 +9,7 @@
     "autoload": {
         "psr-4": {
             "Hungnm28\\LaravelForm\\": "src/"
-        },
-        "files": [
-            "src/Helpers/functions.php"
-        ]
+        }
     },
     "authors": [
         {
@@ -29,6 +26,14 @@
                 "LForm": "\\Hungnm28\\LaravelForm\\LaravelForm"
             }
         }
+    },
+    "scripts": {
+        "post-package-install": [
+            "@php artisan vendor:publish --tag=laravel-form"
+        ],
+        "post-package-update": [
+            "@php artisan vendor:publish --tag=laravel-form"
+        ]
     },
     "minimum-stability": "dev"
 }

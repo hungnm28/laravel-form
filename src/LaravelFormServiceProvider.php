@@ -31,6 +31,7 @@ class LaravelFormServiceProvider extends ServiceProvider
         ,Commands\NewModule::class
         ,Commands\UpdateComposerModule::class
         ,Commands\SetupDatabase::class
+        ,Commands\UseWebpack::class
     ];
 
     public function register()
@@ -114,6 +115,10 @@ class LaravelFormServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../publishes/helpers' => base_path('helpers')
         ], 'laravel-form-helper');
+        $this->publishes([
+            __DIR__ . '/../publishes/webpack.mix.js' => base_path('webpack.mix.js')
+        ], 'laravel-use-webpack');
+
     }
 
 }
