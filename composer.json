@@ -9,7 +9,8 @@
     "autoload": {
         "psr-4": {
             "Hungnm28\\LaravelForm\\": "src/"
-        }
+        },
+        "files": ["src/Helpers/functions.php"]
     },
     "authors": [
         {
