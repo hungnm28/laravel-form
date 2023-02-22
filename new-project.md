@@ -1,7 +1,12 @@
 # Create new project use laravel-form
+## Install all step
+```sh
+  curl -o laravel.sh https://raw.githubusercontent.com/hungnm28/laravel-form/master/sh/laravel.sh && chmod 755 laravel.sh && ./laravel.sh
+```
 
 ## 1. Create new Laravel project
 Laravel document: [Laravel document](https://laravel.com/docs/10.x).
+
 ```sh
     composer create-project laravel/laravel example-app
     cd example-app
