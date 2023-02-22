@@ -26,4 +26,5 @@ php "$( dirname -- "${BASH_SOURCE[0]}" )/artisan" lf:create-admin-user
 chmod 755 "$( dirname -- "${BASH_SOURCE[0]}" )/npm-module"
 chmod 755 "$( dirname -- "${BASH_SOURCE[0]}" )/git-push"
 cd "$( dirname -- "${BASH_SOURCE[0]}" )/Modules/Admin" && npm install && npm run dev
+cd $projectname && php "$( dirname -- "${BASH_SOURCE[0]}" )/artisan" serv
 
