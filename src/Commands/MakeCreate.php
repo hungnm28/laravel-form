@@ -86,16 +86,16 @@ class MakeCreate extends Command
             if(in_array($f,$this->reservedColumn)) continue;
             switch ($field->type) {
                 case "boolean":
-                    $form = '<x-lf.form.toggle name="' . $f . '" label="' . $field->label . '" />';
+                    $form = '<x-lf.form.toggle name="' . $f . '" class="md:w-1/2" label="' . $field->label . '" />';
                     break;
                 case "text":
                     $form = '<x-lf.form.textarea name="' . $f . '" label="' . $field->label . '" />';
                     break;
                 case "json":
-                    $form = '<x-lf.form.array name="' . $f . '" label="' . $field->label . '" placeholder="' . $field->label . ' ..." :params="$' . $f . '"/>';
+                    $form = '<x-lf.form.array name="' . $f . '" class="md:w-1/2" label="' . $field->label . '" placeholder="' . $field->label . ' ..." :params="$' . $f . '"/>';
                     break;
                 default:
-                    $form = '<x-lf.form.input name="' . $f . '" type="' . $field->type . '" label="' . $field->label . '" placeholder="' . $field->label . ' ..."/>';
+                    $form = '<x-lf.form.input name="' . $f . '" class="md:w-1/2" type="' . $field->type . '" label="' . $field->label . '" placeholder="' . $field->label . ' ..."/>';
             }
             $fields .= $form . $this->showNewLine(4);
         }

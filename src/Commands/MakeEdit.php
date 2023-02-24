@@ -83,13 +83,16 @@ class MakeEdit extends Command
             if (in_array($f, $this->reservedColumn)) continue;
             switch ($field->type) {
                 case "boolean":
-                    $fields .= '<x-lf.form.toggle name="' . $f . '" label="' . $field->label . '" />' . $this->showNewLine(4);
+                    $fields .= '<x-lf.form.toggle name="' . $f . '" class="md:w-1/2" label="' . $field->label . '" />' . $this->showNewLine(4);
+                    break;
+                case "text":
+                    $form = '<x-lf.form.textarea name="' . $f . '" label="' . $field->label . '" />';
                     break;
                 case "json":
-                    $fields .= '<x-lf.form.array name="' . $f . '" label="' . $field->label . '" placeholder="' . $field->label . ' ..." :params="$' . $f . '"/>' . $this->showNewLine(4);
+                    $fields .= '<x-lf.form.array name="' . $f . '" class="md:w-1/2" label="' . $field->label . '" placeholder="' . $field->label . ' ..." :params="$' . $f . '"/>' . $this->showNewLine(4);
                     break;
                 default:
-                    $fields .= '<x-lf.form.input name="' . $f . '" type="' . $field->type . '" label="' . $field->label . '" placeholder="' . $field->label . ' ..."/>' . $this->showNewLine(4);
+                    $fields .= '<x-lf.form.input name="' . $f . '" class="md:w-1/2" type="' . $field->type . '" label="' . $field->label . '" placeholder="' . $field->label . ' ..."/>' . $this->showNewLine(4);
             }
         }
         $template = str_replace([
