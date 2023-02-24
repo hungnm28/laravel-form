@@ -33,6 +33,20 @@ class LaravelFormServiceProvider extends ServiceProvider
         ,Commands\SetupDatabase::class
         ,Commands\UseWebpack::class
     ];
+    protected $components = [
+        'btn.delete', 'btn.dropdown', 'btn.modal', 'btn.toggle'
+        , 'filter.input', 'filter.label'
+        , 'form.array', 'form.checkbox', 'form.done', 'form.field'
+        , 'form.group', 'form.icon', 'form.input', 'form.json'
+        , 'form.mce', 'form.picture', 'form.radio', 'form.row'
+        , 'form.select', 'form.sort', 'form.tag', 'form.textarea', 'form.toggle'
+        , 'item.jsons', 'item.tags', 'item.tree-nav'
+        , 'modal'
+        , 'page.header', 'page.listing'
+        , 'table.item', 'table.label'
+        , 'table.sort'
+        ,'card'
+    ];
 
     public function register()
     {
@@ -52,48 +66,17 @@ class LaravelFormServiceProvider extends ServiceProvider
 
     protected function configureComponents()
     {
-        $this->registerComponent('card');
-
-        $this->registerComponent('form.field');
-        $this->registerComponent('form.row');
-        $this->registerComponent('form.array');
-        $this->registerComponent('form.input');
-        $this->registerComponent('form.group');
-        $this->registerComponent('form.mce');
-        $this->registerComponent('form.textarea');
-        $this->registerComponent('form.select');
-        $this->registerComponent('form.picture');
-        $this->registerComponent('form.checkbox');
-        $this->registerComponent('form.radio');
-        $this->registerComponent('form.icon');
-        $this->registerComponent('form.sort');
-        $this->registerComponent('form.json');
-        $this->registerComponent('form.tag');
-        $this->registerComponent('form.toggle');
-        $this->registerComponent('form.done');
-        $this->registerComponent('table.label');
-        $this->registerComponent('table.item');
-        $this->registerComponent('table.sort');
-
-        $this->registerComponent('btn.delete');
-        $this->registerComponent('btn.dropdown');
-        $this->registerComponent('btn.toggle');
-        $this->registerComponent('btn.modal');
-        $this->registerComponent('item.tags');
-        $this->registerComponent('item.tree-nav');
-
-        $this->registerComponent('page.header');
-        $this->registerComponent('page.listing');
-
-        $this->registerComponent('filter.label');
-        $this->registerComponent('filter.input');
-
-        $this->registerComponent('modal');
+        $this->registerComponent();
     }
 
-    protected function registerComponent(string $component)
+    protected function registerComponent()
     {
-        Blade::component('lf-form::components.' . $component, 'lf.' . $component);
+        foreach ($this->components as $component){
+            $path = resource_path("views/components/lf/") . str_replace(".","/",$component) . ".blade.php";
+            if(!file_exists($path)){
+                Blade::component('lf-form::components.' . $component, 'lf.' . $component);
+            }
+        }
     }
 
     protected function configureCommands()
@@ -118,6 +101,9 @@ class LaravelFormServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../publishes/webpack.mix.js' => base_path('webpack.mix.js')
         ], 'laravel-use-webpack');
+        $this->publishes([
+            __DIR__ . '/../resources/views/components' =>base_path("resources/views/components/lf")
+        ], 'laravel-form');
 
     }
 
