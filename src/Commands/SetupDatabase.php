@@ -78,6 +78,7 @@ class SetupDatabase extends Command
         }
 
         file_put_contents(base_path() . "/.env",implode("\n",$envs));
+        file_put_contents(base_path() . "/.env.example",implode("\n",$envs));
 
     }
 
