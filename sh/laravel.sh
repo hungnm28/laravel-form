@@ -11,6 +11,8 @@ php artisan jetstream:install livewire
 composer require nwidart/laravel-modules
 php artisan vendor:publish --provider="Nwidart\Modules\LaravelModulesServiceProvider"
 composer require mhmiton/laravel-modules-livewire
+composer require toanld/modules-inertia
+composer require tightenco/ziggy
 php artisan vendor:publish --tag=modules-livewire-config
 
 composer require hungnm28/laravel-form
