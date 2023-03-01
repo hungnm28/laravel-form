@@ -13,6 +13,7 @@ php artisan vendor:publish --provider="Nwidart\Modules\LaravelModulesServiceProv
 composer require mhmiton/laravel-modules-livewire
 composer require toanld/modules-inertia
 composer require tightenco/ziggy
+php "$( dirname -- "${BASH_SOURCE[0]}" )/artisan" inertia:middleware
 php artisan vendor:publish --tag=modules-livewire-config
 
 composer require hungnm28/laravel-form
