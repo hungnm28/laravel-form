@@ -129,6 +129,9 @@ trait WithCommandTrait
 
     private function getModelNamspace()
     {
+        if(class_exists($this->model["name"])){
+            return $this->model["name"];
+        }
         return "App\\Models\\" . $this->model["name"];
     }
 
@@ -215,7 +218,10 @@ trait WithCommandTrait
 
     private function getModelName()
     {
-        return data_get($this->model, "name");
+        $name = data_get($this->model, "name");
+        $name = explode("\\",$name);
+        $name = @end($name);
+        return $name;
     }
     private function getTableName()
     {
