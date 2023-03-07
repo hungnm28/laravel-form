@@ -16,7 +16,7 @@
                                 </span>
                             <span class="tools">
                                 @if(lfCheckLocalhost())
-                                    <a class="btn-warning xs" href="{{route("DumpMyRouteName.menus",["item"=>$k,"edit"=>true])}}">{!! lfIcon("edit",11) !!}</a>
+                                    <a class="btn-warning xs" href="{{route("DumpMyRouteName.menus",["item"=>$k,"edit"=>true,"module"=>$module])}}">{!! lfIcon("edit",11) !!}</a>
                                     <span class="btn-danger xs" wire:click="delete('{{$k}}')">{!! lfIcon("delete",11) !!}</span>
                                 @endif
                             </span>
@@ -34,7 +34,7 @@
                                             </span>
                                             <span class="tools">
                                                 @if(lfCheckLocalhost())
-                                                    <a class="btn-warning xs" href="{{route("DumpMyRouteName.menus",["item"=>$k.'.children.'.$kChild,"edit"=>true])}}">{!! lfIcon("edit",11) !!}</a>
+                                                    <a class="btn-warning xs" href="{{route("DumpMyRouteName.menus",["item"=>$k.'.children.'.$kChild,"edit"=>true,"module"=>$module])}}">{!! lfIcon("edit",11) !!}</a>
                                                     <span class="btn-danger xs" wire:click="delete('{{$k}}.children.{{$kChild}}')">{!! lfIcon("delete",11) !!}</span>
                                                 @endif
                                             </span>
