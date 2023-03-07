@@ -48,7 +48,7 @@
             </div>
         </div>
         <x-slot:tools>
-            <a href="{{route("DumpMyRouteName.menus",["create"=>true])}}" class="btn-primary xs">{!! lfIcon("add",11) !!}</a>
+            <a href="{{route("DumpMyRouteName.menus",["create"=>true,"module"=>$module])}}" class="btn-primary xs">{!! lfIcon("add",11) !!}</a>
         </x-slot:tools>
     </x-lf.card>
     @if($create)

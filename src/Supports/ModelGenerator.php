@@ -92,6 +92,7 @@ class ModelGenerator
 
     protected function getModel($model)
     {
+
         if ($model instanceof Model) {
             return $this->model = $model;
         }
