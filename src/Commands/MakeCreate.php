@@ -57,6 +57,9 @@ class MakeCreate extends Command
             }
         }
         $listField = trim($listField, ', ');
+        if($listField ==""){
+            $listField = '$recode_id';
+        }
         $routes = $this->getArrRoutes("create");
         $breadcrumb = "";
         foreach ($routes as $k => $title) {

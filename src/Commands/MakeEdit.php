@@ -52,6 +52,9 @@ class MakeEdit extends Command
             }
         }
         $listField = trim($listField, ', ');
+        if($listField ==""){
+            $listField = '$recode_id';
+        }
         $routes = $this->getArrRoutes();
         $breadcrumb = "";
         foreach ($routes as $k => $title) {
