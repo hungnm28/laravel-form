@@ -89,7 +89,7 @@ class MakeEdit extends Command
                     $fields .= '<x-lf.form.toggle name="' . $f . '" class="md:w-1/2" label="' . $field->label . '" />' . $this->showNewLine(4);
                     break;
                 case "text":
-                    $form = '<x-lf.form.textarea name="' . $f . '" label="' . $field->label . '" />';
+                    $fields = '<x-lf.form.textarea name="' . $f . '" label="' . $field->label . '" placeholder="' . $field->label . ' ..." />';
                     break;
                 case "json":
                     $fields .= '<x-lf.form.array name="' . $f . '" class="md:w-1/2" label="' . $field->label . '" placeholder="' . $field->label . ' ..." :params="$' . $f . '"/>' . $this->showNewLine(4);

@@ -3,11 +3,11 @@
         DumpMyFields
         <x-lf.form.done />
         <x-slot:tools>
-            <a class="btn-primary sm" href="{{route('DumpMyRoute')}}">{!! lfIcon("list") !!}</a>
+            <a class="btn-primary sm" href="{{route('DumpMyRoute')}}.listing">{!! lfIcon("list") !!}</a>
         </x-slot:tools>
         <x-slot:footer>
             <div class="card-footer flex justify-between">
-                <label class="btn-primary flex-none" wire:click="store">Create</label>
+                <label class="btn-primary flex-none" wire:click="store">Cqreate</label>
                 <a class="btn" href="{{route("DumpMyRoute")}}">Cancel</a>
             </div>
         </x-slot:footer>

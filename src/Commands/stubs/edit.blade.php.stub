@@ -6,7 +6,7 @@
             @can('DumpMyPermission.show')
             <a class="btn-success sm" href="{{route('DumpMyRoute.show',$record_id)}}">{!! lfIcon("launch",11) !!}</a>
             @endcan
-            <a class="btn-primary sm" href="{{route('DumpMyRoute')}}">{!! lfIcon("list",11) !!}</a>
+            <a class="btn-primary sm" href="{{route('DumpMyRoute')}}.listing">{!! lfIcon("list",11) !!}</a>
         </x-slot:tools>
         <x-slot:footer>
             <div class="card-footer flex justify-between">
