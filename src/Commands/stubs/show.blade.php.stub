@@ -9,7 +9,7 @@
         </table>
         <x-slot:tools>
             @can("DumpMyPermission.listing")
-                <a class="btn-primary xs" href="{{route("DumpMyRoute")}}.listing">{!! lfIcon("list",11) !!}</a>
+                <a class="btn-primary xs" href="{{route("DumpMyRoute.listing")}}">{!! lfIcon("list",11) !!}</a>
             @endcan
             @can("DumpMyPermission.edit")
                 <a class="btn-warning xs" href="{{route("DumpMyRoute.edit",$data->id)}}">{!! lfIcon("edit",11) !!}</a>
@@ -18,7 +18,7 @@
         <x-slot:footer>
             <div class="card-footer flex justify-between">
                 @can("DumpMyPermission.listing")
-                    <a class="btn-primary" href="{{route("DumpMyRoute")}}.listing">{!! lfIcon("list") !!} <span>Listing</span></a>
+                    <a class="btn-primary" href="{{route("DumpMyRoute.listing")}}">{!! lfIcon("list") !!} <span>Listing</span></a>
                 @endcan
                 <div>
                     @can("DumpMyPermission.edit")
