@@ -7,7 +7,7 @@
         </x-slot:tools>
         <x-slot:footer>
             <div class="card-footer flex justify-between">
-                <label class="btn-primary flex-none" wire:click="store">Cqreate</label>
+                <label class="btn-primary flex-none" wire:click="store">Create</label>
                 <a class="btn" href="{{route("DumpMyRoute")}}">Cancel</a>
             </div>
         </x-slot:footer>
