@@ -256,3 +256,17 @@
         }
     }
 }
+
+.ck-editor__editable_inline {
+    @apply min-h-[200px];
+}
+#word-count{
+    @apply inline-block;
+    .ck-word-count{
+        @apply flex space-x-4 font-bold text-teal-600;
+    }
+    .ck-word-count__characters{
+        @apply text-green-600;
+    }
+}
+

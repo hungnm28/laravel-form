@@ -11,9 +11,12 @@ class Listing extends Component
 
     public $create ;
     protected $queryString = ["create"];
-    public function mount(){
+   public function mount()
+       {
+           $this->authorize("DumpMyRouteName.permission-config.listing");
+           $this->done = 1;
+       }
 
-    }
 
     public function delete($record){
         $this->onlyLocalhost();

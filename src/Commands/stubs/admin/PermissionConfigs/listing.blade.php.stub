@@ -18,13 +18,17 @@
             @endforeach
         </table>
         <x-slot:tools>
-            <a href="{{route("DumpMyRouteName.permission-configs",["create"=>true])}}" class="btn-primary xs">{!! lfIcon("add",11) !!}</a>
+            @if(lfCheckLocalhost())
+                <a href="{{route("DumpMyRouteName.permission-configs",["create"=>true])}}" class="btn-primary xs">{!! lfIcon("add",11) !!}</a>
+            @endif
         </x-slot:tools>
     </x-lf.card>
-    @if($create)
-        <x-lf.modal name="create" open="true" class="max-w-screen-lg">
-            <livewire:DumpMyModuleSlug::permission-configs.create />
-        </x-lf.modal>
+    @if(lfCheckLocalhost())
+        @if($create)
+            <x-lf.modal name="create" open="true" class="max-w-screen-lg">
+                <livewire:DumpMyModuleSlug::permission-configs.create />
+            </x-lf.modal>
+        @endif
     @endif
     @if (session()->has('message') && session('message')=="done")
         <div x-data="{time:5,
