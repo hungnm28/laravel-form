@@ -27,20 +27,26 @@
                 @endcan
             @endif
         @endforeach
-        @if(Route::has('DumpMyRouteName.permission-configs'))
-            <li class="item {{ request()->routeIs('DumpMyRouteName.permission-configs')? 'active' : '' }} ">
-                <a href="{{route('DumpMyRouteName.permission-configs')}}" class="link"><span class="icon">{!! lfIcon("security-add") !!}</span><span class="link-title">Permission Configs</span></a>
-            </li>
+        @if(Route::has('admin.permission-configs'))
+           @can("admin.permission-config")
+               <li class="item {{ request()->routeIs('admin.permission-configs')? 'active' : '' }} ">
+                   <a href="{{route('admin.permission-configs')}}" class="link"><span class="icon">{!! lfIcon("security-add") !!}</span><span class="link-title">Permission Configs</span></a>
+               </li>
+           @endcan
         @endif
-         @if(Route::has('DumpMyRouteName.menus'))
-             <li class="item {{ request()->routeIs('DumpMyRouteName.menus')? 'active' : '' }} ">
-                <a href="{{route('DumpMyRouteName.menus')}}" class="link"><span class="icon">{!! lfIcon("menu") !!}</span><span class="link-title">Admin Menus</span></a>
-            </li>
+        @if(Route::has('admin.menus'))
+            @can("admin.menus")
+               <li class="item {{ request()->routeIs('admin.menus')? 'active' : '' }} ">
+                   <a href="{{route('admin.menus')}}" class="link"><span class="icon">{!! lfIcon("menu") !!}</span><span class="link-title">Admin Menus</span></a>
+               </li>
+            @endcan
         @endif
-         @if(Route::has('DumpMyRouteName.icons'))
-             <li class="item {{ request()->routeIs('DumpMyRouteName.icons')? 'active' : '' }} ">
-                <a href="{{route('DumpMyRouteName.icons')}}" class="link"><span class="icon">{!! lfIcon("interests") !!}</span><span class="link-title">Icons</span></a>
-            </li>
+        @if(Route::has('admin.icons'))
+            @can("admin.icons")
+               <li class="item {{ request()->routeIs('admin.icons')? 'active' : '' }} ">
+                   <a href="{{route('admin.icons')}}" class="link"><span class="icon">{!! lfIcon("interests") !!}</span><span class="link-title">Icons</span></a>
+               </li>
+            @endcan
         @endif
     </ul>
 </div>

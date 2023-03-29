@@ -31,6 +31,6 @@ class BooleanCast implements CastsAttributes
      */
     public function set($model, string $key, $value, array $attributes)
     {
-        return boolval($value);
+        return (boolean) $value;
     }
 }

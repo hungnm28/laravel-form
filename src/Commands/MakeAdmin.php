@@ -20,6 +20,7 @@ class MakeAdmin extends Command
     {
         $this->info("Make Admin Module");
         $this->initModule();
+        $this->initRouteServiceProvider();
         $this->installAdminModule("Icons", "Listing");
 
         $this->installAdminModule("PermissionConfigs", "Listing");
@@ -65,6 +66,23 @@ class MakeAdmin extends Command
         $this->viewPath = $this->module->getPath() . "/Resources/views/livewire";
     }
 
+    private function initRouteServiceProvider()
+    {
+        $stub = $this->getStub("admin/Provider/RouteServiceProvider.php.stub");
+        $template = str_replace([
+            "DumpMyModuleName"
+            , "DumpMyModuleSlug"
+            ,"DumpMyModuleLowerName"
+
+        ], [
+            $this->module->getName(),
+            $this->getModuleSug()
+            ,$this->getModuleLowerName()
+        ], $stub);
+        $pathSave = $this->module->getPath() . "/Providers/RouteServiceProvider.php";
+        $this->writeFile($pathSave, $template);
+    }
+
     private function addAdminNavbar()
     {
         $stub = $this->getStub("/admin/Config/menu.php.stub");
@@ -74,7 +92,7 @@ class MakeAdmin extends Command
             "DumpMyLowerName"
             , "DumpMyRouteName"
             , "DumpMyPermission"
-            ,"DumpMyModuleHeadName"
+            , "DumpMyModuleHeadName"
         ], [
             $this->module->getLowerName()
             , $this->getRouteName()
@@ -83,6 +101,7 @@ class MakeAdmin extends Command
         ], $stub);
         $this->writeFile($pathSave, $template);
     }
+
     private function addPermission()
     {
         $stub = $this->getStub("/admin/Config/permission.php.stub");
@@ -120,15 +139,15 @@ class MakeAdmin extends Command
             'DumpMyModuleName'
             , 'DumpMyModuleView'
             , 'DumpMyRouteName'
-            ,'DumpMyModuleHeadName'
-            ,'DumpMyModuleLowerName'
-            ,'DumpMyModuleSlug'
+            , 'DumpMyModuleHeadName'
+            , 'DumpMyModuleLowerName'
+            , 'DumpMyModuleSlug'
         ], [
             $this->module->getName()
             , $this->getModuleSug()
             , $this->getModuleSug()
-            ,$this->getModuleHeadName()
-            ,$this->getModuleLowerName()
+            , $this->getModuleHeadName()
+            , $this->getModuleLowerName()
             , $this->getModuleSug()
 
 
@@ -150,11 +169,11 @@ class MakeAdmin extends Command
         $pathSave = $pathSave . "/$file.blade.php";
         $template = str_replace([
             'DumpMyRouteName'
-            ,'DumpMyModuleLowerName'
-            ,'DumpMyModuleSlug'
+            , 'DumpMyModuleLowerName'
+            , 'DumpMyModuleSlug'
         ], [
             $this->getSnakeString($this->module->getName())
-            ,$this->getModuleLowerName()
+            , $this->getModuleLowerName()
             , $this->getModuleSug()
 
         ], $stub);
@@ -162,7 +181,8 @@ class MakeAdmin extends Command
 
     }
 
-    private function installMenu(){
+    private function installMenu()
+    {
         $stub = $this->getStub("admin/layouts/menu.blade.php.stub");
         $pathSave = $this->module->getPath() . "/Resources/views/components/menu.blade.php";
         $template = str_replace([
@@ -170,15 +190,15 @@ class MakeAdmin extends Command
             , 'DumpMyModuleView'
             , 'DumpMyRouteName'
             , 'DumpMyModuleSlug'
-            ,'DumpMyModuleLowerName'
-            ,'DumpMyModuleHeadName'
+            , 'DumpMyModuleLowerName'
+            , 'DumpMyModuleHeadName'
         ], [
             $this->module->getName()
             , $this->module->getLowerName()
             , $this->getRouteName()
             , $this->getModuleSug()
-            ,$this->getModuleLowerName()
-            ,$this->getModuleHeadName()
+            , $this->getModuleLowerName()
+            , $this->getModuleHeadName()
 
         ], $stub);
 
@@ -194,13 +214,13 @@ class MakeAdmin extends Command
             , 'DumpMyModuleView'
             , 'DumpMyRouteName'
             , 'DumpMyModuleSlug'
-            ,'DumpMyModuleLowerName'
+            , 'DumpMyModuleLowerName'
         ], [
             $this->module->getName()
             , $this->module->getLowerName()
             , $this->getRouteName()
             , $this->getModuleSug()
-            ,$this->getModuleLowerName()
+            , $this->getModuleLowerName()
 
         ], $stub);
 

@@ -23,7 +23,7 @@
 
         <x-lf.form.done />
         <x-slot:tools>
-            <a class="btn-primary sm" href="{{route('DumpMyRouteName.admins')}}">{!! lfIcon("list") !!}</a>
+            <a class="btn-primary sm" href="{{route('DumpMyRouteName.admins.listing')}}">{!! lfIcon("list") !!}</a>
         </x-slot:tools>
         <x-slot:footer>
             <div class="card-footer flex justify-between">

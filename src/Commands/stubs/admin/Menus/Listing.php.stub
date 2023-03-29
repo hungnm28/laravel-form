@@ -14,7 +14,7 @@ class Listing extends Component
     public $edit;
     protected $queryString = ["create","edit","module"];
     public function mount(){
-        $this->authorize("DumpMyRouteName.menus.listing");
+        $this->authorize("DumpMyRouteName.menus");
         if(!$this->module){
             $this->module = "DumpMyModuleLowerName";
         }

@@ -21,7 +21,7 @@ class Show extends Component
     {
         $data =  Role::with([
             "permissions"=>function($qr){
-            $qr = $qr->with("parent");
+            $qr = $qr->with("children")->whereParentId(0);
             return $qr;
             }
         ])->findOrFail($this->record_id);

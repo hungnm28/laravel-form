@@ -13,7 +13,7 @@ class Listing extends Component
     protected $queryString = ["create"];
    public function mount()
        {
-           $this->authorize("DumpMyRouteName.permission-config.listing");
+           $this->authorize("DumpMyRouteName.permission-config");
            $this->done = 1;
        }
 

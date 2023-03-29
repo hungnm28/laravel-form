@@ -18,22 +18,9 @@
                 <th class="text-right pr-2">Permissions:</th>
                 <td>
                     <div class="w-full flex flex-wrap">
-                        @php
-                            $permissions = $data->permissions->reduce(function ($rt,$item){
-                               if($item->parent_id ==0){
-                                   $rt[$item->id]["info"] = $item;
-                               }else{
-                                   $rt[$item->parent_id]["info"]=$item->parent;
-                                   $rt[$item->parent_id]["children"][] = $item;
-                               }
-                               return $rt;
-
-                            },[]);
-                        @endphp
-
-                        @foreach($permissions as $permission)
+                        @foreach($data->permissions as $permission)
                             <span class="flex-none bg-gray-100 border px-1 m-1">
-                                <b>{{$permission["info"]->label}} : </b>
+                                <b>{{$permission->label}} : </b>
                                 @if(isset($permission['children']))
                                     @foreach($permission['children'] as $child)
                                         {{$child->label}},

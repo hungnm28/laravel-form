@@ -1,8 +1,8 @@
 <?php
-Route::get('/', [\Modules\DumpMyModuleName\Http\Controllers\HomeController::class, "index"]);
-Route::get("/icons", \Modules\DumpMyModuleName\Http\Livewire\Icons\Listing::class)->name('.icons');
-Route::get("/menus", \Modules\DumpMyModuleName\Http\Livewire\Menus\Listing::class)->name('.menus');
-Route::get("/permission-configs", \Modules\DumpMyModuleName\Http\Livewire\PermissionConfigs\Listing::class)->name('.permission-configs');
+Route::get('/', [\Modules\Admin\Http\Controllers\HomeController::class, "index"]);
+Route::get("/icons", \Modules\Admin\Http\Livewire\Icons\Listing::class)->name('.icons')->can("admin.icons");
+Route::get("/menus", \Modules\Admin\Http\Livewire\Menus\Listing::class)->name('.menus')->can("admin.menus");
+Route::get("/permission-configs", \Modules\Admin\Http\Livewire\PermissionConfigs\Listing::class)->name('.permission-configs')->can("admin.permission-configs");
 
 Route::prefix("admins")->name(".admins")->group(function (){
     Route::get("/", \Modules\DumpMyModuleName\Http\Livewire\Admins\Index::class)->can("DumpMyModuleSlug.admins");

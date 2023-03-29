@@ -20,7 +20,9 @@ class Listing extends Component
     {
         $this->authorize("DumpMyRouteName.permissions.delete");
         if ($this->confirm > 0) {
-            Permission::destroy($this->confirm);
+            $data = Permission::findOrFail($this->confirm);
+            $data->children()->delete();
+            $data->delete();
         }
         $this->confirm = 0;
         $this->dispatchBrowserEvent('warning', 'Permissions successfully destroyed.');
