@@ -2,6 +2,7 @@
     <x-lf.card title="Edit" class="warning">
         DumpMyFields
         <x-lf.form.done :params="['Listing','Create','Show']"/>
+        <x-lf.form.loading />
         <x-slot:tools >
             @can('DumpMyPermission.show')
             <a class="btn-success sm" href="{{route('DumpMyRoute.show',$record_id)}}">{!! lfIcon("launch",11) !!}</a>

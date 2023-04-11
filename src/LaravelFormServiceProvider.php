@@ -39,7 +39,7 @@ class LaravelFormServiceProvider extends ServiceProvider
         , 'form.array', 'form.checkbox', 'form.done', 'form.field'
         , 'form.group', 'form.icon', 'form.input', 'form.json'
         , 'form.mce', 'form.picture', 'form.radio', 'form.row'
-        , 'form.select', 'form.sort', 'form.tag', 'form.textarea', 'form.toggle'
+        , 'form.select', 'form.sort', 'form.tag', 'form.textarea', 'form.toggle', 'form.loading'
         , 'item.jsons', 'item.tags', 'item.tree-nav'
         , 'modal'
         , 'page.header', 'page.listing'

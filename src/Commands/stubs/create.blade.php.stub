@@ -2,6 +2,7 @@
     <x-lf.card title="Create" class="info">
         DumpMyFields
         <x-lf.form.done />
+        <x-lf.form.loading />
         <x-slot:tools>
             <a class="btn-primary sm" href="{{route('DumpMyRoute.listing')}}">{!! lfIcon("list") !!}</a>
         </x-slot:tools>

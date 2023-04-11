@@ -25,6 +25,7 @@
             </tr>
         @endforeach
     </table>
+    <x-lf.form.loading />
     <x-slot:filters>
         <x-lf.filter.input name="fId" type="number" placeholder="Id ..." />
     </x-slot:filters>
