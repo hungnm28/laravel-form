@@ -92,6 +92,7 @@ class MakeCreate extends Command
                     $form = '<x-lf.form.toggle name="' . $f . '" class="md:w-1/2" label="' . $field->label . '" />';
                     break;
                 case "text":
+                case "long-text":
                     $form = '<x-lf.form.textarea name="' . $f . '" label="' . $field->label . '" placeholder="' . $field->label . ' ..." />';
                     break;
                 case "json":

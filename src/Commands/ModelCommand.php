@@ -23,6 +23,7 @@ class ModelCommand extends Command
         , "email" => "EmailCast"
         , "boolean" => "BooleanCast"
         , "integer" => "IntegerCast"
+        , "tinyinteger" => "IntegerCast"
         , "bigint" => "BigintCast"
     ];
 
