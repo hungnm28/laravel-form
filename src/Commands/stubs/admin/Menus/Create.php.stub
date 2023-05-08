@@ -61,7 +61,7 @@ class Create extends Component
                             "label" =>"Listing"
                             , "icon" => "list"
                             , "route" => $this->route.".listing"
-                            , "permission" => $this->permission . ".lsiting"
+                            , "permission" => $this->permission . ".listing"
                             , "children" => []
                         ];
                         break;
