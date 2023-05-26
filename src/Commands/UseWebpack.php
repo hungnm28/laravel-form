@@ -32,7 +32,16 @@ class UseWebpack extends Command
         "production": "mix --production",
         "vite": "vite",', $package);
         }
+        $package = str_replace('"type": "module",',"",$package);
         file_put_contents(base_path("package.json"), $package);
+
+        file_put_contents(base_path("postcss.config.js"), 'module.exports = {
+    plugins: {
+        tailwindcss: {},
+        autoprefixer: {},
+    },
+};
+');
 
         $guestPath = resource_path("views/layouts/guest.blade.php");
         if(file_exists($guestPath)){
