@@ -101,15 +101,15 @@ class SetupDatabase extends Command
             $this->info("Database created successfully with the name $db_name");
         }
         if(strtolower(getenv('DB_USERNAME')) != "root") {
-            $this->info("CREATE USER IF NOT EXISTS " . getenv('DB_USERNAME') . "@" . getenv('DB_HOST') . " IDENTIFIED BY '" . getenv('DB_PASSWORD') . "';");
-            if ($conn->query("CREATE USER IF NOT EXISTS " . getenv('DB_USERNAME') . "@" . getenv('DB_HOST') . " IDENTIFIED BY '" . getenv('DB_PASSWORD') . "'") === TRUE) {
-                $this->info("CREATE USER IF NOT EXISTS " . getenv('DB_USERNAME') . "@" . getenv('DB_HOST') . " IDENTIFIED BY '" . getenv('DB_PASSWORD') . "';");
+            $this->info("CREATE USER IF NOT EXISTS '" . getenv('DB_USERNAME') . "@" . getenv('DB_HOST') . "' IDENTIFIED BY '" . getenv('DB_PASSWORD') . "';");
+            if ($conn->query("CREATE USER IF NOT EXISTS '" . getenv('DB_USERNAME') . "@" . getenv('DB_HOST') . "' IDENTIFIED BY '" . getenv('DB_PASSWORD') . "'") === TRUE) {
+                $this->info("CREATE USER IF NOT EXISTS '" . getenv('DB_USERNAME') . "@" . getenv('DB_HOST') . "' IDENTIFIED BY '" . getenv('DB_PASSWORD') . "';");
             }
-            if ($conn->query("GRANT ALL PRIVILEGES ON " . getenv('DB_DATABASE') . ".*   TO " . getenv('DB_USERNAME') . "@" . getenv('DB_HOST') . "  WITH GRANT OPTION") === TRUE) {
-                $this->info("GRANT ALL PRIVILEGES ON " . getenv('DB_DATABASE') . ".*   TO " . getenv('DB_USERNAME') . "@" . getenv('DB_HOST') . "  WITH GRANT OPTION;");
+            if ($conn->query("GRANT ALL PRIVILEGES ON '" . getenv('DB_DATABASE') . ".*'   TO '" . getenv('DB_USERNAME') . "@" . getenv('DB_HOST') . "'  WITH GRANT OPTION") === TRUE) {
+                $this->info("GRANT ALL PRIVILEGES ON '" . getenv('DB_DATABASE') . ".*'   TO '" . getenv('DB_USERNAME') . "@" . getenv('DB_HOST') . "'  WITH GRANT OPTION;");
             }
-            if ($conn->query("ALTER USER " . getenv('DB_USERNAME') . "@" . getenv('DB_HOST') . " IDENTIFIED WITH mysql_native_password BY '" . getenv('DB_PASSWORD') . "'") === TRUE) {
-                $this->info("ALTER USER " . getenv('DB_USERNAME') . "@" . getenv('DB_HOST') . " IDENTIFIED WITH mysql_native_password BY '" . getenv('DB_PASSWORD') . "';");
+            if ($conn->query("ALTER USER '" . getenv('DB_USERNAME') . "@" . getenv('DB_HOST') . "' IDENTIFIED WITH mysql_native_password BY '" . getenv('DB_PASSWORD') . "'") === TRUE) {
+                $this->info("ALTER USER '" . getenv('DB_USERNAME') . "@" . getenv('DB_HOST') . "' IDENTIFIED WITH mysql_native_password BY '" . getenv('DB_PASSWORD') . "';");
             }
         }
         // closing connection
