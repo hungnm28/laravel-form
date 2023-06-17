@@ -45,6 +45,7 @@ class LaravelFormServiceProvider extends ServiceProvider
         , 'page.header', 'page.listing'
         , 'table.item', 'table.label'
         , 'table.sort'
+        ,'box.errors'
         ,'card'
     ];
 

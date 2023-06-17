@@ -1,0 +1,15 @@
+.box-errors{
+    @apply w-full block p-4 flex-none;
+    .label{
+        @apply w-full block bg-red-100 font-medium text-lg p-2 text-red-600 border-red-500 border-t border-l border-r rounded-t;
+    }
+    .content{
+        @apply w-full block p-2 bg-red-50 border-red-600 rounded-b border text-red-600;
+        .item{
+            @apply w-full block py-2 border-b;
+            &:last-child{
+                @apply border-0;
+            }
+        }
+    }
+}

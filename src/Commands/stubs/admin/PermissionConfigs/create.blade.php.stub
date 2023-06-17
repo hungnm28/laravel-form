@@ -1,5 +1,6 @@
 <div class="w-full  p-4 max-w-screen-lg">
     <x-lf.card title="Create" class="info">
+        <x-lf.box.errors />
         <div class="w-full p-4">
             <div class="w-full p-4 border-orange-500 border bg-orange-200 text-red-800">
                 <b>Notes:</b>

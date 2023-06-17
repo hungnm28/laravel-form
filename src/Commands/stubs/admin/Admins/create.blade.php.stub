@@ -1,5 +1,6 @@
 <div class="w-full p-1 md:p-4 max-w-md">
     <x-lf.card title="Create" class="info">
+        <x-lf.box.errors />
         <x-lf.form.input name="user_id" type="integer" label="User id" placeholder="User id ..." />
         <x-lf.form.input name="email" type="string" label="Email" placeholder="Email ..." />
         @if($data)
