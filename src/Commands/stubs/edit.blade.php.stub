@@ -1,6 +1,5 @@
 <div class="w-full p-1 md:p-4">
     <x-lf.card title="Edit" class="warning">
-        <x-lf.box.errors />
         DumpMyFields
         <x-lf.form.done :params="['Listing','Create','Show']"/>
         <x-lf.form.loading />

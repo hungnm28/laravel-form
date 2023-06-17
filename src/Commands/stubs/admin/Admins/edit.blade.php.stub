@@ -1,6 +1,5 @@
 <div class="w-full p-1 md:p-4">
     <x-lf.card title="Edit" class="warning">
-        <x-lf.box.errors />
         <x-lf.form.input name="name" type="string" label="Name" placeholder="Name ..."/>
 		<x-lf.form.input name="email" type="string" label="Email" placeholder="Email ..."/>
 		<x-lf.form.input name="password" type="string" label="Password" placeholder="Password ..."/>

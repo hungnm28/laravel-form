@@ -1,6 +1,5 @@
 <div class="w-full p-1 md:p-4">
     <x-lf.card title="Create" class="info">
-        <x-lf.box.errors />
         <x-lf.form.input name="label" type="string" label="Label" placeholder="Label ..." />
         <x-lf.form.input name="name" disabled type="string" label="Name" placeholder="Name ..." />
         <x-lf.form.field name="permissions" label="Permissions">

@@ -1,6 +1,5 @@
 <div class="w-full p-1 md:p-4">
     <x-lf.card title="Create" class="info ">
-        <x-lf.box.errors />
         <x-lf.form.select name="name" class="w-full md:w-1/2" label="Chọn Permission" :params="$permissions"/>
         <x-lf.form.input name="name"   class="w-full md:w-1/2" type="string" label="Hoặc nhập" placeholder="Permission ..."/>
 		<x-lf.form.input name="label" type="string" label="Label" placeholder="Label ..."/>
