@@ -33,9 +33,11 @@ class Edit extends Component
 
     }
 
-    public function updated($field)
-    {
-        $this->validateOnly($field);
+    public function updated($field){
+        $rules = $this->getRules();
+        if(isset($rules[$field])){
+            $this->validateOnly($field);
+        }
     }
 
     public function store()
